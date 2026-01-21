@@ -1,0 +1,34 @@
+meta {
+  name: /projects/{slug} [project-update]
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{base_url}}/projects/:slug
+  body: json
+  auth: inherit
+}
+
+params:path {
+  slug: portfolio-new
+}
+
+body:json {
+  {
+    "name": "Portfolio",
+    "description": "Mon premier portfolio de test",
+    "urlWebsite": null,
+    "urlRepository": null,
+    "year": "2026",
+    "tags": null,
+    "slug": "portfolio",
+    "stack": null,
+    "isDisabled": "false"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

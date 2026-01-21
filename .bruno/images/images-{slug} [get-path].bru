@@ -1,0 +1,20 @@
+meta {
+  name: /images/{slug} [get-path]
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/images/:slug
+  body: none
+  auth: inherit
+}
+
+params:path {
+  slug: projects/portfolio/1768922488587-images.png
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

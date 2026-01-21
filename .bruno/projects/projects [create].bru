@@ -1,0 +1,25 @@
+meta {
+  name: /projects [create]
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/projects
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Portfolio",
+    "description": "Mon premier portfolio de test",
+    "year": "2026",
+    "slug": "portfolio"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

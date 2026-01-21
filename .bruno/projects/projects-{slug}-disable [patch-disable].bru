@@ -1,0 +1,26 @@
+meta {
+  name: /projects/{slug}/disable [patch-disable]
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{base_url}}/projects/:slug/disable
+  body: json
+  auth: inherit
+}
+
+params:path {
+  slug: portfolio
+}
+
+body:json {
+  {
+    "isDisabled": true
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

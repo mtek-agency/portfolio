@@ -1,0 +1,29 @@
+meta {
+  name: /images/{slug} [create]
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/images/:slug
+  body: multipartForm
+  auth: inherit
+}
+
+params:path {
+  slug: portfolio
+}
+
+body:multipart-form {
+  images: @file(/Users/matteo/Downloads/erte.png) @contentType(File)
+  images: @file(/Users/matteo/Downloads/Célébration Rugby sous le toit métallique.png) @contentType(File)
+}
+
+body:file {
+  file: @file(/Users/matteo/Downloads/erte.png) @contentType(image/png)
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
