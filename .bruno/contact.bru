@@ -1,0 +1,26 @@
+meta {
+  name: /contact
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base_url}}/contact
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Mattéo",
+    "email": "matteo@gmail.com",
+    "message": "un coucou de brevo",
+    "newsletter": true,
+    "token": "tttttt"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

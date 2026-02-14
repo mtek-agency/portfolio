@@ -3,10 +3,11 @@ import type { ProjectImage } from '~~/server/db/schema'
 import { projectImages } from '~~/server/db/schema'
 import { db } from 'hub:db'
 import { eq } from 'drizzle-orm'
+import type { MultiPartData } from 'h3'
 
 
 export const imageService = {
-    async uploadProjectImage(projectId: number, slug: string, image, order: int = 0): Promise<ProjectImage> {
+    async uploadProjectImage(projectId: number, slug: string, image: MultiPartData, order: number = 0): Promise<ProjectImage> {
         const extension = image.filename?.split('.').pop() || 'png'
 
         const filename = `projects/${slug}/${Date.now()}-${image.name}.${extension}`
