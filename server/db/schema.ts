@@ -55,6 +55,19 @@ export type ProjectUpdate = Partial<ProjectInsert>
 export type ProjectImage = InferSelectModel<typeof projectImages>
 export type ProjectImageInsert = InferInsertModel<typeof projectImages>
 
+export const messages = pgTable('messages', {
+    id: serial().primaryKey(),
+    type: text({ enum: ['contact', 'newsletter'] }).notNull(),
+    name: text(),
+    email: text().notNull(),
+    message: text(),
+    isRead: boolean().notNull().default(false),
+    createdAt: timestamp().notNull().defaultNow(),
+})
+
+export type Message = InferSelectModel<typeof messages>
+export type MessageInsert = InferInsertModel<typeof messages>
+
 export const projectsRelations = relations(projects, ({ many }) => ({
     images: many(projectImages),
 }))

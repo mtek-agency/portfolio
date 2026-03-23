@@ -71,6 +71,21 @@ class BrevoService {
 
         await this.contactsApi.createContact(createContact)
     }
+
+    async getContactsCount(): Promise<number> {
+        const { body } = await this.contactsApi.getContacts(1)
+        return body.count ?? 0
+    }
+
+    async getContactId(email: string): Promise<number | null> {
+        try {
+            const { body } = await this.contactsApi.getContactInfo(email)
+            return body.id ?? null
+        }
+        catch {
+            return null
+        }
+    }
 }
 
 export const useBrevo = () => BrevoService.getInstance()

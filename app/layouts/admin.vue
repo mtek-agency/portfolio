@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const open = ref(false)
-const links = useAdminNav(() => { open.value = false })
+const { data: unreadCount } = await useAsyncData('inbox-unread', () => $fetch<number>('/api/messages/unread-count'))
+const links = useAdminNav(unreadCount, () => { open.value = false })
 </script>
 
 <template>
