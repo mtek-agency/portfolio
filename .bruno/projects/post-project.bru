@@ -1,0 +1,51 @@
+meta {
+  name: Create project
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base_url}}/projects
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Portfolio V5",
+    "description": "Mon portfolio personnel construit avec Nuxt 3 et Nuxt UI.",
+    "year": "2026",
+    "slug": "portfolio-v5",
+    "urlWebsite": "https://matteo-bonneval.fr",
+    "urlRepository": "https://github.com/matteo-bonneval/portfolio",
+    "tags": "nuxt,vue,typescript",
+    "stack": "Nuxt 3,Nuxt UI,NuxtHub,Drizzle ORM,PostgreSQL",
+    "isDisabled": false
+  }
+}
+
+script:post-response {
+  if (res.status === 200 && res.body.slug) {
+    bru.setEnvVar("slug", res.body.slug);
+  }
+}
+
+tests {
+  test("Projet créé - status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Réponse contient l'id", function() {
+    expect(res.body).to.have.property("id");
+  });
+  test("Slug correspond", function() {
+    expect(res.body.slug).to.equal("portfolio-v5");
+  });
+  test("isDisabled est false par défaut", function() {
+    expect(res.body.isDisabled).to.equal(false);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

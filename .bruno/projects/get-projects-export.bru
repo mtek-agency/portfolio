@@ -1,0 +1,29 @@
+meta {
+  name: Export projects CSV
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/projects/export
+  body: none
+  auth: inherit
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Content-Type est text/csv", function() {
+    expect(res.headers["content-type"]).to.include("text/csv");
+  });
+  test("Content-Disposition est attachment", function() {
+    expect(res.headers["content-disposition"]).to.include("attachment");
+    expect(res.headers["content-disposition"]).to.include(".csv");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

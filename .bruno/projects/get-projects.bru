@@ -1,0 +1,30 @@
+meta {
+  name: Get all projects
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/projects
+  body: none
+  auth: inherit
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Réponse est un tableau", function() {
+    expect(res.body).to.be.an("array");
+  });
+  test("Chaque projet a un slug", function() {
+    if (res.body.length > 0) {
+      expect(res.body[0]).to.have.property("slug");
+    }
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
