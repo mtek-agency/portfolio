@@ -1,29 +1,16 @@
 import { projectService } from '~~/server/services/project.service'
-import type { Project } from '~~/server/db/schema'
-import { requireAuthIfNeeded } from '~~/server/utils/auth'
 import { getValidatedSlug } from '~~/server/utils/params'
+import { z } from 'zod'
+
+const disableSchema = z.object({ isDisabled: z.boolean() })
 
 export default defineEventHandler(async (event) => {
-    await requireAuthIfNeeded(event)
-
+    await requireUserSession(event)
     const slug = getValidatedSlug(event)
+    const { isDisabled } = await readValidatedBody(event, (b) => disableSchema.parse(b))
 
-    const body = await readBody<{ isDisabled: boolean }>(event)
-    if (body === null || body === undefined || typeof body.isDisabled !== 'boolean') {
-        throw createError({
-            statusCode: 400,
-            statusMessage: 'isDisabled must be a boolean'
-        })
-    }
-
-    const project: Project | undefined = await projectService.setDisable(slug, body.isDisabled)
-
-    if (!project) {
-        throw createError({
-            statusCode: 404,
-            statusMessage: 'Project not found'
-        })
-    }
+    const project = await projectService.setDisable(slug, isDisabled)
+    if (!project) throw createError({ statusCode: 404, statusMessage: 'Project not found' })
 
     return project
 })

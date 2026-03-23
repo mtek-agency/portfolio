@@ -5,7 +5,10 @@ defineProps<{
   collapsed?: boolean
 }>()
 
-const { user } = useUserSession()
+const { user, clear } = useUserSession()
+const colorMode = useColorMode()
+
+const isDark = computed(() => colorMode.value === 'dark')
 
 const userConnected = ref({
   name: user.value.name,
@@ -20,21 +23,19 @@ const items = computed<DropdownMenuItem[][]>(() => ([[{
   label: userConnected.value.name,
   avatar: userConnected.value.avatar
 }], [{
-  label: 'Profile',
-  icon: 'i-lucide-user'
-}],  [{
-  label: 'Gitlab',
-  icon: 'i-lucide-gitlab',
-  to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-  target: '_blank'
-}, {
-  label: 'GitHub',
-  icon: 'i-simple-icons-github',
-  to: 'https://github.com/nuxt-ui-templates/dashboard',
-  target: '_blank'
-}, {
-  label: 'Log out',
-  icon: 'i-lucide-log-out'
+  label: isDark.value ? 'Thème clair' : 'Thème sombre',
+  icon: isDark.value ? 'i-lucide-sun' : 'i-lucide-moon',
+  onSelect: () => {
+    colorMode.preference = isDark.value ? 'light' : 'dark'
+  }
+}], [{
+  label: 'Se déconnecter',
+  icon: 'i-lucide-log-out',
+  onSelect: async () => {
+    await $fetch('/api/auth/logout', { method: 'POST' })
+    await clear()
+    await navigateTo('/login')
+  }
 }]]))
 </script>
 

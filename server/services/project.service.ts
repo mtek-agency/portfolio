@@ -5,8 +5,14 @@ import type { ProjectImage } from 'hub:db:schema'
 
 
 export const projectService = {
-    async findAll(): Promise<Project[]> {
-        return await db.query.projects.findMany()
+    async findAll(): Promise<(Project & { images: { id: number }[] })[]> {
+        return await db.query.projects.findMany({
+            with: {
+                images: {
+                    columns: { id: true },
+                },
+            },
+        })
     },
     async findBySlug(slug: string): Promise<(Project & { images: ProjectImage[] }) | undefined> {
         return await db.query.projects.findFirst({

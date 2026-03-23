@@ -9,8 +9,9 @@ import type { MultiPartData } from 'h3'
 export const imageService = {
     async uploadProjectImage(projectId: number, slug: string, image: MultiPartData, order: number = 0): Promise<ProjectImage> {
         const extension = image.filename?.split('.').pop() || 'png'
+        const originalName = image.filename?.replace(/\.[^.]+$/, '') || `image-${order}`
 
-        const filename = `projects/${slug}/${Date.now()}-${image.name}.${extension}`
+        const filename = `projects/${slug}/${Date.now()}-${originalName}.${extension}`
         const blobResult = await blob.put(filename, image.data, {
             contentType: image.type,
         })
@@ -21,7 +22,7 @@ export const imageService = {
                 projectId,
                 url: blobResult.pathname,
                 filename,
-                mimeType: extension,
+                mimeType: image.type ?? extension,
                 size: blobResult.size,
                 order,
             })
@@ -35,10 +36,7 @@ export const imageService = {
         })
     },
     async deleteById(id: number, filename: string): Promise<void> {
-         await db
-            .delete(projectImages)
-            .where(eq(projectImages.id, Number(id)))
-            .returning()
+        await db.delete(projectImages).where(eq(projectImages.id, id))
         await blob.del(filename)
     }
 }

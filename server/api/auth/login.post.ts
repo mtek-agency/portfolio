@@ -1,29 +1,21 @@
 import { AuthService } from '~~/server/services/auth.service'
-import type { Auth } from '#shared/types/auth.type'
-import {loginSchema} from "#shared/schemas/auth.schema";
+import { loginSchema } from '#shared/schemas/auth.schema'
 
 export default defineEventHandler(async (event) => {
-    const body: Auth = await readBody<Auth>(event)
-    const validationResult = loginSchema.safeParse(body)
-    if (!validationResult.success) {
+    const body = await readValidatedBody(event, (b) => loginSchema.parse(b))
+
+    const user = await AuthService.validateUser(body)
+    if (!user) {
         throw createError({
-            statusCode: 400,
-            statusMessage: "Validation failed",
-            data: validationResult.error.message,
+            statusCode: 401,
+            statusMessage: 'Invalid email or password',
         })
     }
 
-    const user = await AuthService.validateUser(validationResult.data)
-    if (!user) {
-        return createError({
-            statusCode: 401,
-            statusMessage: "Please check your email and password.",
-        });
-    }
     const { password: _, ...userWithoutPassword } = user
     await setUserSession(event, {
         user: userWithoutPassword,
         loggedInAt: new Date(),
-    });
-    return await getUserSession(event)
+    })
+    return getUserSession(event)
 })
