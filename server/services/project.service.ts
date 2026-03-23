@@ -19,7 +19,7 @@ export const projectService = {
             where: eq(projects.slug, slug),
             with: {
                 images: {
-                    orderBy: (images, { asc }) => [asc(images.id)],
+                    orderBy: (images, { asc }) => [asc(images.order), asc(images.id)],
                 },
             },
         })

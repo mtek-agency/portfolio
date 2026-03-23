@@ -38,5 +38,12 @@ export const imageService = {
     async deleteById(id: number, filename: string): Promise<void> {
         await db.delete(projectImages).where(eq(projectImages.id, id))
         await blob.del(filename)
+    },
+    async reorder(ids: number[]): Promise<void> {
+        await Promise.all(
+            ids.map((id, index) =>
+                db.update(projectImages).set({ order: index }).where(eq(projectImages.id, id))
+            )
+        )
     }
 }
