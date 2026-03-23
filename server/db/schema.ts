@@ -68,6 +68,20 @@ export const messages = pgTable('messages', {
 export type Message = InferSelectModel<typeof messages>
 export type MessageInsert = InferInsertModel<typeof messages>
 
+export const tools = pgTable('tools', {
+    id: serial().primaryKey(),
+    name: text().notNull(),
+    url: text().notNull(),
+    icon: text(),
+    category: text().notNull(),
+    isActive: boolean().notNull().default(true),
+    order: integer().default(0),
+    createdAt: timestamp().notNull().defaultNow(),
+})
+
+export type Tool = InferSelectModel<typeof tools>
+export type ToolInsert = InferInsertModel<typeof tools>
+
 export const projectsRelations = relations(projects, ({ many }) => ({
     images: many(projectImages),
 }))

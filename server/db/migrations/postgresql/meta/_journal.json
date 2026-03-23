@@ -36,6 +36,13 @@
       "when": 1742724000000,
       "tag": "0004_inbox_messages",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1742810400000,
+      "tag": "0005_tools",
+      "breakpoints": true
     }
   ]
 }
