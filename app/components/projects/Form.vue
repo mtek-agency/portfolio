@@ -11,6 +11,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   saved: [updated: Project]
   'update:saving': [value: boolean]
+  'update:dirty': [value: boolean]
 }>()
 
 const toast = useToast()
@@ -27,6 +28,20 @@ const formState = reactive<ProjectEditInput>({
   stack: props.project.stack ?? '',
   isDisabled: props.project.isDisabled,
 })
+
+const isDirty = computed(() =>
+  formState.name !== props.project.name
+  || formState.description !== props.project.description
+  || formState.year !== props.project.year
+  || formState.slug !== props.project.slug
+  || formState.urlWebsite !== (props.project.urlWebsite ?? '')
+  || formState.urlRepository !== (props.project.urlRepository ?? '')
+  || formState.tags !== (props.project.tags ?? '')
+  || formState.stack !== (props.project.stack ?? '')
+  || formState.isDisabled !== props.project.isDisabled,
+)
+
+watch(isDirty, val => emit('update:dirty', val))
 
 async function onSubmit(event: FormSubmitEvent<ProjectEditInput>) {
   saving.value = true
@@ -80,37 +95,37 @@ async function onSubmit(event: FormSubmitEvent<ProjectEditInput>) {
         </UFormField>
 
         <UFormField name="slug" label="Slug" required>
-          <UInput v-model="formState.slug" placeholder="mon-projet" class="w-full font-mono" />
+          <div class="flex gap-2">
+            <UInput v-model="formState.slug" placeholder="mon-projet" class="flex-1 font-mono" />
+            <UTooltip text="Régénérer depuis le nom">
+              <UButton
+                icon="i-lucide-refresh-cw"
+                size="sm"
+                variant="ghost"
+                color="neutral"
+                type="button"
+                @click="formState.slug = toSlug(formState.name)"
+              />
+            </UTooltip>
+          </div>
         </UFormField>
       </div>
     </div>
 
     <!-- Colonne droite : Liens + Mots-clés + Paramètres -->
     <div class="flex flex-col gap-4">
-      <!-- Liens -->
       <div class="rounded-xl border border-default bg-elevated/40 p-5 flex flex-col gap-4">
         <p class="text-sm font-semibold text-default">Liens</p>
 
         <UFormField name="urlWebsite" label="Site web">
-          <UInput
-            v-model="formState.urlWebsite"
-            placeholder="https://…"
-            leading-icon="i-lucide-globe"
-            class="w-full"
-          />
+          <UInput v-model="formState.urlWebsite" placeholder="https://…" leading-icon="i-lucide-globe" class="w-full" />
         </UFormField>
 
         <UFormField name="urlRepository" label="Dépôt">
-          <UInput
-            v-model="formState.urlRepository"
-            placeholder="https://github.com/…"
-            leading-icon="i-lucide-github"
-            class="w-full"
-          />
+          <UInput v-model="formState.urlRepository" placeholder="https://github.com/…" leading-icon="i-lucide-github" class="w-full" />
         </UFormField>
       </div>
 
-      <!-- Mots-clés -->
       <div class="rounded-xl border border-default bg-elevated/40 p-5 flex flex-col gap-4">
         <p class="text-sm font-semibold text-default">Mots-clés</p>
 
@@ -123,7 +138,6 @@ async function onSubmit(event: FormSubmitEvent<ProjectEditInput>) {
         </UFormField>
       </div>
 
-      <!-- Paramètres -->
       <div class="rounded-xl border border-default bg-elevated/40 p-5 flex flex-col gap-4">
         <p class="text-sm font-semibold text-default">Paramètres</p>
 

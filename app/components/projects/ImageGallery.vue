@@ -22,6 +22,26 @@ async function onDragEnd() {
 }
 
 const { zoomedImage, zoomedIndex, open: openLightbox, close: closeLightbox, prev, next } = useLightbox(sortableImages)
+
+// Confirmation suppression
+const pendingDeleteImage = ref<ProjectImage | null>(null)
+const deleteModalOpen = ref(false)
+
+function requestDelete(image: ProjectImage) {
+  pendingDeleteImage.value = image
+  deleteModalOpen.value = true
+}
+
+function cancelDelete() {
+  pendingDeleteImage.value = null
+  deleteModalOpen.value = false
+}
+
+async function confirmDelete() {
+  if (!pendingDeleteImage.value) return
+  await deleteImage(pendingDeleteImage.value)
+  cancelDelete()
+}
 </script>
 
 <template>
@@ -53,36 +73,33 @@ const { zoomedImage, zoomedIndex, open: openLightbox, close: closeLightbox, prev
       @end="onDragEnd"
     >
       <div
-        v-for="image in sortableImages"
+        v-for="(image, index) in sortableImages"
         :key="image.id"
         class="relative group rounded-lg overflow-hidden aspect-video bg-elevated cursor-zoom-in"
         @click="openLightbox(image)"
       >
         <img :src="`/api/images/${image.filename}`" :alt="image.filename" class="w-full h-full object-cover">
+
+        <!-- Badge couverture -->
+        <UBadge
+          v-if="index === 0"
+          label="Couverture"
+          size="xs"
+          color="primary"
+          variant="solid"
+          class="absolute top-2 left-2"
+        />
+
         <div class="absolute inset-0 bg-black/50 flex items-center justify-center gap-2">
-          <UButton
-            icon="i-lucide-grip"
-            variant="ghost"
-            color="neutral"
-            size="sm"
-            class="drag-handle cursor-grab active:cursor-grabbing text-white! hover:text-white!"
-            @click.stop
-          />
-          <UButton
-            icon="i-lucide-zoom-in"
-            variant="ghost"
-            color="neutral"
-            size="sm"
-            class="text-white! hover:text-white!"
-            @click.stop="openLightbox(image)"
-          />
+          <UButton icon="i-lucide-grip" variant="ghost" color="neutral" size="sm" class="drag-handle cursor-grab active:cursor-grabbing text-white! hover:text-white!" @click.stop />
+          <UButton icon="i-lucide-zoom-in" variant="ghost" color="neutral" size="sm" class="text-white! hover:text-white!" @click.stop="openLightbox(image)" />
           <UButton
             icon="i-lucide-trash-2"
             variant="ghost"
             color="error"
             size="sm"
             :loading="deletingImageId === image.id"
-            @click.stop="deleteImage(image)"
+            @click.stop="requestDelete(image)"
           />
         </div>
       </div>
@@ -94,79 +111,34 @@ const { zoomedImage, zoomedIndex, open: openLightbox, close: closeLightbox, prev
       <UButton label="Ajouter des images" variant="ghost" size="sm" @click="fileInput?.click()" />
     </div>
 
-    <!-- Lightbox -->
-    <Teleport to="body">
-      <Transition name="lightbox">
-        <div
-          v-if="zoomedImage"
-          class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 cursor-zoom-out"
-          @click="closeLightbox"
-        >
-          <UTooltip v-if="zoomedIndex > 0" side="right">
-            <UButton
-              icon="i-lucide-chevron-left"
-              variant="ghost"
-              color="neutral"
-              size="xl"
-              class="absolute left-4 top-1/2 -translate-y-1/2 text-white! hover:text-white! hover:bg-white/10"
-              @click.stop="prev"
-            />
-            <template #content>
-              <div class="flex items-center gap-1">Image précédente <UKbd>←</UKbd></div>
-            </template>
-          </UTooltip>
-
-          <img
-            :src="`/api/images/${zoomedImage?.filename}`"
-            :alt="zoomedImage?.filename"
-            class="max-w-[90vw] max-h-[90vh] object-contain select-none rounded-lg shadow-2xl cursor-default"
-            @click.stop
-          >
-
-          <UTooltip v-if="zoomedIndex < sortableImages.length - 1" side="left">
-            <UButton
-              icon="i-lucide-chevron-right"
-              variant="ghost"
-              color="neutral"
-              size="xl"
-              class="absolute right-4 top-1/2 -translate-y-1/2 text-white! hover:text-white! hover:bg-white/10"
-              @click.stop="next"
-            />
-            <template #content>
-              <div class="flex items-center gap-1">Image suivante <UKbd>→</UKbd></div>
-            </template>
-          </UTooltip>
-
-          <UTooltip side="left">
-            <UButton
-              icon="i-lucide-x"
-              variant="ghost"
-              color="neutral"
-              size="lg"
-              class="absolute top-4 right-4 text-white! hover:text-white! hover:bg-white/10"
-              @click.stop="closeLightbox"
-            />
-            <template #content>
-              <div class="flex items-center gap-1">Fermer <UKbd>Esc</UKbd></div>
-            </template>
-          </UTooltip>
-
-          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/60 text-sm tabular-nums">
-            {{ zoomedIndex + 1 }} / {{ sortableImages.length }}
-          </div>
+    <!-- Modal confirmation suppression -->
+    <UModal v-model:open="deleteModalOpen" title="Supprimer l'image">
+      <template #body>
+        <p class="text-sm text-muted">Cette action est irréversible. L'image sera définitivement supprimée.</p>
+      </template>
+      <template #footer>
+        <div class="flex gap-3 justify-end w-full">
+          <UButton label="Annuler" variant="ghost" color="neutral" @click="cancelDelete" />
+          <UButton
+            label="Supprimer"
+            icon="i-lucide-trash-2"
+            color="error"
+            :loading="!!deletingImageId"
+            @click="confirmDelete"
+          />
         </div>
-      </Transition>
-    </Teleport>
+      </template>
+    </UModal>
+
+    <!-- Lightbox -->
+    <ProjectsImageLightbox
+      v-if="zoomedImage"
+      :filename="zoomedImage.filename"
+      :index="zoomedIndex"
+      :total="sortableImages.length"
+      @close="closeLightbox"
+      @prev="prev"
+      @next="next"
+    />
   </div>
 </template>
-
-<style scoped>
-.lightbox-enter-active,
-.lightbox-leave-active {
-  transition: opacity 0.2s ease;
-}
-.lightbox-enter-from,
-.lightbox-leave-to {
-  opacity: 0;
-}
-</style>

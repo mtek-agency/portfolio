@@ -17,13 +17,17 @@ const projectsRef = toRef(props, 'projects')
 const { search, statusFilter, statusOptions, filteredProjects, activeCount, disabledCount } = useProjectFilters(projectsRef)
 
 const columns: TableColumn<ProjectWithImageCount>[] = [
-  { accessorKey: 'name', header: 'Projet' },
-  { accessorKey: 'year', header: 'Année' },
+  { accessorKey: 'name', header: 'Projet', enableSorting: true },
+  { accessorKey: 'year', header: 'Année', enableSorting: true },
   { accessorKey: 'tags', header: 'Tags' },
   { accessorKey: 'stack', header: 'Stack' },
-  { accessorKey: 'isDisabled', header: 'Statut' },
+  { accessorKey: 'isDisabled', header: 'Statut', enableSorting: true },
   { accessorKey: 'id', id: 'actions' },
 ]
+
+function navigateToProject(slug: string) {
+  navigateTo(`/admin/projets/${slug}`)
+}
 </script>
 
 <template>
@@ -37,12 +41,7 @@ const columns: TableColumn<ProjectWithImageCount>[] = [
 
     <!-- Toolbar -->
     <div class="flex items-center gap-3">
-      <UInput
-        v-model="search"
-        leading-icon="i-lucide-search"
-        placeholder="Rechercher par nom, slug…"
-        class="max-w-sm"
-      />
+      <UInput v-model="search" leading-icon="i-lucide-search" placeholder="Rechercher par nom, slug…" class="max-w-sm" />
       <USelect v-model="statusFilter" :items="statusOptions" class="w-48" />
       <span class="ml-auto text-sm text-muted">
         {{ filteredProjects.length }} résultat{{ filteredProjects.length !== 1 ? 's' : '' }}
@@ -50,13 +49,19 @@ const columns: TableColumn<ProjectWithImageCount>[] = [
     </div>
 
     <!-- Table -->
-    <UTable :data="filteredProjects" :columns="columns" :loading="loading" class="w-full">
+    <UTable
+      :data="filteredProjects"
+      :columns="columns"
+      :loading="loading"
+      class="w-full"
+      :ui="{ tr: 'cursor-pointer hover:bg-elevated/50 transition-colors' }"
+    >
       <template #actions-header>
         <div class="flex justify-end">Affichage / Modifier</div>
       </template>
 
       <template #name-cell="{ row }">
-        <div class="flex flex-col gap-0.5 py-1">
+        <div class="flex flex-col gap-0.5 py-1" @click="navigateToProject(row.original.slug)">
           <div class="flex items-center gap-2">
             <span class="font-medium text-default">{{ row.original.name }}</span>
             <UBadge
@@ -70,47 +75,50 @@ const columns: TableColumn<ProjectWithImageCount>[] = [
         </div>
       </template>
 
+      <template #year-cell="{ row }">
+        <span @click="navigateToProject(row.original.slug)">{{ row.original.year }}</span>
+      </template>
+
       <template #tags-cell="{ row }">
-        <div v-if="row.original.tags" class="flex flex-wrap gap-1">
-          <UBadge
-            v-for="tag in row.original.tags.split(',')"
-            :key="tag"
-            :label="tag.trim()"
-            variant="subtle"
-            color="primary"
-            size="sm"
-          />
+        <div class="py-1" @click="navigateToProject(row.original.slug)">
+          <div v-if="row.original.tags" class="flex flex-wrap gap-1">
+            <UBadge v-for="tag in row.original.tags.split(',')" :key="tag" :label="tag.trim()" variant="subtle" color="primary" size="sm" />
+          </div>
+          <span v-else class="text-muted text-sm">—</span>
         </div>
-        <span v-else class="text-muted text-sm">—</span>
       </template>
 
       <template #stack-cell="{ row }">
-        <div v-if="row.original.stack" class="flex flex-wrap gap-1">
-          <UBadge
-            v-for="tech in row.original.stack.split(',').slice(0, 3)"
-            :key="tech"
-            :label="tech.trim()"
-            variant="outline"
-            color="neutral"
-            size="sm"
-          />
-          <UBadge
-            v-if="row.original.stack.split(',').length > 3"
-            :label="`+${row.original.stack.split(',').length - 3}`"
-            variant="soft"
-            color="neutral"
-            size="sm"
-          />
+        <div class="py-1" @click="navigateToProject(row.original.slug)">
+          <div v-if="row.original.stack" class="flex flex-wrap gap-1">
+            <UBadge
+              v-for="tech in row.original.stack.split(',').slice(0, 3)"
+              :key="tech"
+              :label="tech.trim()"
+              variant="outline"
+              color="neutral"
+              size="sm"
+            />
+            <UBadge
+              v-if="row.original.stack.split(',').length > 3"
+              :label="`+${row.original.stack.split(',').length - 3}`"
+              variant="soft"
+              color="neutral"
+              size="sm"
+            />
+          </div>
+          <span v-else class="text-muted text-sm">—</span>
         </div>
-        <span v-else class="text-muted text-sm">—</span>
       </template>
 
       <template #isDisabled-cell="{ row }">
-        <UBadge
-          :label="row.original.isDisabled ? 'Désactivé' : 'Actif'"
-          :color="row.original.isDisabled ? 'neutral' : 'success'"
-          variant="subtle"
-        />
+        <div @click="navigateToProject(row.original.slug)">
+          <UBadge
+            :label="row.original.isDisabled ? 'Désactivé' : 'Actif'"
+            :color="row.original.isDisabled ? 'neutral' : 'success'"
+            variant="subtle"
+          />
+        </div>
       </template>
 
       <template #actions-cell="{ row }">
@@ -126,13 +134,7 @@ const columns: TableColumn<ProjectWithImageCount>[] = [
               />
             </span>
           </UTooltip>
-          <UButton
-            icon="i-lucide-pencil"
-            variant="ghost"
-            color="neutral"
-            size="sm"
-            :to="`/admin/projets/${row.original.slug}`"
-          />
+          <UButton icon="i-lucide-pencil" variant="ghost" color="neutral" size="sm" :to="`/admin/projets/${row.original.slug}`" />
         </div>
       </template>
     </UTable>
