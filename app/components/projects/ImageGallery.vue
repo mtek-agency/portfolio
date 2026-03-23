@@ -14,15 +14,14 @@ const emit = defineEmits<{
 const slug = toRef(props, 'slug')
 const { fileInput, uploadingImages, deletingImageId, uploadFiles, deleteImage, reorderImages } = useProjectImages(slug, () => emit('refresh'))
 
-const zoomedImage = ref<ProjectImage | null>(null)
-
-// Copie locale pour le drag — synchronisée quand les images changent depuis le parent
 const sortableImages = ref<ProjectImage[]>([...props.images])
 watch(() => props.images, val => { sortableImages.value = [...val] }, { deep: true })
 
 async function onDragEnd() {
   await reorderImages(sortableImages.value.map(img => img.id))
 }
+
+const { zoomedImage, zoomedIndex, open: openLightbox, close: closeLightbox, prev, next } = useLightbox(sortableImages)
 </script>
 
 <template>
@@ -40,14 +39,7 @@ async function onDragEnd() {
         :loading="uploadingImages"
         @click="fileInput?.click()"
       />
-      <input
-        ref="fileInput"
-        type="file"
-        accept="image/*"
-        multiple
-        class="hidden"
-        @change="uploadFiles"
-      >
+      <input ref="fileInput" type="file" accept="image/*" multiple class="hidden" @change="uploadFiles">
     </div>
 
     <VueDraggable
@@ -64,13 +56,9 @@ async function onDragEnd() {
         v-for="image in sortableImages"
         :key="image.id"
         class="relative group rounded-lg overflow-hidden aspect-video bg-elevated cursor-zoom-in"
-        @click="zoomedImage = image"
+        @click="openLightbox(image)"
       >
-        <img
-          :src="`/api/images/${image.filename}`"
-          :alt="image.filename"
-          class="w-full h-full object-cover"
-        >
+        <img :src="`/api/images/${image.filename}`" :alt="image.filename" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-black/50 flex items-center justify-center gap-2">
           <UButton
             icon="i-lucide-grip"
@@ -86,7 +74,7 @@ async function onDragEnd() {
             color="neutral"
             size="sm"
             class="text-white! hover:text-white!"
-            @click.stop="zoomedImage = image"
+            @click.stop="openLightbox(image)"
           />
           <UButton
             icon="i-lucide-trash-2"
@@ -103,12 +91,7 @@ async function onDragEnd() {
     <div v-else class="rounded-lg border border-dashed border-default flex flex-col items-center justify-center gap-2 py-10 text-center">
       <UIcon name="i-lucide-image" class="size-8 text-muted" />
       <p class="text-sm text-muted">Aucune image pour ce projet</p>
-      <UButton
-        label="Ajouter des images"
-        variant="ghost"
-        size="sm"
-        @click="fileInput?.click()"
-      />
+      <UButton label="Ajouter des images" variant="ghost" size="sm" @click="fileInput?.click()" />
     </div>
 
     <!-- Lightbox -->
@@ -117,20 +100,60 @@ async function onDragEnd() {
         <div
           v-if="zoomedImage"
           class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 cursor-zoom-out"
-          @click="zoomedImage = null"
+          @click="closeLightbox"
         >
+          <UTooltip v-if="zoomedIndex > 0" side="right">
+            <UButton
+              icon="i-lucide-chevron-left"
+              variant="ghost"
+              color="neutral"
+              size="xl"
+              class="absolute left-4 top-1/2 -translate-y-1/2 text-white! hover:text-white! hover:bg-white/10"
+              @click.stop="prev"
+            />
+            <template #content>
+              <div class="flex items-center gap-1">Image précédente <UKbd>←</UKbd></div>
+            </template>
+          </UTooltip>
+
           <img
             :src="`/api/images/${zoomedImage?.filename}`"
             :alt="zoomedImage?.filename"
             class="max-w-[90vw] max-h-[90vh] object-contain select-none rounded-lg shadow-2xl cursor-default"
             @click.stop
           >
-          <button
-            class="absolute top-4 right-4 text-white/70 hover:text-white transition-colors cursor-pointer"
-            @click="zoomedImage = null"
-          >
-            <UIcon name="i-lucide-x" class="size-7" />
-          </button>
+
+          <UTooltip v-if="zoomedIndex < sortableImages.length - 1" side="left">
+            <UButton
+              icon="i-lucide-chevron-right"
+              variant="ghost"
+              color="neutral"
+              size="xl"
+              class="absolute right-4 top-1/2 -translate-y-1/2 text-white! hover:text-white! hover:bg-white/10"
+              @click.stop="next"
+            />
+            <template #content>
+              <div class="flex items-center gap-1">Image suivante <UKbd>→</UKbd></div>
+            </template>
+          </UTooltip>
+
+          <UTooltip side="left">
+            <UButton
+              icon="i-lucide-x"
+              variant="ghost"
+              color="neutral"
+              size="lg"
+              class="absolute top-4 right-4 text-white! hover:text-white! hover:bg-white/10"
+              @click.stop="closeLightbox"
+            />
+            <template #content>
+              <div class="flex items-center gap-1">Fermer <UKbd>Esc</UKbd></div>
+            </template>
+          </UTooltip>
+
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/60 text-sm tabular-nums">
+            {{ zoomedIndex + 1 }} / {{ sortableImages.length }}
+          </div>
         </div>
       </Transition>
     </Teleport>

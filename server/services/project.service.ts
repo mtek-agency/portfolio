@@ -54,5 +54,23 @@ export const projectService = {
             .where(eq(projects.slug, slug))
             .returning()
         return project
+    },
+    async upsertMany(data: Partial<ProjectInsert>[]): Promise<{ imported: number, skipped: number }> {
+        let imported = 0
+        let skipped = 0
+
+        for (const item of data) {
+            if (!item.name || !item.slug) { skipped++; continue }
+            await db
+                .insert(projects)
+                .values(item as ProjectInsert)
+                .onConflictDoUpdate({
+                    target: projects.slug,
+                    set: { ...item, updatedAt: new Date() },
+                })
+            imported++
+        }
+
+        return { imported, skipped }
     }
 }

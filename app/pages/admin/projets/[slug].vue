@@ -20,6 +20,10 @@ const { data: project, refresh } = await useFetch<ProjectWithImages>(
 
 if (!project.value) throw createError({ statusCode: 404, statusMessage: 'Projet introuvable' })
 
+useKeyboardShortcut('s', () => {
+  document.getElementById('project-form')?.requestSubmit()
+}, { meta: true })
+
 async function onSaved(updated: Project) {
   if (updated.slug !== slug.value) {
     await navigateTo(`/admin/projets/${updated.slug}`)
@@ -42,15 +46,34 @@ async function onSaved(updated: Project) {
         to="/admin/projets"
       />
       <UButton
-        label="Sauvegarder"
         icon="i-lucide-save"
         form="project-form"
         type="submit"
         :loading="saving"
-      />
+      >
+        Sauvegarder
+        <template #trailing>
+          <span class="flex items-center gap-0.5 opacity-60 ml-0.5">
+            <UKbd
+                value="meta"
+                size="sm"
+                color="neutral"
+                variant="subtle"
+            />
+            <UKbd
+                value="S"
+                size="sm"
+                color="neutral"
+                variant="subtle"
+            />
+          </span>
+        </template>
+      </UButton>
     </template>
 
     <div class="p-6 flex flex-col gap-6">
+      <ProjectsInfoCard :project="project!" />
+
       <ProjectsForm :project="project!" @saved="onSaved" @update:saving="saving = $event" />
 
       <USeparator />

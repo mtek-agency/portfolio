@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import type { Project } from '~~/server/db/schema'
+import type { ProjectWithImageCount } from '~/composables/useProjectFilters'
 
 definePageMeta({
   layout: 'admin',
   middleware: ['auth'],
 })
 
-type ProjectWithImageCount = Project & { images: { id: number }[] }
-
 const { data: projects, refresh, status } = await useFetch<ProjectWithImageCount[]>('/api/projects')
-
 const { togglingId, toggleDisable } = useProjectToggle(refresh)
+const { importInput, exportProjects, onImportFile } = useProjectExportImport(refresh)
+
+useKeyboardShortcut('d', () => { isCreating.value = true }, { meta: true })
 
 const isCreating = ref(false)
 </script>
@@ -18,8 +18,32 @@ const isCreating = ref(false)
 <template>
   <DashboardPanel title="Projets">
     <template #right>
-      <UButton icon="i-lucide-plus" label="Nouveau projet" @click="isCreating = true" />
+      <UButton
+        icon="i-lucide-upload"
+        label="Importer"
+        variant="ghost"
+        color="neutral"
+        @click="importInput?.click()"
+      />
+      <UButton
+        icon="i-lucide-download"
+        label="Exporter"
+        variant="ghost"
+        color="neutral"
+        @click="exportProjects"
+      />
+      <UButton icon="i-lucide-plus" @click="isCreating = true">
+        Nouveau projet
+        <template #trailing>
+          <span class="flex items-center gap-0.5 ml-0.5">
+            <UKbd value="meta" size="sm" color="neutral" variant="subtle" />
+            <UKbd value="d" size="sm" color="neutral" variant="subtle" />
+          </span>
+        </template>
+      </UButton>
     </template>
+
+    <input ref="importInput" type="file" accept=".csv" class="hidden" @change="onImportFile">
 
     <ProjectsTable
       :projects="projects ?? []"
