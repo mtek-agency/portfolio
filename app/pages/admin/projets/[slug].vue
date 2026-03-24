@@ -22,6 +22,8 @@ const { data: project, refresh } = await useFetch<ProjectWithImages>(
 
 if (!project.value) throw createError({ statusCode: 404, statusMessage: 'Projet introuvable' })
 
+useHead({ title: computed(() => project.value?.name ?? 'Projet') })
+
 const deleteConfirm = useDeleteConfirm<Project>()
 
 useKeyboardShortcut('s', () => document.getElementById('project-form')?.requestSubmit(), { meta: true })

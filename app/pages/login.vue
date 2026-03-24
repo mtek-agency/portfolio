@@ -6,6 +6,8 @@ definePageMeta({
   layout: 'blank'
 })
 
+useHead({ title: 'Connexion' })
+
 const toast = useAppToast()
 const route = useRoute()
 const { fetch: fetchSession } = useUserSession()

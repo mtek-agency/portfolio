@@ -7,6 +7,8 @@ import type { TableColumn } from '#ui/components/Table.vue'
 
 definePageMeta({ layout: 'admin', middleware: ['auth'] })
 
+useHead({ title: 'Blog' })
+
 const toast = useAppToast()
 const deleteConfirm = useDeleteConfirm<Post>()
 

@@ -21,6 +21,8 @@ const { data: viewCount } = await useFetch<{ views: number }>(
 
 if (!post.value) throw createError({ statusCode: 404, statusMessage: 'Article introuvable' })
 
+useHead({ title: computed(() => post.value?.title ?? 'Article') })
+
 const { formState, dirty, saving, save, toggleStatus, toggleFeatured } = usePostEditor(post, slug, refresh)
 
 // Cover image upload

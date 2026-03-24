@@ -2,6 +2,8 @@
 import { TOOL_CATEGORIES } from '#shared/constants/tool'
 import type { Tool } from '~~/server/db/schema'
 
+useHead({ title: 'Uses' })
+
 const { data: tools } = await useFetch<Tool[]>('/api/tools/public')
 
 const dailyDrivers = computed(() =>

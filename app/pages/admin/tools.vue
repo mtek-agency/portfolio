@@ -7,6 +7,8 @@ definePageMeta({
   middleware: ['auth'],
 })
 
+useHead({ title: 'Outils' })
+
 const { groupedTools, refresh, onReorder, toggle, remove } = useTools()
 const deleteConfirm = useDeleteConfirm<Tool>()
 

@@ -6,6 +6,8 @@ definePageMeta({
   middleware: ['auth'],
 })
 
+useHead({ title: 'Profil' })
+
 const {
   user,
   avatarSrc,

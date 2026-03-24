@@ -6,6 +6,8 @@ definePageMeta({
   middleware: ['auth'],
 })
 
+useHead({ title: 'Inbox' })
+
 const { refresh, unreadCount, contactCount, newsletterCount, activeFilter, filterOptions, filteredMessages, markAsRead, markAllRead } = useInboxMessages()
 const { data: brevoStats } = useFetch<{ totalContacts: number }>('/api/brevo/stats', { key: 'brevo-stats' })
 

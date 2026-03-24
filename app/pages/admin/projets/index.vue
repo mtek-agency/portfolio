@@ -6,6 +6,8 @@ definePageMeta({
   middleware: ['auth'],
 })
 
+useHead({ title: 'Projets' })
+
 const { data: projects, status } = await useFetch<ProjectWithImageCount[]>('/api/projects', { key: 'projects' })
 const { togglingId, toggleDisable } = useProjectToggle()
 const { importInput, exportProjects, onImportFile } = useProjectExportImport()

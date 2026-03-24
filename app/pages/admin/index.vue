@@ -8,6 +8,8 @@ definePageMeta({
   middleware: ['auth'],
 })
 
+useHead({ title: 'Dashboard' })
+
 type DashboardStats = {
   projects: { active: number, disabled: number }
   messages: { unread: number, total: number, newsletter: number, newSince: number, lastMessage: Message | null }
