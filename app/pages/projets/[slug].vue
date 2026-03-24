@@ -23,8 +23,10 @@ const coverImage = computed(() =>
 const techStack = computed(() => parseTags(project.value?.stack))
 const tags = computed(() => parseTags(project.value?.tags))
 
+const galleryImages = computed(() => project.value?.images.slice(1) ?? [])
+const { cardEls, cardStyle } = useStackCards(computed(() => galleryImages.value.length))
+
 const { el: contentEl, isVisible: contentVisible } = useReveal({ threshold: 0.05 })
-const { el: galleryEl, isVisible: galleryVisible } = useReveal({ threshold: 0.05 })
 
 useSeoMeta({
   title: () => project.value?.metaTitle || project.value?.name || '',
@@ -37,7 +39,7 @@ useSeoMeta({
   <div v-if="project">
     <!-- Hero -->
     <section class="bg-neutral-950 overflow-hidden pt-24">
-      <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pt-12 pb-14">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12 pt-12 pb-14">
         <div class="flex flex-col lg:flex-row items-start justify-between gap-10">
           <div class="flex-1">
             <div class="overflow-hidden mb-5">
@@ -51,7 +53,7 @@ useSeoMeta({
             <div class="overflow-hidden leading-[0.88]">
               <h1
                 class="font-display font-black text-white tracking-tighter"
-                style="font-size: clamp(3rem, 9vw, 9rem); animation: line-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both"
+                style="font-size: clamp(2rem, 5vw, 5.5rem); animation: line-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both"
               >
                 {{ project.name }}
               </h1>
@@ -80,7 +82,7 @@ useSeoMeta({
               class="group inline-flex items-center gap-2 px-5 py-2.5 border border-white/20 text-white text-sm font-medium rounded-full hover:bg-white/10 transition-colors duration-300"
             >
               Code source
-              <UIcon name="i-lucide-github" class="size-3.5" />
+              <UIcon name="i-lucide-code" class="size-3.5" />
             </a>
           </div>
         </div>
@@ -135,28 +137,28 @@ useSeoMeta({
       </div>
     </section>
 
-    <!-- Gallery -->
-    <section
-      v-if="project.images.length > 1"
-      ref="galleryEl"
-      class="bg-neutral-50 dark:bg-neutral-900 py-16 lg:py-24"
-    >
+    <!-- Gallery — stacking cards -->
+    <section v-if="galleryImages.length" class="bg-neutral-50 dark:bg-neutral-900 pt-16 lg:pt-24">
       <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
         <p class="text-[10px] tracking-[0.4em] uppercase text-neutral-400 font-medium mb-10">Galerie</p>
+      </div>
+      <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
         <div
-          class="columns-1 md:columns-2 gap-4 space-y-4 transition-all duration-700"
-          :class="galleryVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
+          v-for="(image, i) in galleryImages"
+          :key="image.id"
+          :ref="el => { cardEls[i] = el as HTMLElement }"
+          class="mb-3 will-change-transform"
+          :style="cardStyle(i)"
         >
           <div
-            v-for="(image, i) in project.images.slice(1)"
-            :key="image.id"
-            class="break-inside-avoid rounded-2xl overflow-hidden transition-all duration-700"
-            :class="galleryVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
-            :style="{ transitionDelay: galleryVisible ? `${i * 80}ms` : '0ms' }"
+            class="rounded-2xl lg:rounded-3xl overflow-hidden border border-neutral-200 dark:border-neutral-800"
+            style="height: calc(100svh - 172px)"
           >
-            <img :src="coverImageSrc(image.url)!" :alt="project.name" class="w-full" />
+            <img :src="coverImageSrc(image.url)!" :alt="project.name" class="w-full h-full object-cover" />
           </div>
         </div>
+        <!-- Scroll space so the last card can stick -->
+        <div class="h-svh" />
       </div>
     </section>
 
