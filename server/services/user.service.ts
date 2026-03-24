@@ -24,5 +24,21 @@ export const UserService = {
         return await db.query.users.findFirst({
             where: eq(schema.users.email, email)
         })
-    }
+    },
+    async findById(id: number): Promise<User|undefined> {
+        return await db.query.users.findFirst({
+            where: eq(schema.users.id, id)
+        })
+    },
+    async updateProfile(id: number, data: { name: string, email: string }): Promise<User|undefined> {
+        const [user] = await db.update(schema.users).set(data).where(eq(schema.users.id, id)).returning()
+        return user
+    },
+    async updatePassword(id: number, newPasswordHash: string): Promise<void> {
+        await db.update(schema.users).set({ password: newPasswordHash }).where(eq(schema.users.id, id))
+    },
+    async updateAvatar(id: number, avatarUrl: string): Promise<User|undefined> {
+        const [user] = await db.update(schema.users).set({ avatar: avatarUrl }).where(eq(schema.users.id, id)).returning()
+        return user
+    },
 }

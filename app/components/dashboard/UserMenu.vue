@@ -10,10 +10,17 @@ const colorMode = useColorMode()
 
 const isDark = computed(() => colorMode.value === 'dark')
 
+const avatarSrc = computed(() => {
+  const avatar = user.value?.avatar
+  if (!avatar) return null
+  if (avatar.startsWith('http')) return avatar
+  return `/api/images/${avatar}`
+})
+
 const userConnected = ref({
   name: user.value.name,
   avatar: {
-    src: user.value.avatar,
+    src: avatarSrc,
     alt: user.value.name
   }
 })
@@ -23,6 +30,10 @@ const items = computed<DropdownMenuItem[][]>(() => ([[{
   label: userConnected.value.name,
   avatar: userConnected.value.avatar
 }], [{
+  label: 'Mon profil',
+  icon: 'i-lucide-user',
+  to: '/admin/profile',
+}, {
   label: isDark.value ? 'Thème clair' : 'Thème sombre',
   icon: isDark.value ? 'i-lucide-sun' : 'i-lucide-moon',
   onSelect: () => {
