@@ -18,6 +18,7 @@ const formState = reactive<ToolCreateInput>({
   name: '',
   url: '',
   icon: '',
+  description: '',
   category: (props.defaultCategory ?? 'dev') as ToolCreateInput['category'],
   isActive: true,
   isPublic: false,
@@ -29,6 +30,7 @@ watch(() => props.tool, (tool) => {
     formState.name = tool.name
     formState.url = tool.url
     formState.icon = tool.icon ?? ''
+    formState.description = tool.description ?? ''
     formState.category = tool.category as ToolCreateInput['category']
     formState.isActive = tool.isActive
     formState.isPublic = tool.isPublic
@@ -38,6 +40,7 @@ watch(() => props.tool, (tool) => {
     formState.name = ''
     formState.url = ''
     formState.icon = ''
+    formState.description = ''
     formState.category = (props.defaultCategory ?? 'dev') as ToolCreateInput['category']
     formState.isActive = true
     formState.isPublic = false
@@ -109,6 +112,10 @@ async function onSubmit(event: FormSubmitEvent<ToolCreateInput>) {
               <UIcon v-else name="i-lucide-image" class="size-5 text-muted" />
             </div>
           </div>
+        </UFormField>
+
+        <UFormField name="description" label="Description" hint="Texte affiché au survol sur le portfolio (max 200 car.)">
+          <UInput v-model="formState.description" placeholder="Retrouve tous mes projets open source" class="w-full" />
         </UFormField>
 
         <UFormField name="category" label="Catégorie" required>

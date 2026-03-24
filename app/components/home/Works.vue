@@ -1,0 +1,82 @@
+<script setup lang="ts">
+import type { PublicProject } from '~/types/home'
+
+defineProps<{ projects: PublicProject[] }>()
+
+const { el, isVisible } = useReveal()
+const { hoveredImage, mouseX, mouseY, onHover, onLeave, onMouseMove } = useProjectHover()
+</script>
+
+<template>
+  <section ref="el" class="bg-neutral-50 dark:bg-neutral-950 py-24 lg:py-36" @mousemove="onMouseMove">
+    <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+      <div
+        class="flex items-baseline justify-between mb-16 transition-all duration-700"
+        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
+      >
+        <p class="text-[10px] tracking-[0.4em] uppercase text-neutral-400 font-medium">Travaux sélectionnés</p>
+        <span class="text-xs font-mono text-neutral-400">{{ String(projects.length).padStart(2, '0') }}</span>
+      </div>
+
+      <!-- Floating hover image -->
+      <Teleport to="body">
+        <Transition name="hover-image">
+          <div
+            v-if="hoveredImage"
+            class="fixed pointer-events-none z-40 w-72 h-48 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10"
+            :style="{ left: `${mouseX + 28}px`, top: `${mouseY - 96}px` }"
+          >
+            <img :src="hoveredImage" class="w-full h-full object-cover" alt="" />
+          </div>
+        </Transition>
+      </Teleport>
+
+      <div>
+        <div
+          v-for="(project, i) in projects"
+          :key="project.id"
+          class="group flex items-center justify-between py-6 border-b border-neutral-100 dark:border-neutral-800/80 cursor-pointer select-none transition-all duration-500"
+          :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
+          :style="{ transitionDelay: isVisible ? `${i * 75}ms` : '0ms' }"
+          @click="navigateTo(`/projets/${project.slug}`)"
+          @mousemove="(e) => onHover(e, project)"
+          @mouseleave="onLeave"
+        >
+          <div class="flex items-baseline gap-6 md:gap-10">
+            <span class="text-xs font-mono text-neutral-300 dark:text-neutral-700 w-6 shrink-0">{{ String(i + 1).padStart(2, '0') }}</span>
+            <span class="font-display font-bold text-xl md:text-3xl text-neutral-900 dark:text-neutral-100 group-hover:translate-x-3 transition-transform duration-300 ease-out">
+              {{ project.name }}
+            </span>
+          </div>
+          <div class="flex items-center gap-3 md:gap-6 shrink-0">
+            <div class="hidden md:flex gap-2">
+              <span
+                v-for="tag in parseTags(project.tags).slice(0, 2)"
+                :key="tag"
+                class="text-xs px-2.5 py-1 rounded-full border border-neutral-200 dark:border-neutral-800 text-neutral-400"
+              >{{ tag }}</span>
+            </div>
+            <span class="text-sm text-neutral-400 font-mono">{{ project.year }}</span>
+            <div class="size-8 rounded-full border border-neutral-200 dark:border-neutral-800 flex items-center justify-center transition-all duration-300 group-hover:bg-neutral-950 group-hover:border-neutral-950 dark:group-hover:bg-white dark:group-hover:border-white">
+              <UIcon name="i-lucide-arrow-up-right" class="size-3.5 text-neutral-400 group-hover:text-white dark:group-hover:text-black transition-colors" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="mt-12 flex justify-center transition-all duration-700"
+        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
+        :style="{ transitionDelay: isVisible ? '450ms' : '0ms' }"
+      >
+        <NuxtLink
+          to="/projets"
+          class="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full border border-neutral-300 dark:border-neutral-700 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-950 hover:border-neutral-950 hover:text-white dark:hover:bg-white dark:hover:text-black dark:hover:border-white transition-all duration-300"
+        >
+          Tous les projets
+          <UIcon name="i-lucide-arrow-right" class="size-3.5 group-hover:translate-x-1 transition-transform" />
+        </NuxtLink>
+      </div>
+    </div>
+  </section>
+</template>

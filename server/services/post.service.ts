@@ -9,7 +9,7 @@ export async function findAllPosts() {
 export async function findPublishedPosts() {
   return db.select().from(posts)
     .where(eq(posts.status, 'published'))
-    .orderBy(desc(posts.publishedAt))
+    .orderBy(desc(posts.isFeatured), desc(posts.publishedAt))
 }
 
 export async function findPostBySlug(slug: string) {

@@ -75,6 +75,7 @@ export const tools = pgTable('tools', {
     name: text().notNull(),
     url: text().notNull(),
     icon: text(),
+    description: text(),
     category: text().notNull(),
     isActive: boolean().notNull().default(true),
     isPublic: boolean().notNull().default(false),

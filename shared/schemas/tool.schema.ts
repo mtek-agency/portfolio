@@ -5,6 +5,7 @@ export const toolCreateSchema = z.object({
     name: z.string().min(1, 'Nom requis').max(100),
     url: z.string().url('URL invalide'),
     icon: z.string().max(100).optional().nullable(),
+    description: z.string().max(200).optional().nullable(),
     category: z.enum(TOOL_CATEGORY_IDS),
     isActive: z.boolean().default(true),
     isPublic: z.boolean().default(false),
