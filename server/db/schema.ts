@@ -85,13 +85,29 @@ export const tools = pgTable('tools', {
 export type Tool = InferSelectModel<typeof tools>
 export type ToolInsert = InferInsertModel<typeof tools>
 
+export const projectViews = pgTable('project_views', {
+    id: serial().primaryKey(),
+    projectId: integer().notNull().references(() => projects.id, { onDelete: 'cascade' }),
+    viewedAt: timestamp().notNull().defaultNow(),
+})
+
+export type ProjectView = InferSelectModel<typeof projectViews>
+
 export const projectsRelations = relations(projects, ({ many }) => ({
     images: many(projectImages),
+    views: many(projectViews),
 }))
 
 export const projectImagesRelations = relations(projectImages, ({ one }) => ({
     project: one(projects, {
         fields: [projectImages.projectId],
+        references: [projects.id],
+    }),
+}))
+
+export const projectViewsRelations = relations(projectViews, ({ one }) => ({
+    project: one(projects, {
+        fields: [projectViews.projectId],
         references: [projects.id],
     }),
 }))

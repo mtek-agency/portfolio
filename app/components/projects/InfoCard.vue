@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Project } from '~~/server/db/schema'
 
-const props = defineProps<{ project: Project }>()
+const props = defineProps<{ project: Project & { views: number } }>()
 
 const toast = useToast()
 
@@ -21,9 +21,15 @@ async function copyLink() {
 
 <template>
   <div class="flex items-center justify-between rounded-xl border border-default bg-elevated/40 px-5 py-3 gap-4 flex-wrap">
-    <div class="flex items-center gap-2 text-sm text-muted">
-      <UIcon name="i-lucide-clock" class="size-4 shrink-0" />
-      <span>Dernière modification : <span class="text-default font-medium">{{ updatedAt }}</span></span>
+    <div class="flex items-center gap-4 flex-wrap text-sm text-muted">
+      <div class="flex items-center gap-2">
+        <UIcon name="i-lucide-clock" class="size-4 shrink-0" />
+        <span>Dernière modification : <span class="text-default font-medium">{{ updatedAt }}</span></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <UIcon name="i-lucide-eye" class="size-4 shrink-0" />
+        <span><span class="text-default font-medium">{{ project.views.toLocaleString('fr-FR') }}</span> vue{{ project.views !== 1 ? 's' : '' }}</span>
+      </div>
     </div>
 
     <div class="flex items-center gap-2">

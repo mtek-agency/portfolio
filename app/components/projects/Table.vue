@@ -19,6 +19,7 @@ const { search, statusFilter, statusOptions, filteredProjects, activeCount, disa
 const columns: TableColumn<ProjectWithImageCount>[] = [
   { accessorKey: 'name', header: 'Projet', enableSorting: true },
   { accessorKey: 'year', header: 'Année', enableSorting: true },
+  { accessorKey: 'views', header: 'Vues', enableSorting: true },
   { accessorKey: 'tags', header: 'Tags' },
   { accessorKey: 'stack', header: 'Stack' },
   { accessorKey: 'isDisabled', header: 'Statut', enableSorting: true },
@@ -77,6 +78,13 @@ function navigateToProject(slug: string) {
 
       <template #year-cell="{ row }">
         <span @click="navigateToProject(row.original.slug)">{{ row.original.year }}</span>
+      </template>
+
+      <template #views-cell="{ row }">
+        <div class="flex items-center gap-1.5 text-sm text-muted" @click="navigateToProject(row.original.slug)">
+          <UIcon name="i-lucide-eye" class="size-3.5 shrink-0" />
+          <span>{{ row.original.views.toLocaleString('fr-FR') }}</span>
+        </div>
       </template>
 
       <template #tags-cell="{ row }">

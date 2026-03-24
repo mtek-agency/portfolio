@@ -10,6 +10,13 @@ get {
   auth: inherit
 }
 
+script:post-response {
+  if (res.status === 200 && res.body.length > 0) {
+    bru.setEnvVar("slug", res.body[0].slug);
+    bru.setEnvVar("project_id", res.body[0].id);
+  }
+}
+
 tests {
   test("Status 200", function() {
     expect(res.status).to.equal(200);
@@ -20,6 +27,7 @@ tests {
   test("Chaque projet a un slug", function() {
     if (res.body.length > 0) {
       expect(res.body[0]).to.have.property("slug");
+      expect(res.body[0]).to.have.property("views");
     }
   });
 }

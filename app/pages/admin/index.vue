@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Message } from '~~/server/db/schema'
+import type { BreakdownData } from '~~/server/services/project.views.service'
 
 definePageMeta({
   layout: 'admin',
@@ -15,9 +16,10 @@ type DashboardStats = {
 const lastVisit = useCookie<string>('admin_last_visit', { maxAge: 365 * 24 * 60 * 60 })
 const since = lastVisit.value
 
-const [{ data: stats }, { data: brevoStats }] = await Promise.all([
+const [{ data: stats }, { data: brevoStats }, { data: viewsBreakdown }] = await Promise.all([
   useFetch<DashboardStats>('/api/dashboard', { query: since ? { since } : {} }),
   useFetch<{ totalContacts: number }>('/api/brevo/stats'),
+  useFetch<BreakdownData>('/api/projects/views/breakdown'),
 ])
 
 onMounted(() => {
@@ -75,6 +77,11 @@ onMounted(() => {
           sublabel="total Brevo"
           color="success"
         />
+      </div>
+
+      <!-- Views chart -->
+      <div v-if="viewsBreakdown" class="rounded-xl border border-default bg-elevated/40 p-5">
+        <DashboardViewsChart :data="viewsBreakdown" />
       </div>
 
       <!-- Last message -->

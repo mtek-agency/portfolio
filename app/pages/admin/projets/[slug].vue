@@ -7,7 +7,7 @@ definePageMeta({
   middleware: ['auth'],
 })
 
-type ProjectWithImages = Project & { images: ProjectImage[] }
+type ProjectWithImages = Project & { images: ProjectImage[], views: number }
 
 const route = useRoute()
 const toast = useToast()

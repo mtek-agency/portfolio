@@ -18,10 +18,10 @@ const avatarSrc = computed(() => {
 })
 
 const userConnected = ref({
-  name: user.value.name,
+  name: user.value?.name,
   avatar: {
     src: avatarSrc,
-    alt: user.value.name
+    alt: user.value?.name
   }
 })
 

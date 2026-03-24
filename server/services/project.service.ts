@@ -3,15 +3,20 @@ import { projects } from '~~/server/db/schema'
 import type { Project, ProjectInsert, ProjectUpdate } from '~~/server/db/schema'
 import type { ProjectImage } from 'hub:db:schema'
 import { blob } from 'hub:blob'
+import { projectViewService } from './project.views.service'
 
 export const projectService = {
-    async findAll(): Promise<(Project & { images: { id: number }[] })[]> {
-        return await db.query.projects.findMany({
-            with: { images: { columns: { id: true } } },
-        })
+    async findAll(): Promise<(Project & { images: { id: number }[], views: number })[]> {
+        const [list, viewCounts] = await Promise.all([
+            db.query.projects.findMany({
+                with: { images: { columns: { id: true } } },
+            }),
+            projectViewService.getTotalByProject(),
+        ])
+        return list.map(p => ({ ...p, views: viewCounts[p.id] ?? 0 }))
     },
-    async findBySlug(slug: string): Promise<(Project & { images: ProjectImage[] }) | undefined> {
-        return await db.query.projects.findFirst({
+    async findBySlug(slug: string): Promise<(Project & { images: ProjectImage[], views: number }) | undefined> {
+        const project = await db.query.projects.findFirst({
             where: eq(projects.slug, slug),
             with: {
                 images: {
@@ -19,6 +24,9 @@ export const projectService = {
                 },
             },
         })
+        if (!project) return undefined
+        const views = await projectViewService.getTotalForProject(project.id)
+        return { ...project, views }
     },
     async create(data: ProjectInsert): Promise<Project> {
         const [project] = await db

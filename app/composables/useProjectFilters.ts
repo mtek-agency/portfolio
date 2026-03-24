@@ -1,6 +1,6 @@
 import type { Project } from '~~/server/db/schema'
 
-export type ProjectWithImageCount = Project & { images: { id: number }[] }
+export type ProjectWithImageCount = Project & { images: { id: number }[], views: number }
 
 export function useProjectFilters(projects: Ref<ProjectWithImageCount[]>) {
   const search = ref('')
