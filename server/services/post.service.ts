@@ -50,6 +50,8 @@ export async function updatePost(slug: string, data: PostUpdateInput) {
       tags: data.tags ?? null,
       status: data.status,
       isFeatured: data.isFeatured,
+      metaTitle: data.metaTitle ?? null,
+      metaDescription: data.metaDescription ?? null,
       publishedAt,
       updatedAt: now,
     })

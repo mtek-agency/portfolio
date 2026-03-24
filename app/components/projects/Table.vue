@@ -68,7 +68,7 @@ function navigateToProject(slug: string) {
             <UBadge
               :label="`${row.original.images.length} image${row.original.images.length !== 1 ? 's' : ''}`"
               variant="soft"
-              color="neutral"
+              :color="row.original.images.length > 5 ? 'success' : row.original.images.length >= 3 ? 'warning' : 'error'"
               size="xs"
             />
           </div>

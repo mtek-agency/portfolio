@@ -11,9 +11,11 @@ const { data: post } = await useFetch<Post>(`/api/blog/${slug}`, {
 if (!post.value) throw createError({ statusCode: 404, statusMessage: 'Article introuvable' })
 
 useSeoMeta({
-  title: post.value.title,
-  description: post.value.excerpt ?? undefined,
-  ogImage: post.value.coverImage ?? undefined,
+  title: post.value.metaTitle || post.value.title,
+  ogTitle: post.value.metaTitle || post.value.title,
+  description: post.value.metaDescription || post.value.excerpt || undefined,
+  ogDescription: post.value.metaDescription || post.value.excerpt || undefined,
+  ogImage: post.value.coverImage ? coverImageSrc(post.value.coverImage) ?? undefined : undefined,
 })
 
 const tags = computed(() => parseTags(post.value?.tags))

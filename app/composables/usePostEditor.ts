@@ -19,6 +19,8 @@ export function usePostEditor(
     tags: post.value?.tags ?? '',
     status: (post.value?.status ?? 'draft') as 'draft' | 'published',
     isFeatured: post.value?.isFeatured ?? false,
+    metaTitle: post.value?.metaTitle ?? '',
+    metaDescription: post.value?.metaDescription ?? '',
   })
 
   watch(post, (val) => {
@@ -31,6 +33,8 @@ export function usePostEditor(
     formState.tags = val.tags ?? ''
     formState.status = val.status as 'draft' | 'published'
     formState.isFeatured = val.isFeatured
+    formState.metaTitle = val.metaTitle ?? ''
+    formState.metaDescription = val.metaDescription ?? ''
   })
 
   watch(() => formState.title, (val) => {
@@ -41,13 +45,30 @@ export function usePostEditor(
   })
 
   watch(
-    () => [formState.excerpt, formState.content, formState.coverImage, formState.tags, formState.status, formState.isFeatured, formState.slug],
+    () => [formState.excerpt, formState.content, formState.coverImage, formState.tags, formState.status, formState.isFeatured, formState.slug, formState.metaTitle, formState.metaDescription],
     () => { dirty.value = true },
   )
 
-  useKeyboardShortcut('s', save, { meta: true })
+  // Auto-save: 3s debounce after any change
+  let autoSaveTimer: ReturnType<typeof setTimeout> | null = null
 
-  async function save() {
+  watch(
+    () => [formState.title, formState.slug, formState.excerpt, formState.content, formState.coverImage, formState.tags, formState.status, formState.isFeatured, formState.metaTitle, formState.metaDescription],
+    () => {
+      if (autoSaveTimer) clearTimeout(autoSaveTimer)
+      autoSaveTimer = setTimeout(() => {
+        if (dirty.value && !saving.value) save()
+      }, 3000)
+    },
+  )
+
+  onUnmounted(() => {
+    if (autoSaveTimer) clearTimeout(autoSaveTimer)
+  })
+
+  useKeyboardShortcut('s', () => save({ notify: true }), { meta: true })
+
+  async function save({ notify = false } = {}) {
     saving.value = true
     try {
       const updated = await $fetch<Post>(`/api/posts/${slug.value}`, {
@@ -61,6 +82,8 @@ export function usePostEditor(
           tags: formState.tags || null,
           status: formState.status,
           isFeatured: formState.isFeatured,
+          metaTitle: formState.metaTitle || null,
+          metaDescription: formState.metaDescription || null,
         },
       })
       dirty.value = false
@@ -69,7 +92,7 @@ export function usePostEditor(
       }
       else {
         await refresh()
-        toast.success('Article sauvegardé')
+        if (notify) toast.success('Article sauvegardé')
       }
     }
     catch (e: any) {
@@ -82,12 +105,12 @@ export function usePostEditor(
 
   async function toggleStatus() {
     formState.status = formState.status === 'published' ? 'draft' : 'published'
-    await save()
+    await save({ notify: true })
   }
 
   async function toggleFeatured() {
     formState.isFeatured = !formState.isFeatured
-    await save()
+    await save({ notify: true })
   }
 
   onBeforeRouteLeave(() => {

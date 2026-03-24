@@ -25,6 +25,8 @@ useHead({ title: computed(() => post.value?.title ?? 'Article') })
 
 const { formState, dirty, saving, save, toggleStatus, toggleFeatured } = usePostEditor(post, slug, refresh)
 
+function saveAndNotify() { save({ notify: true }) }
+
 // Cover image upload
 const coverInput = ref<HTMLInputElement>()
 const uploadingCover = ref(false)
@@ -137,7 +139,7 @@ const suggestionItems = [
         Non sauvegardé
       </span>
       <UButton label="Retour" icon="i-lucide-arrow-left" variant="ghost" color="neutral" to="/admin/blog" />
-      <UButton icon="i-lucide-save" :loading="saving" @click="save">
+      <UButton icon="i-lucide-save" :loading="saving" @click="saveAndNotify">
         Sauvegarder
         <template #trailing>
           <span class="flex items-center gap-0.5 opacity-60 ml-0.5">
@@ -273,6 +275,33 @@ const suggestionItems = [
             <p class="text-xs font-semibold text-muted uppercase tracking-wider mb-2">Tags</p>
             <UInput v-model="formState.tags" placeholder="nuxt, vue, typescript" class="w-full text-sm" />
             <p class="text-xs text-muted mt-1">Séparés par des virgules</p>
+          </div>
+
+          <USeparator />
+
+          <!-- SEO -->
+          <div class="flex flex-col gap-3">
+            <p class="text-xs font-semibold text-muted uppercase tracking-wider">SEO</p>
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <p class="text-xs text-muted">Meta title</p>
+                <span class="text-xs" :class="(formState.metaTitle?.length ?? 0) > 60 ? 'text-error' : 'text-muted'">
+                  {{ formState.metaTitle?.length ?? 0 }}/60
+                </span>
+              </div>
+              <UInput v-model="formState.metaTitle" placeholder="Titre pour Google…" class="w-full text-sm" />
+              <p class="text-xs text-muted mt-1">Par défaut : titre de l'article</p>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <p class="text-xs text-muted">Meta description</p>
+                <span class="text-xs" :class="(formState.metaDescription?.length ?? 0) > 160 ? 'text-error' : 'text-muted'">
+                  {{ formState.metaDescription?.length ?? 0 }}/160
+                </span>
+              </div>
+              <UTextarea v-model="formState.metaDescription" placeholder="Description pour Google…" :rows="3" autoresize class="w-full text-sm" />
+              <p class="text-xs text-muted mt-1">Par défaut : résumé de l'article</p>
+            </div>
           </div>
 
           <!-- Dates -->

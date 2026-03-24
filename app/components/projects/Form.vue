@@ -27,6 +27,8 @@ const formState = reactive<ProjectEditInput>({
   tags: props.project.tags ?? '',
   stack: props.project.stack ?? '',
   isDisabled: props.project.isDisabled,
+  metaTitle: props.project.metaTitle ?? '',
+  metaDescription: props.project.metaDescription ?? '',
 })
 
 const isDirty = computed(() =>
@@ -38,7 +40,9 @@ const isDirty = computed(() =>
   || formState.urlRepository !== (props.project.urlRepository ?? '')
   || formState.tags !== (props.project.tags ?? '')
   || formState.stack !== (props.project.stack ?? '')
-  || formState.isDisabled !== props.project.isDisabled,
+  || formState.isDisabled !== props.project.isDisabled
+  || formState.metaTitle !== (props.project.metaTitle ?? '')
+  || formState.metaDescription !== (props.project.metaDescription ?? ''),
 )
 
 watch(isDirty, val => emit('update:dirty', val))
@@ -149,6 +153,32 @@ async function onSubmit(event: FormSubmitEvent<ProjectEditInput>) {
             </span>
           </div>
         </UFormField>
+      </div>
+
+      <div class="rounded-xl border border-default bg-elevated/40 p-5 flex flex-col gap-4">
+        <p class="text-sm font-semibold text-default">SEO</p>
+
+        <UFormField name="metaTitle" label="Meta title" :hint="`${formState.metaTitle?.length ?? 0}/60`">
+          <UInput
+            v-model="formState.metaTitle"
+            placeholder="Titre pour Google…"
+            class="w-full"
+            :ui="{ trailing: 'pointer-events-none' }"
+          />
+          <p class="text-xs text-muted mt-1">Par défaut : nom du projet</p>
+        </UFormField>
+
+        <UFormField name="metaDescription" label="Meta description" :hint="`${formState.metaDescription?.length ?? 0}/160`">
+          <UTextarea
+            v-model="formState.metaDescription"
+            placeholder="Description pour Google…"
+            :rows="3"
+            autoresize
+            class="w-full"
+          />
+          <p class="text-xs text-muted mt-1">Par défaut : description du projet</p>
+        </UFormField>
+
       </div>
     </div>
   </UForm>

@@ -34,6 +34,8 @@ export const projectEditSchema = z.object({
     tags: z.string().optional(),
     stack: z.string().optional(),
     isDisabled: z.boolean(),
+    metaTitle: z.string().max(60).optional().nullable(),
+    metaDescription: z.string().max(160).optional().nullable(),
 })
 
 export type CreateProjectInput = z.infer<typeof createProjectSchema>

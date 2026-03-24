@@ -22,6 +22,8 @@ export const projects = pgTable('projects', {
     slug: text().notNull().unique(),
     stack: text(),
     isDisabled: boolean().notNull().default(false),
+    metaTitle: text('meta_title'),
+    metaDescription: text('meta_description'),
     createdAt: timestamp().notNull().defaultNow(),
     updatedAt: timestamp().notNull().defaultNow(),
 })
@@ -122,6 +124,8 @@ export const posts = pgTable('posts', {
     tags: text(),
     status: text({ enum: ['draft', 'published'] }).notNull().default('draft'),
     isFeatured: boolean('is_featured').notNull().default(false),
+    metaTitle: text('meta_title'),
+    metaDescription: text('meta_description'),
     publishedAt: timestamp('published_at'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),

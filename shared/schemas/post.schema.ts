@@ -14,6 +14,8 @@ export const postUpdateSchema = z.object({
   tags: z.string().optional().nullable(),
   status: z.enum(['draft', 'published']),
   isFeatured: z.boolean(),
+  metaTitle: z.string().max(60).optional().nullable(),
+  metaDescription: z.string().max(160).optional().nullable(),
 })
 
 export type PostCreateInput = z.infer<typeof postCreateSchema>
