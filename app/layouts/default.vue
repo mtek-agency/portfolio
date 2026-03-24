@@ -1,5 +1,5 @@
 <template>
-  <div class="hide-cursor bg-white dark:bg-neutral-950 text-neutral-950 dark:text-neutral-50 min-h-screen">
+  <div class="hide-cursor bg-neutral-950 text-neutral-950 dark:text-neutral-50 min-h-screen">
     <UiGrainOverlay />
     <UiCustomCursor />
     <SiteNav />
