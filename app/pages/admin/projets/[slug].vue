@@ -22,6 +22,8 @@ const { data: project, refresh } = await useFetch<ProjectWithImages>(
 
 if (!project.value) throw createError({ statusCode: 404, statusMessage: 'Projet introuvable' })
 
+const deleteConfirm = useDeleteConfirm<Project>()
+
 useKeyboardShortcut('s', () => document.getElementById('project-form')?.requestSubmit(), { meta: true })
 
 async function onSaved(updated: Project) {
@@ -40,24 +42,10 @@ onBeforeRouteLeave(() => {
   }
 })
 
-// Suppression
-const deleteModalOpen = ref(false)
-const deleting = ref(false)
-
-async function deleteProject() {
-  deleting.value = true
-  try {
-    await $fetch(`/api/projects/${slug.value}`, { method: 'DELETE' })
-    dirty.value = false
-    await navigateTo('/admin/projets')
-  }
-  catch {
-    toast.error('Erreur', 'Impossible de supprimer le projet')
-  }
-  finally {
-    deleting.value = false
-    deleteModalOpen.value = false
-  }
+async function deleteProject(p: Project) {
+  await $fetch(`/api/projects/${p.slug}`, { method: 'DELETE' })
+  dirty.value = false
+  await navigateTo('/admin/projets')
 }
 </script>
 
@@ -102,25 +90,17 @@ async function deleteProject() {
           <p class="text-sm font-semibold text-default">Supprimer le projet</p>
           <p class="text-sm text-muted mt-0.5">Action irréversible — toutes les images seront supprimées.</p>
         </div>
-        <UButton label="Supprimer" icon="i-lucide-trash-2" color="error" variant="soft" @click="deleteModalOpen = true" />
+        <UButton label="Supprimer" icon="i-lucide-trash-2" color="error" variant="soft" @click="deleteConfirm.request(project!)" />
       </div>
     </div>
   </DashboardPanel>
 
-  <!-- Modal confirmation suppression -->
-  <UModal v-model:open="deleteModalOpen" title="Supprimer le projet">
-    <template #body>
-      <p class="text-sm text-muted">
-        Êtes-vous sûr de vouloir supprimer
-        <span class="font-semibold text-default">{{ project?.name }}</span> ?
-        Cette action est irréversible.
-      </p>
-    </template>
-    <template #footer>
-      <div class="flex gap-3 justify-end w-full">
-        <UButton label="Annuler" variant="ghost" color="neutral" @click="deleteModalOpen = false" />
-        <UButton label="Supprimer définitivement" icon="i-lucide-trash-2" color="error" :loading="deleting" @click="deleteProject" />
-      </div>
-    </template>
-  </UModal>
+  <UiConfirmDeleteModal
+    v-model:open="deleteConfirm.open.value"
+    :title="`Supprimer « ${deleteConfirm.item.value?.name} » ?`"
+    description="Action irréversible — toutes les images seront supprimées."
+    :loading="deleteConfirm.loading.value"
+    @confirm="deleteConfirm.confirm(deleteProject)"
+    @cancel="deleteConfirm.cancel()"
+  />
 </template>

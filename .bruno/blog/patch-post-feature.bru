@@ -1,0 +1,29 @@
+meta {
+  name: Toggle post featured
+  type: http
+  seq: 7
+}
+
+patch {
+  url: {{base_url}}/posts/:slug/feature
+  body: none
+  auth: inherit
+}
+
+params:path {
+  slug: {{post_slug}}
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("isFeatured est un boolean", function() {
+    expect(res.body.isFeatured).to.be.a("boolean");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

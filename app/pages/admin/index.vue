@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Message } from '~~/server/db/schema'
 import type { BreakdownData } from '~~/server/services/project.views.service'
+import type { PostBreakdownData } from '~~/server/services/post.views.service'
 
 definePageMeta({
   layout: 'admin',
@@ -16,10 +17,11 @@ type DashboardStats = {
 const lastVisit = useCookie<string>('admin_last_visit', { maxAge: 365 * 24 * 60 * 60 })
 const since = lastVisit.value
 
-const [{ data: stats }, { data: brevoStats }, { data: viewsBreakdown }] = await Promise.all([
+const [{ data: stats }, { data: brevoStats }, { data: viewsBreakdown }, { data: postViewsBreakdown }] = await Promise.all([
   useFetch<DashboardStats>('/api/dashboard', { key: 'dashboard', query: since ? { since } : {} }),
   useFetch<{ totalContacts: number }>('/api/brevo/stats', { key: 'brevo-stats' }),
   useFetch<BreakdownData>('/api/projects/views/breakdown', { key: 'views-breakdown' }),
+  useFetch<PostBreakdownData>('/api/posts/views/breakdown', { key: 'post-views-breakdown' }),
 ])
 
 onMounted(() => {
@@ -79,9 +81,40 @@ onMounted(() => {
         />
       </div>
 
-      <!-- Views chart -->
-      <div v-if="viewsBreakdown" class="rounded-xl border border-default bg-elevated/40 p-5">
-        <DashboardViewsChart :data="viewsBreakdown" />
+      <!-- Views charts -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div v-if="viewsBreakdown" class="rounded-xl border border-default bg-elevated/40 p-5">
+          <DashboardViewsChart :data="viewsBreakdown" title="Vues projets" />
+        </div>
+
+        <div v-if="postViewsBreakdown" class="rounded-xl border border-default bg-elevated/40 p-5 flex flex-col gap-4">
+          <DashboardViewsChart :data="postViewsBreakdown" title="Vues articles" />
+
+          <!-- Most popular post -->
+          <template v-if="postViewsBreakdown.mostPopular">
+            <USeparator />
+            <div class="flex items-center gap-3">
+              <div class="flex items-center justify-center size-8 rounded-lg bg-warning/10 shrink-0">
+                <UIcon name="i-lucide-trophy" class="size-4 text-warning" />
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-xs text-muted">Article le plus lu</p>
+                <NuxtLink
+                  :to="`/admin/blog/${postViewsBreakdown.mostPopular.slug}`"
+                  class="text-sm font-medium text-default hover:text-primary transition-colors truncate block"
+                >
+                  {{ postViewsBreakdown.mostPopular.title }}
+                </NuxtLink>
+              </div>
+              <UBadge
+                :label="`${postViewsBreakdown.mostPopular.views.toLocaleString('fr-FR')} vue${postViewsBreakdown.mostPopular.views !== 1 ? 's' : ''}`"
+                color="warning"
+                variant="soft"
+                size="sm"
+              />
+            </div>
+          </template>
+        </div>
       </div>
 
       <!-- Last message -->

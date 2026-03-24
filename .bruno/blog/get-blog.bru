@@ -1,0 +1,30 @@
+meta {
+  name: Get published posts (public)
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{base_url}}/blog
+  body: none
+  auth: none
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Réponse est un tableau", function() {
+    expect(res.body).to.be.an("array");
+  });
+  test("Seuls les articles publiés sont retournés", function() {
+    for (const post of res.body) {
+      expect(post.status).to.equal("published");
+    }
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

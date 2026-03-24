@@ -1,0 +1,42 @@
+meta {
+  name: Get post views breakdown
+  type: http
+  seq: 11
+}
+
+get {
+  url: {{base_url}}/posts/views/breakdown
+  body: none
+  auth: inherit
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("Réponse contient projects et timeline", function() {
+    expect(res.body).to.have.property("projects");
+    expect(res.body).to.have.property("timeline");
+    expect(res.body.projects).to.be.an("array");
+    expect(res.body.timeline).to.be.an("array");
+    expect(res.body.timeline.length).to.equal(12);
+  });
+  test("Chaque point timeline a month, total et byProject", function() {
+    const point = res.body.timeline[0];
+    expect(point).to.have.property("month");
+    expect(point).to.have.property("total");
+    expect(point).to.have.property("byProject");
+  });
+  test("mostPopular est null ou contient title, slug, views", function() {
+    if (res.body.mostPopular !== null) {
+      expect(res.body.mostPopular).to.have.property("title");
+      expect(res.body.mostPopular).to.have.property("slug");
+      expect(res.body.mostPopular).to.have.property("views");
+    }
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

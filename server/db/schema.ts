@@ -111,3 +111,40 @@ export const projectViewsRelations = relations(projectViews, ({ one }) => ({
         references: [projects.id],
     }),
 }))
+
+export const posts = pgTable('posts', {
+    id: serial().primaryKey(),
+    title: text().notNull(),
+    slug: text().notNull().unique(),
+    excerpt: text(),
+    content: text().notNull().default(''),
+    coverImage: text('cover_image'),
+    tags: text(),
+    status: text({ enum: ['draft', 'published'] }).notNull().default('draft'),
+    isFeatured: boolean('is_featured').notNull().default(false),
+    publishedAt: timestamp('published_at'),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+    updatedAt: timestamp('updated_at').notNull().defaultNow(),
+})
+
+export type Post = InferSelectModel<typeof posts>
+export type PostInsert = InferInsertModel<typeof posts>
+
+export const postViews = pgTable('post_views', {
+    id: serial().primaryKey(),
+    postId: integer().notNull().references(() => posts.id, { onDelete: 'cascade' }),
+    viewedAt: timestamp().notNull().defaultNow(),
+})
+
+export type PostView = InferSelectModel<typeof postViews>
+
+export const postsRelations = relations(posts, ({ many }) => ({
+    views: many(postViews),
+}))
+
+export const postViewsRelations = relations(postViews, ({ one }) => ({
+    post: one(posts, {
+        fields: [postViews.postId],
+        references: [posts.id],
+    }),
+}))

@@ -1,0 +1,29 @@
+meta {
+  name: Toggle post published
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{base_url}}/posts/:slug/toggle
+  body: none
+  auth: inherit
+}
+
+params:path {
+  slug: {{post_slug}}
+}
+
+tests {
+  test("Status 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("status est published ou draft", function() {
+    expect(["published", "draft"]).to.include(res.body.status);
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

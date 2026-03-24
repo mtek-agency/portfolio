@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { BreakdownData } from '~~/server/services/project.views.service'
 
-const props = defineProps<{ data: BreakdownData }>()
+const props = defineProps<{ data: BreakdownData, title?: string }>()
 
 const COLORS = [
   '#3b82f6', // blue
@@ -80,7 +80,7 @@ function segments(point: typeof timeline.value[0]) {
     <!-- Header -->
     <div class="flex items-center justify-between gap-2 flex-wrap">
       <div class="flex items-baseline gap-3">
-        <p class="text-sm font-medium text-default">Vues sur le portfolio</p>
+        <p class="text-sm font-medium text-default">{{ title ?? 'Vues sur le portfolio' }}</p>
         <p class="text-xs text-muted">{{ grandTotal.toLocaleString('fr-FR') }} sur 12 mois</p>
       </div>
 

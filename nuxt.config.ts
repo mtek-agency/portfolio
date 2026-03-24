@@ -22,6 +22,17 @@ export default defineNuxtConfig({
   turnstile: {
     siteKey: process.env.NUXT_TURNSTILE_SITE_KEY,
   },
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@nuxt/ui > prosemirror-state',
+        '@nuxt/ui > prosemirror-transform',
+        '@nuxt/ui > prosemirror-model',
+        '@nuxt/ui > prosemirror-view',
+        '@nuxt/ui > prosemirror-gapcursor',
+      ],
+    },
+  },
   runtimeConfig: {
     admin: {
       email: process.env.NUXT_ADMIN_EMAIL,

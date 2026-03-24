@@ -8,6 +8,7 @@ definePageMeta({
 })
 
 const { groupedTools, refresh, onReorder, toggle, remove } = useTools()
+const deleteConfirm = useDeleteConfirm<Tool>()
 
 // Search + filter
 const search = ref('')
@@ -41,27 +42,8 @@ function openEdit(tool: Tool) {
   slideoverOpen.value = true
 }
 
-// Delete confirmation
-const deleteModalOpen = ref(false)
-const pendingDelete = ref<Tool | null>(null)
-const deleting = ref(false)
-
-function requestDelete(tool: Tool) {
-  pendingDelete.value = tool
-  deleteModalOpen.value = true
-}
-
-async function confirmDelete() {
-  if (!pendingDelete.value) return
-  deleting.value = true
-  try {
-    await remove(pendingDelete.value)
-    deleteModalOpen.value = false
-    pendingDelete.value = null
-  }
-  finally {
-    deleting.value = false
-  }
+async function deleteTool(tool: Tool) {
+  await remove(tool)
 }
 </script>
 
@@ -74,12 +56,7 @@ async function confirmDelete() {
     <div class="p-6 flex flex-col gap-6">
       <!-- Toolbar -->
       <div class="flex items-center gap-3 flex-wrap">
-        <UInput
-          v-model="search"
-          leading-icon="i-lucide-search"
-          placeholder="Rechercher un outil…"
-          class="max-w-xs"
-        />
+        <UInput v-model="search" leading-icon="i-lucide-search" placeholder="Rechercher un outil…" class="max-w-xs" />
         <div class="flex items-center gap-1">
           <UButton
             v-for="opt in categoryFilterOptions"
@@ -105,7 +82,7 @@ async function confirmDelete() {
           @reorder="onReorder"
           @edit="openEdit"
           @toggle="toggle"
-          @delete="requestDelete"
+          @delete="deleteConfirm.request"
           @add="openCreate(cat.id)"
         />
       </div>
@@ -116,28 +93,23 @@ async function confirmDelete() {
         <p class="text-sm text-muted">Aucun résultat pour "{{ search }}"</p>
       </div>
     </div>
+
     <!-- Form slideover -->
     <ToolsFormSlideover
-        v-model:open="slideoverOpen"
-        :tool="editingTool"
-        :default-category="defaultCategory"
-        @saved="refresh"
+      v-model:open="slideoverOpen"
+      :tool="editingTool"
+      :default-category="defaultCategory"
+      @saved="refresh"
     />
 
-    <!-- Delete modal -->
-    <UModal v-model:open="deleteModalOpen" title="Supprimer l'outil">
-      <template #body>
-        <p class="text-sm text-muted">
-          Supprimer <span class="font-semibold text-default">{{ pendingDelete?.name }}</span> ?
-          Cette action est irréversible.
-        </p>
-      </template>
-      <template #footer>
-        <div class="flex gap-3 justify-end w-full">
-          <UButton label="Annuler" variant="ghost" color="neutral" @click="deleteModalOpen = false" />
-          <UButton label="Supprimer" icon="i-lucide-trash-2" color="error" :loading="deleting" @click="confirmDelete" />
-        </div>
-      </template>
-    </UModal>
+    <!-- Delete confirm -->
+    <UiConfirmDeleteModal
+      v-model:open="deleteConfirm.open.value"
+      :title="`Supprimer « ${deleteConfirm.item.value?.name} » ?`"
+      description="Cette action est irréversible."
+      :loading="deleteConfirm.loading.value"
+      @confirm="deleteConfirm.confirm(deleteTool)"
+      @cancel="deleteConfirm.cancel()"
+    />
   </DashboardPanel>
 </template>

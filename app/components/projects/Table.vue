@@ -90,7 +90,7 @@ function navigateToProject(slug: string) {
       <template #tags-cell="{ row }">
         <div class="py-1" @click="navigateToProject(row.original.slug)">
           <div v-if="row.original.tags" class="flex flex-wrap gap-1">
-            <UBadge v-for="tag in row.original.tags.split(',')" :key="tag" :label="tag.trim()" variant="subtle" color="primary" size="sm" />
+            <UBadge v-for="tag in parseTags(row.original.tags)" :key="tag" :label="tag" variant="subtle" color="primary" size="sm" />
           </div>
           <span v-else class="text-muted text-sm">—</span>
         </div>
@@ -100,16 +100,16 @@ function navigateToProject(slug: string) {
         <div class="py-1" @click="navigateToProject(row.original.slug)">
           <div v-if="row.original.stack" class="flex flex-wrap gap-1">
             <UBadge
-              v-for="tech in row.original.stack.split(',').slice(0, 3)"
+              v-for="tech in parseTags(row.original.stack).slice(0, 3)"
               :key="tech"
-              :label="tech.trim()"
+              :label="tech"
               variant="outline"
               color="neutral"
               size="sm"
             />
             <UBadge
-              v-if="row.original.stack.split(',').length > 3"
-              :label="`+${row.original.stack.split(',').length - 3}`"
+              v-if="parseTags(row.original.stack).length > 3"
+              :label="`+${parseTags(row.original.stack).length - 3}`"
               variant="soft"
               color="neutral"
               size="sm"
