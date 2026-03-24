@@ -95,6 +95,14 @@ useSeoMeta({
         </p>
         <div class="blog-content" v-html="post.content" />
       </div>
+
+      <!-- Author -->
+      <BlogAuthor />
+
+      <!-- Newsletter -->
+      <div class="max-w-2xl mx-auto px-6 lg:px-0 pb-16 lg:pb-24">
+        <BlogNewsletter />
+      </div>
     </section>
 
     <!-- Back -->
