@@ -6,9 +6,9 @@ definePageMeta({
   middleware: ['auth'],
 })
 
-const { data: projects, refresh, status } = await useFetch<ProjectWithImageCount[]>('/api/projects')
-const { togglingId, toggleDisable } = useProjectToggle(refresh)
-const { importInput, exportProjects, onImportFile } = useProjectExportImport(refresh)
+const { data: projects, status } = await useFetch<ProjectWithImageCount[]>('/api/projects', { key: 'projects' })
+const { togglingId, toggleDisable } = useProjectToggle()
+const { importInput, exportProjects, onImportFile } = useProjectExportImport()
 
 useKeyboardShortcut('d', () => { isCreating.value = true }, { meta: true })
 

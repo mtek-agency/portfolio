@@ -7,7 +7,7 @@ definePageMeta({
   middleware: ['auth'],
 })
 
-const { groupedTools, refresh, onReorder, toggle, remove } = await useTools()
+const { groupedTools, refresh, onReorder, toggle, remove } = useTools()
 
 // Search + filter
 const search = ref('')
@@ -24,12 +24,6 @@ const visibleCategories = computed(() =>
     && (search.value === '' || groupedTools[c.id]?.some(t => t.name.toLowerCase().includes(search.value.toLowerCase())))
   )
 )
-
-function filteredGroupTools(categoryId: string): Tool[] {
-  const list = groupedTools[categoryId] ?? []
-  if (!search.value) return list
-  return list.filter(t => t.name.toLowerCase().includes(search.value.toLowerCase()))
-}
 
 // Slideover
 const slideoverOpen = ref(false)

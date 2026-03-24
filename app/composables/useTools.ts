@@ -4,11 +4,10 @@ import type { ToolCreateInput, ToolUpdateInput } from '#shared/schemas/tool.sche
 
 export type { Tool }
 
-export async function useTools() {
-  const toast = useToast()
-  const { data: tools, refresh } = await useFetch<Tool[]>('/api/tools')
+export function useTools() {
+  const toast = useAppToast()
+  const { data: tools, refresh, status } = useFetch<Tool[]>('/api/tools', { key: 'tools' })
 
-  // Grouped by category — reactive object for VueDraggable cross-group DnD
   const groupedTools = reactive<Record<string, Tool[]>>(
     Object.fromEntries(TOOL_CATEGORY_IDS.map(id => [id, []]))
   )
@@ -50,8 +49,8 @@ export async function useTools() {
     if (groupedTools[tool.category]) {
       groupedTools[tool.category] = groupedTools[tool.category].filter(t => t.id !== tool.id)
     }
-    toast.add({ title: 'Outil supprimé', color: 'neutral', icon: 'i-lucide-check' })
+    toast.success('Outil supprimé')
   }
 
-  return { tools, groupedTools, refresh, onReorder, create, update, toggle, remove }
+  return { tools, groupedTools, refresh, status, onReorder, create, update, toggle, remove }
 }

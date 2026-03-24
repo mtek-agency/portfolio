@@ -6,12 +6,8 @@ definePageMeta({
   middleware: ['auth'],
 })
 
-const [inbox, { data: brevoStats }] = await Promise.all([
-  useInboxMessages(),
-  useFetch<{ totalContacts: number }>('/api/brevo/stats'),
-])
-
-const { refresh, unreadCount, contactCount, newsletterCount, activeFilter, filterOptions, filteredMessages, markAsRead, markAllRead } = inbox
+const { refresh, unreadCount, contactCount, newsletterCount, activeFilter, filterOptions, filteredMessages, markAsRead, markAllRead } = useInboxMessages()
+const { data: brevoStats } = useFetch<{ totalContacts: number }>('/api/brevo/stats', { key: 'brevo-stats' })
 
 const { brevoUrl, loadingBrevo, fetchBrevoContact } = useBrevoContact()
 

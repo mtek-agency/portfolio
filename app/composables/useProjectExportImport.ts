@@ -1,5 +1,5 @@
-export function useProjectExportImport(refresh: () => Promise<void>) {
-  const toast = useToast()
+export function useProjectExportImport() {
+  const toast = useAppToast()
   const importInput = ref<HTMLInputElement>()
 
   async function exportProjects() {
@@ -24,17 +24,15 @@ export function useProjectExportImport(refresh: () => Promise<void>) {
         method: 'POST',
         body: formData,
       })
-      await refresh()
+      await refreshNuxtData('projects')
       const s = (n: number) => n !== 1 ? 's' : ''
-      toast.add({
-        title: 'Import terminé',
-        description: `${result.imported} projet${s(result.imported)} importé${s(result.imported)}${result.skipped ? `, ${result.skipped} ignoré${s(result.skipped)}` : ''}`,
-        color: 'neutral',
-        icon: 'i-lucide-check',
-      })
+      toast.success(
+        'Import terminé',
+        `${result.imported} projet${s(result.imported)} importé${s(result.imported)}${result.skipped ? `, ${result.skipped} ignoré${s(result.skipped)}` : ''}`,
+      )
     }
     catch {
-      toast.add({ title: 'Erreur import', description: 'Fichier CSV invalide ou corrompu', color: 'error', icon: 'i-lucide-x' })
+      toast.error('Erreur import', 'Fichier CSV invalide ou corrompu')
     }
     finally {
       if (importInput.value) importInput.value.value = ''

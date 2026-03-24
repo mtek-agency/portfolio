@@ -10,14 +10,14 @@ definePageMeta({
 type ProjectWithImages = Project & { images: ProjectImage[], views: number }
 
 const route = useRoute()
-const toast = useToast()
+const toast = useAppToast()
 const slug = computed(() => route.params.slug as string)
 const saving = ref(false)
 const dirty = ref(false)
 
 const { data: project, refresh } = await useFetch<ProjectWithImages>(
   () => `/api/projects/${slug.value}`,
-  { watch: [slug] },
+  { key: computed(() => `project-${slug.value}`), watch: [slug] },
 )
 
 if (!project.value) throw createError({ statusCode: 404, statusMessage: 'Projet introuvable' })
@@ -30,7 +30,7 @@ async function onSaved(updated: Project) {
   }
   else {
     await refresh()
-    toast.add({ title: 'Projet mis à jour', color: 'neutral', icon: 'i-lucide-check' })
+    toast.success('Projet mis à jour')
   }
 }
 
@@ -52,7 +52,7 @@ async function deleteProject() {
     await navigateTo('/admin/projets')
   }
   catch {
-    toast.add({ title: 'Erreur', description: 'Impossible de supprimer le projet', color: 'error', icon: 'i-lucide-x' })
+    toast.error('Erreur', 'Impossible de supprimer le projet')
   }
   finally {
     deleting.value = false

@@ -1,13 +1,14 @@
 import type { Message } from '~~/server/db/schema'
 
-export async function useInboxMessages() {
-  const { data: messages, refresh } = await useFetch<Message[]>('/api/messages')
+type Filter = 'all' | 'unread' | 'contact' | 'newsletter'
+
+export function useInboxMessages() {
+  const { data: messages, refresh, status } = useFetch<Message[]>('/api/messages', { key: 'messages' })
 
   const unreadCount = computed(() => messages.value?.filter(m => !m.isRead).length ?? 0)
   const contactCount = computed(() => messages.value?.filter(m => m.type === 'contact').length ?? 0)
   const newsletterCount = computed(() => messages.value?.filter(m => m.type === 'newsletter').length ?? 0)
 
-  type Filter = 'all' | 'unread' | 'contact' | 'newsletter'
   const activeFilter = ref<Filter>('all')
 
   const filterOptions: { label: string, value: Filter }[] = [
@@ -45,6 +46,7 @@ export async function useInboxMessages() {
   return {
     messages,
     refresh,
+    status,
     unreadCount,
     contactCount,
     newsletterCount,

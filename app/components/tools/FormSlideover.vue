@@ -9,7 +9,7 @@ const props = defineProps<{ tool?: Tool | null, defaultCategory?: string }>()
 const emit = defineEmits<{ saved: [], cancel: [] }>()
 
 const open = defineModel<boolean>('open', { default: false })
-const toast = useToast()
+const toast = useAppToast()
 const saving = ref(false)
 
 const isEdit = computed(() => !!props.tool)
@@ -62,17 +62,17 @@ async function onSubmit(event: FormSubmitEvent<ToolCreateInput>) {
   try {
     if (isEdit.value && props.tool) {
       await $fetch(`/api/tools/${props.tool.id}`, { method: 'PUT', body: event.data })
-      toast.add({ title: 'Outil mis à jour', color: 'neutral', icon: 'i-lucide-check' })
+      toast.success('Outil mis à jour')
     }
     else {
       await $fetch('/api/tools', { method: 'POST', body: event.data })
-      toast.add({ title: 'Outil ajouté', color: 'neutral', icon: 'i-lucide-check' })
+      toast.success('Outil ajouté')
     }
     open.value = false
     emit('saved')
   }
   catch {
-    toast.add({ title: 'Erreur', description: 'Impossible de sauvegarder l\'outil', color: 'error', icon: 'i-lucide-x' })
+    toast.error('Erreur', "Impossible de sauvegarder l'outil")
   }
   finally {
     saving.value = false

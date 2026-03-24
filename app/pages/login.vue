@@ -6,7 +6,7 @@ definePageMeta({
   layout: 'blank'
 })
 
-const toast = useToast()
+const toast = useAppToast()
 const route = useRoute()
 const { fetch: fetchSession } = useUserSession()
 
@@ -43,31 +43,19 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
     })
 
     if (error.value) {
-      toast.add({
-        title: 'Login failed',
-        description: error.value.message || 'Invalid credentials',
-        color: 'error'
-      })
+      toast.error('Login failed', error.value.message || 'Invalid credentials')
       return
     }
 
     await fetchSession()
 
-    toast.add({
-      title: 'Login success',
-      description: 'You have been successfully logged in',
-      color: 'neutral'
-    })
+    toast.success('Login success', 'You have been successfully logged in')
 
     const redirectTo = (route.query.redirect as string) || '/admin'
     await navigateTo(redirectTo)
 
   } catch {
-    toast.add({
-      title: 'Error',
-      description: 'An error occurred during login',
-      color: 'error'
-    })
+    toast.error('Error', 'An error occurred during login')
   } finally {
     loading.value = false
   }

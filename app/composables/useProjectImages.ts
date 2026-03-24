@@ -1,7 +1,7 @@
 import type { ProjectImage } from '~~/server/db/schema'
 
 export function useProjectImages(slug: Ref<string>, refresh: () => void | Promise<void>) {
-  const toast = useToast()
+  const toast = useAppToast()
   const fileInput = ref<HTMLInputElement>()
   const uploadingImages = ref(false)
   const deletingImageId = ref<number | null>(null)
@@ -16,14 +16,10 @@ export function useProjectImages(slug: Ref<string>, refresh: () => void | Promis
       for (const file of files) formData.append('images', file)
       await $fetch(`/api/projects/${slug.value}/images`, { method: 'POST', body: formData })
       await refresh()
-      toast.add({
-        title: `${files.length} image${files.length > 1 ? 's' : ''} ajoutée${files.length > 1 ? 's' : ''}`,
-        color: 'neutral',
-        icon: 'i-lucide-check',
-      })
+      toast.success(`${files.length} image${files.length > 1 ? 's' : ''} ajoutée${files.length > 1 ? 's' : ''}`)
     }
     catch {
-      toast.add({ title: 'Erreur upload', description: "Impossible d'uploader les images", color: 'error', icon: 'i-lucide-x' })
+      toast.error('Erreur upload', "Impossible d'uploader les images")
     }
     finally {
       uploadingImages.value = false
@@ -38,7 +34,7 @@ export function useProjectImages(slug: Ref<string>, refresh: () => void | Promis
       await refresh()
     }
     catch {
-      toast.add({ title: 'Erreur', description: "Impossible de supprimer l'image", color: 'error', icon: 'i-lucide-x' })
+      toast.error('Erreur', "Impossible de supprimer l'image")
     }
     finally {
       deletingImageId.value = null
@@ -53,7 +49,7 @@ export function useProjectImages(slug: Ref<string>, refresh: () => void | Promis
       })
     }
     catch {
-      toast.add({ title: 'Erreur', description: "Impossible de sauvegarder l'ordre", color: 'error', icon: 'i-lucide-x' })
+      toast.error('Erreur', "Impossible de sauvegarder l'ordre")
     }
   }
 

@@ -17,9 +17,9 @@ const lastVisit = useCookie<string>('admin_last_visit', { maxAge: 365 * 24 * 60 
 const since = lastVisit.value
 
 const [{ data: stats }, { data: brevoStats }, { data: viewsBreakdown }] = await Promise.all([
-  useFetch<DashboardStats>('/api/dashboard', { query: since ? { since } : {} }),
-  useFetch<{ totalContacts: number }>('/api/brevo/stats'),
-  useFetch<BreakdownData>('/api/projects/views/breakdown'),
+  useFetch<DashboardStats>('/api/dashboard', { key: 'dashboard', query: since ? { since } : {} }),
+  useFetch<{ totalContacts: number }>('/api/brevo/stats', { key: 'brevo-stats' }),
+  useFetch<BreakdownData>('/api/projects/views/breakdown', { key: 'views-breakdown' }),
 ])
 
 onMounted(() => {

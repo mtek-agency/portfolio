@@ -3,7 +3,7 @@ import type { Project } from '~~/server/db/schema'
 
 const props = defineProps<{ project: Project & { views: number } }>()
 
-const toast = useToast()
+const toast = useAppToast()
 
 const updatedAt = computed(() =>
   new Intl.DateTimeFormat('fr-FR', {
@@ -15,7 +15,7 @@ const updatedAt = computed(() =>
 async function copyLink() {
   const url = `${window.location.origin}/projets/${props.project.slug}`
   await navigator.clipboard.writeText(url)
-  toast.add({ title: 'Lien copié !', icon: 'i-lucide-check', color: 'neutral' })
+  toast.success('Lien copié !')
 }
 </script>
 

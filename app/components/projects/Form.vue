@@ -14,7 +14,7 @@ const emit = defineEmits<{
   'update:dirty': [value: boolean]
 }>()
 
-const toast = useToast()
+const toast = useAppToast()
 const saving = ref(false)
 
 const formState = reactive<ProjectEditInput>({
@@ -54,7 +54,7 @@ async function onSubmit(event: FormSubmitEvent<ProjectEditInput>) {
     emit('saved', updated)
   }
   catch {
-    toast.add({ title: 'Erreur', description: 'Impossible de mettre à jour le projet', color: 'error', icon: 'i-lucide-x' })
+    toast.error('Erreur', 'Impossible de mettre à jour le projet')
   }
   finally {
     saving.value = false

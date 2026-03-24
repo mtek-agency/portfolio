@@ -1,6 +1,6 @@
 import type { Project } from '~~/server/db/schema'
 
-export function useProjectToggle(refresh: () => Promise<void>) {
+export function useProjectToggle() {
   const togglingId = ref<number | null>(null)
 
   async function toggleDisable(project: Project) {
@@ -11,7 +11,7 @@ export function useProjectToggle(refresh: () => Promise<void>) {
         method: 'PATCH',
         body: { isDisabled: !project.isDisabled },
       })
-      await refresh()
+      await refreshNuxtData('projects')
     }
     finally {
       togglingId.value = null
