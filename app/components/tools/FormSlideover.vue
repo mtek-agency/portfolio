@@ -20,6 +20,8 @@ const formState = reactive<ToolCreateInput>({
   icon: '',
   category: (props.defaultCategory ?? 'dev') as ToolCreateInput['category'],
   isActive: true,
+  isPublic: false,
+  isDailyDriver: false,
 })
 
 watch(() => props.tool, (tool) => {
@@ -29,6 +31,8 @@ watch(() => props.tool, (tool) => {
     formState.icon = tool.icon ?? ''
     formState.category = tool.category as ToolCreateInput['category']
     formState.isActive = tool.isActive
+    formState.isPublic = tool.isPublic
+    formState.isDailyDriver = tool.isDailyDriver
   }
   else {
     formState.name = ''
@@ -36,6 +40,8 @@ watch(() => props.tool, (tool) => {
     formState.icon = ''
     formState.category = (props.defaultCategory ?? 'dev') as ToolCreateInput['category']
     formState.isActive = true
+    formState.isPublic = false
+    formState.isDailyDriver = false
   }
 }, { immediate: true })
 
@@ -56,11 +62,11 @@ async function onSubmit(event: FormSubmitEvent<ToolCreateInput>) {
   try {
     if (isEdit.value && props.tool) {
       await $fetch(`/api/tools/${props.tool.id}`, { method: 'PUT', body: event.data })
-      toast.add({ title: 'Outil mis à jour', color: 'success', icon: 'i-lucide-check' })
+      toast.add({ title: 'Outil mis à jour', color: 'neutral', icon: 'i-lucide-check' })
     }
     else {
       await $fetch('/api/tools', { method: 'POST', body: event.data })
-      toast.add({ title: 'Outil ajouté', color: 'success', icon: 'i-lucide-check' })
+      toast.add({ title: 'Outil ajouté', color: 'neutral', icon: 'i-lucide-check' })
     }
     open.value = false
     emit('saved')
@@ -75,7 +81,7 @@ async function onSubmit(event: FormSubmitEvent<ToolCreateInput>) {
 </script>
 
 <template>
-  <USlideover v-model:open="open" :title="isEdit ? 'Modifier l\'outil' : 'Ajouter un outil'" side="right">
+  <USlideover v-model:open="open" :title="isEdit ? 'Modifier l\'outil' : 'Ajouter un outil'" side="right" inset>
     <template #body>
       <UForm
         id="tool-form"
@@ -113,6 +119,20 @@ async function onSubmit(event: FormSubmitEvent<ToolCreateInput>) {
           <div class="flex items-center gap-3">
             <USwitch v-model="formState.isActive" />
             <span class="text-sm text-muted">{{ formState.isActive ? 'Actif' : 'Inactif' }}</span>
+          </div>
+        </UFormField>
+
+        <UFormField name="isPublic" label="Visible sur le portfolio">
+          <div class="flex items-center gap-3">
+            <USwitch v-model="formState.isPublic" />
+            <span class="text-sm text-muted">{{ formState.isPublic ? 'Public' : 'Privé' }}</span>
+          </div>
+        </UFormField>
+
+        <UFormField name="isDailyDriver" label="Daily driver">
+          <div class="flex items-center gap-3">
+            <USwitch v-model="formState.isDailyDriver" />
+            <span class="text-sm text-muted">{{ formState.isDailyDriver ? 'Utilisé quotidiennement' : 'Usage occasionnel' }}</span>
           </div>
         </UFormField>
       </UForm>

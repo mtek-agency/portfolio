@@ -30,7 +30,7 @@ async function onSaved(updated: Project) {
   }
   else {
     await refresh()
-    toast.add({ title: 'Projet mis à jour', color: 'success', icon: 'i-lucide-check' })
+    toast.add({ title: 'Projet mis à jour', color: 'neutral', icon: 'i-lucide-check' })
   }
 }
 

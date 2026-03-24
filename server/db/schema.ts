@@ -75,6 +75,9 @@ export const tools = pgTable('tools', {
     icon: text(),
     category: text().notNull(),
     isActive: boolean().notNull().default(true),
+    isPublic: boolean().notNull().default(false),
+    isDailyDriver: boolean().notNull().default(false),
+    clicks: integer().notNull().default(0),
     order: integer().default(0),
     createdAt: timestamp().notNull().defaultNow(),
 })

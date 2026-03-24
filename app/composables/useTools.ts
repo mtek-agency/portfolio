@@ -50,7 +50,7 @@ export async function useTools() {
     if (groupedTools[tool.category]) {
       groupedTools[tool.category] = groupedTools[tool.category].filter(t => t.id !== tool.id)
     }
-    toast.add({ title: 'Outil supprimé', color: 'success', icon: 'i-lucide-check' })
+    toast.add({ title: 'Outil supprimé', color: 'neutral', icon: 'i-lucide-check' })
   }
 
   return { tools, groupedTools, refresh, onReorder, create, update, toggle, remove }

@@ -15,7 +15,7 @@ const updatedAt = computed(() =>
 async function copyLink() {
   const url = `${window.location.origin}/projets/${props.project.slug}`
   await navigator.clipboard.writeText(url)
-  toast.add({ title: 'Lien copié !', icon: 'i-lucide-check', color: 'success' })
+  toast.add({ title: 'Lien copié !', icon: 'i-lucide-check', color: 'neutral' })
 }
 </script>
 

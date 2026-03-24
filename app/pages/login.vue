@@ -56,7 +56,7 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
     toast.add({
       title: 'Login success',
       description: 'You have been successfully logged in',
-      color: 'success'
+      color: 'neutral'
     })
 
     const redirectTo = (route.query.redirect as string) || '/admin'

@@ -18,7 +18,7 @@ export function useProjectImages(slug: Ref<string>, refresh: () => void | Promis
       await refresh()
       toast.add({
         title: `${files.length} image${files.length > 1 ? 's' : ''} ajoutée${files.length > 1 ? 's' : ''}`,
-        color: 'success',
+        color: 'neutral',
         icon: 'i-lucide-check',
       })
     }

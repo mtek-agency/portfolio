@@ -29,7 +29,7 @@ export function useProjectExportImport(refresh: () => Promise<void>) {
       toast.add({
         title: 'Import terminé',
         description: `${result.imported} projet${s(result.imported)} importé${s(result.imported)}${result.skipped ? `, ${result.skipped} ignoré${s(result.skipped)}` : ''}`,
-        color: 'success',
+        color: 'neutral',
         icon: 'i-lucide-check',
       })
     }

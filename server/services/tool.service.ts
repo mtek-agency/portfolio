@@ -37,4 +37,13 @@ export const toolService = {
     async delete(id: number): Promise<void> {
         await db.delete(tools).where(eq(tools.id, id))
     },
+    async findPublic(): Promise<Tool[]> {
+        return await db.query.tools.findMany({
+            where: (t, { and, eq }) => and(eq(t.isActive, true), eq(t.isPublic, true)),
+            orderBy: (t, { asc }) => [asc(t.category), asc(t.order), asc(t.id)],
+        })
+    },
+    async incrementClicks(id: number): Promise<void> {
+        await db.update(tools).set({ clicks: sql`${tools.clicks} + 1` }).where(eq(tools.id, id))
+    },
 }

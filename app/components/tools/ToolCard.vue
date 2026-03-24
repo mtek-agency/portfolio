@@ -28,6 +28,16 @@ const emit = defineEmits<{
     <!-- Name -->
     <a :href="tool.url" target="_blank" rel="noopener" class="text-sm font-medium text-default truncate flex-1 min-w-0 hover:underline">{{ tool.name }}</a>
 
+    <!-- Badges -->
+    <div class="flex items-center gap-1 shrink-0 group-hover:opacity-0 transition-opacity">
+      <UTooltip v-if="tool.isDailyDriver" text="Daily driver">
+        <UIcon name="i-lucide-zap" class="size-3 text-amber-500" />
+      </UTooltip>
+      <UTooltip v-if="tool.isPublic" text="Public">
+        <UIcon name="i-lucide-globe" class="size-3 text-sky-500" />
+      </UTooltip>
+    </div>
+
     <!-- Actions -->
     <div class="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
       <UTooltip text="Ouvrir">

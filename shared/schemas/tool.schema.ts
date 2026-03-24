@@ -7,6 +7,8 @@ export const toolCreateSchema = z.object({
     icon: z.string().max(100).optional().nullable(),
     category: z.enum(TOOL_CATEGORY_IDS),
     isActive: z.boolean().default(true),
+    isPublic: z.boolean().default(false),
+    isDailyDriver: z.boolean().default(false),
 })
 
 export const toolUpdateSchema = toolCreateSchema.partial()
