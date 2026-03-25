@@ -1,0 +1,43 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  IMAGE: $CI_REGISTRY_IMAGE
+  TAG: $CI_COMMIT_SHORT_SHA
+  DOCKER_BUILDKIT: "1"
+
+build-and-push:
+  stage: build
+  image: docker:27
+  services:
+    - docker:27-dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - |
+      docker build \
+        --target runner \
+        --build-arg NUXT_TURNSTILE_SITE_KEY=$NUXT_TURNSTILE_SITE_KEY \
+        --cache-from $IMAGE:latest \
+        --tag $IMAGE:$TAG \
+        --tag $IMAGE:latest \
+        .
+    - docker push $IMAGE:$TAG
+    - docker push $IMAGE:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+deploy:
+  stage: deploy
+  image: alpine:3
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - |
+      curl --fail --silent --show-error \
+        -X GET "$DOKPLOY_DEPLOY_URL"
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  needs:
+    - build-and-push
