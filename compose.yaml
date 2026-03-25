@@ -25,8 +25,11 @@ services:
       - "3000:3000"
     env_file: .env
     volumes:
-      - .:/appr
-      - /app/node_modulesl
+      - .:/app
+      # Isolation des dossiers générés localement (incompatibles Linux/macOS)
+      - /app/node_modules
+      - /app/.nuxt
+      - /app/.output
       - blob_data:/app/.data/files
     depends_on:
       postgres:

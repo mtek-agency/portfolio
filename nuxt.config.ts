@@ -29,8 +29,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   hub: {
     db: {
-      dialect: 'postgresql',
-      applyMigrationsDuringBuild: false,
+      dialect: 'postgresql'
     },
     blob: {
       driver: 'fs',

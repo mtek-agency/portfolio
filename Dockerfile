@@ -6,7 +6,7 @@ FROM node:22-alpine AS deps
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm i
 
 # ─────────────────────────────────────────────────────────
 # Stage 2 — dev : serveur de développement
