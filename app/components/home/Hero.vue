@@ -1,10 +1,12 @@
+<script setup lang="ts">
+</script>
 <template>
   <section class="relative min-h-svh bg-neutral-950 flex flex-col overflow-hidden">
     <div class="absolute inset-0 pointer-events-none">
       <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw] h-[60vh] bg-white/[0.025] rounded-full blur-[140px]" />
     </div>
 
-    <div class="relative flex-1 flex flex-col justify-end max-w-screen-xl mx-auto w-full px-6 lg:px-12 pb-20 pt-32">
+    <div class="relative flex-1 flex flex-col justify-end max-w-7xl mx-auto w-full px-6 lg:px-12 pb-20 pt-32">
       <div class="overflow-hidden mb-8">
         <p
           class="text-neutral-500 text-[10px] tracking-[0.5em] uppercase font-medium"

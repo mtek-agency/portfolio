@@ -5,10 +5,12 @@ defineProps<{
   title?: string
   breadcrumb?: BreadcrumbItem[]
 }>()
+
+const route = useRoute()
 </script>
 
 <template>
-  <UDashboardPanel id="home">
+  <UDashboardPanel :id="route.path">
     <template #header>
       <UDashboardNavbar :title="breadcrumb ? undefined : (title ?? 'Admin')" :ui="{ right: 'gap-3' }">
         <template #leading>

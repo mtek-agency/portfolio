@@ -8,7 +8,7 @@ const { el, isVisible } = useReveal()
 
 <template>
   <section ref="el" class="bg-neutral-100 dark:bg-neutral-950 py-24 lg:py-36">
-    <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
       <!-- Header -->
       <div
         class="flex items-center justify-between mb-12 transition-all duration-700"
@@ -47,7 +47,7 @@ const { el, isVisible } = useReveal()
               {{ parseTags(posts[0].tags)[0] }}
             </span>
             <span class="text-neutral-700">·</span>
-            <span class="text-xs text-neutral-400">{{ posts[0].publishedAt ? formatDateShort(new Date(posts[0].publishedAt)) : '' }}</span>
+            <span class="text-xs text-neutral-400">{{ posts[0].publishedAt ? formatDate(new Date(posts[0].publishedAt), { day: 'numeric', month: 'short', year: 'numeric' }) : '' }}</span>
           </div>
           <h2
             class="font-display font-black text-white tracking-tighter leading-[0.92] transition-transform duration-500 group-hover:translate-x-2"
@@ -88,7 +88,7 @@ const { el, isVisible } = useReveal()
                 {{ parseTags(post.tags)[0] }}
               </span>
               <span class="text-neutral-700">·</span>
-              <span class="text-xs text-neutral-500">{{ post.publishedAt ? formatDateShort(new Date(post.publishedAt)) : '' }}</span>
+              <span class="text-xs text-neutral-500">{{ post.publishedAt ? formatDate(new Date(post.publishedAt), { day: 'numeric', month: 'short', year: 'numeric' }) : '' }}</span>
             </div>
             <h3
               class="font-display font-bold text-white tracking-tight leading-snug transition-transform duration-500 group-hover:translate-x-1.5"

@@ -29,17 +29,17 @@ async function subscribe() {
 
 <template>
   <footer class="bg-neutral-950 border-t border-neutral-800/50">
-    <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
 
       <!-- Newsletter band -->
-      <div class="py-20 border-b border-neutral-800/50">
-        <div class="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-12">
+      <div class="py-12 md:py-20 border-b border-neutral-800/50">
+        <div class="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 lg:gap-12">
           <!-- Headline -->
           <div class="shrink-0">
-            <p class="text-[10px] tracking-[0.5em] uppercase text-neutral-600 font-medium mb-6">Newsletter</p>
+            <p class="text-[10px] tracking-[0.5em] uppercase text-neutral-600 font-medium mb-4 md:mb-6">Newsletter</p>
             <h2
               class="font-display font-black text-white tracking-tighter leading-[0.88]"
-              style="font-size: clamp(3rem, 5.5vw, 6.5rem)"
+              style="font-size: clamp(2rem, 5.5vw, 6.5rem)"
             >
               Restez au<br>courant.
             </h2>
@@ -47,8 +47,8 @@ async function subscribe() {
 
           <!-- Form side -->
           <div class="w-full lg:max-w-lg">
-            <p class="text-neutral-500 text-base mb-10 leading-relaxed">
-              Nouveaux articles et projets directement dans votre boîte mail.<br class="hidden lg:block"> Pas de spam, promis.
+            <p class="text-neutral-500 text-sm md:text-base mb-6 md:mb-10 leading-relaxed">
+              Nouveaux articles et projets directement dans votre boîte mail. Pas de spam, promis.
             </p>
 
             <div v-if="done" class="flex items-center gap-4">
@@ -59,17 +59,17 @@ async function subscribe() {
             </div>
 
             <div v-else>
-              <div class="border-b-2 border-neutral-700 focus-within:border-white transition-[border-color] duration-300 flex items-center gap-4 pb-4">
+              <div class="border-b-2 border-neutral-700 focus-within:border-white transition-[border-color] duration-300 flex items-center gap-3 pb-3 md:pb-4">
                 <input
                   v-model="email"
                   type="email"
                   placeholder="votre@email.fr"
-                  class="flex-1 bg-transparent text-white text-lg md:text-xl placeholder-neutral-700 outline-none font-medium"
+                  class="flex-1 min-w-0 bg-transparent text-white text-base md:text-xl placeholder-neutral-700 outline-none font-medium"
                   @keyup.enter="subscribe"
                 />
                 <button
                   :disabled="sending || !token || !email"
-                  class="shrink-0 font-display font-black text-lg text-white hover:opacity-40 transition-opacity disabled:opacity-20 tracking-tight"
+                  class="shrink-0 font-display font-black text-sm md:text-lg text-white hover:opacity-40 transition-opacity disabled:opacity-20 tracking-tight whitespace-nowrap"
                   @click="subscribe"
                 >
                   {{ sending ? '…' : "S'abonner →" }}

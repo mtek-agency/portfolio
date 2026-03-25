@@ -7,11 +7,13 @@ defineProps<{
   color?: 'primary' | 'success' | 'warning' | 'error' | 'neutral'
   to?: string
 }>()
+
+const NuxtLink = resolveComponent('NuxtLink')
 </script>
 
 <template>
   <component
-    :is="to ? resolveComponent('NuxtLink') : 'div'"
+    :is="to ? NuxtLink : 'div'"
     :to="to"
     class="rounded-xl border border-default bg-elevated/40 p-5 flex items-start gap-4 transition-colors"
     :class="to ? 'hover:bg-elevated/70 cursor-pointer' : ''"

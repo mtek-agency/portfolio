@@ -6,7 +6,7 @@ const lines = ['Je transforme', 'vos idées en', 'solutions', 'numériques.']
 
 <template>
   <section ref="el" class="bg-neutral-100 dark:bg-neutral-950 py-36 lg:py-56 overflow-hidden">
-    <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
       <div v-for="(line, i) in lines" :key="line" class="overflow-hidden">
         <p
           class="font-display font-black text-neutral-950 dark:text-white tracking-tighter leading-[0.92] transition-all duration-1000 ease-out"

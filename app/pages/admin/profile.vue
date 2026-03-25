@@ -4,6 +4,7 @@ import type { ProfileUpdateInput, PasswordUpdateInput } from '#shared/schemas/us
 definePageMeta({
   layout: 'admin',
   middleware: ['auth'],
+  pageTransition: false,
 })
 
 useHead({ title: 'Profil' })

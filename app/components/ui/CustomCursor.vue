@@ -2,8 +2,12 @@
 const x = ref(-200)
 const y = ref(-200)
 const isHovering = ref(false)
+const hasMouse = ref(false)
 
 onMounted(() => {
+  hasMouse.value = window.matchMedia('(pointer: fine)').matches
+  if (!hasMouse.value) return
+
   const onMove = (e: MouseEvent) => {
     x.value = e.clientX
     y.value = e.clientY
@@ -22,6 +26,7 @@ onMounted(() => {
 
 <template>
   <ClientOnly>
+    <template v-if="hasMouse">
     <!-- Dot — precise, immediate -->
     <div
       class="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference will-change-transform"
@@ -39,5 +44,6 @@ onMounted(() => {
         :class="isHovering ? 'size-11' : 'size-7'"
       />
     </div>
+    </template>
   </ClientOnly>
 </template>

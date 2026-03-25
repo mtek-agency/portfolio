@@ -3,7 +3,7 @@ import type { EditorToolbarItem, EditorCustomHandlers } from '@nuxt/ui'
 import type { Editor } from '@tiptap/vue-3'
 import type { Post } from '~~/server/db/schema'
 
-definePageMeta({ layout: 'admin', middleware: ['auth'] })
+definePageMeta({ layout: 'admin', middleware: ['auth'], pageTransition: false })
 
 const route = useRoute()
 const toast = useAppToast()

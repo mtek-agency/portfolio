@@ -6,6 +6,7 @@ import type { PostBreakdownData } from '~~/server/services/post.views.service'
 definePageMeta({
   layout: 'admin',
   middleware: ['auth'],
+  pageTransition: false,
 })
 
 useHead({ title: 'Dashboard' })

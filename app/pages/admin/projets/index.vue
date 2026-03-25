@@ -4,6 +4,7 @@ import type { ProjectWithImageCount } from '~/composables/useProjectFilters'
 definePageMeta({
   layout: 'admin',
   middleware: ['auth'],
+  pageTransition: false,
 })
 
 useHead({ title: 'Projets' })

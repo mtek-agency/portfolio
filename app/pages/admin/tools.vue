@@ -5,6 +5,7 @@ import type { Tool } from '~~/server/db/schema'
 definePageMeta({
   layout: 'admin',
   middleware: ['auth'],
+  pageTransition: false,
 })
 
 useHead({ title: 'Outils' })

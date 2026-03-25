@@ -31,7 +31,7 @@ useSeoMeta({
   <article v-if="post">
     <!-- Hero -->
     <section class="bg-neutral-950 overflow-hidden pt-24">
-      <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pt-12 pb-14">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12 pt-12 pb-14">
         <!-- Tags -->
         <div class="overflow-hidden mb-6">
           <div
@@ -61,7 +61,7 @@ useSeoMeta({
           class="flex flex-wrap items-center gap-4 text-sm text-neutral-500"
           style="animation: line-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.4s both"
         >
-          <span>{{ post.publishedAt ? formatDate(new Date(post.publishedAt)) : '' }}</span>
+          <span>{{ post.publishedAt ? formatDate(new Date(post.publishedAt), { dateStyle: 'long' }) : '' }}</span>
           <span class="text-neutral-700">·</span>
           <span>{{ readingTime }} min de lecture</span>
         </div>
@@ -107,7 +107,7 @@ useSeoMeta({
 
     <!-- Back -->
     <div class="bg-white dark:bg-neutral-950 py-10 border-t border-neutral-100 dark:border-neutral-800/60">
-      <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <NuxtLink
           to="/blog"
           class="group inline-flex items-center gap-2.5 text-sm text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors duration-200"

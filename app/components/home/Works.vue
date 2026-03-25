@@ -9,7 +9,7 @@ const { hoveredImage, mouseX, mouseY, onHover, onLeave, onMouseMove } = useProje
 
 <template>
   <section ref="el" class="bg-neutral-50 dark:bg-neutral-950 py-24 lg:py-36" @mousemove="onMouseMove">
-    <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
       <div
         class="flex items-baseline justify-between mb-16 transition-all duration-700"
         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"

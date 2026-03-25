@@ -96,7 +96,7 @@ useSeoMeta({
 
     <!-- Content -->
     <section ref="contentEl" class="bg-white dark:bg-neutral-950 py-20 lg:py-28">
-      <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <div
           class="grid grid-cols-1 lg:grid-cols-3 gap-16 transition-all duration-700"
           :class="contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
@@ -139,10 +139,10 @@ useSeoMeta({
 
     <!-- Gallery — stacking cards -->
     <section v-if="galleryImages.length" class="bg-neutral-50 dark:bg-neutral-900 pt-16 lg:pt-24">
-      <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <p class="text-[10px] tracking-[0.4em] uppercase text-neutral-400 font-medium mb-10">Galerie</p>
       </div>
-      <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <div
           v-for="(image, i) in galleryImages"
           :key="image.id"
@@ -164,7 +164,7 @@ useSeoMeta({
 
     <!-- Back -->
     <div class="bg-white dark:bg-neutral-950 py-10 border-t border-neutral-100 dark:border-neutral-800/60">
-      <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <NuxtLink
           to="/projets"
           class="group inline-flex items-center gap-2.5 text-sm text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors duration-200"

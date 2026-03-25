@@ -5,7 +5,7 @@ import type { PostCreateInput } from '#shared/schemas/post.schema'
 import type { FormSubmitEvent } from '#ui/types'
 import type { TableColumn } from '#ui/components/Table.vue'
 
-definePageMeta({ layout: 'admin', middleware: ['auth'] })
+definePageMeta({ layout: 'admin', middleware: ['auth'], pageTransition: false })
 
 useHead({ title: 'Blog' })
 

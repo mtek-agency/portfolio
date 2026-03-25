@@ -5,6 +5,7 @@ import type { Project, ProjectImage } from '~~/server/db/schema'
 definePageMeta({
   layout: 'admin',
   middleware: ['auth'],
+  pageTransition: false,
 })
 
 type ProjectWithImages = Project & { images: ProjectImage[], views: number }

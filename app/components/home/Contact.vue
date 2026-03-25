@@ -8,7 +8,7 @@ const links = [
 
 <template>
   <section class="bg-neutral-950 py-24 lg:py-36">
-    <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
         <!-- Left: intro -->
         <div class="flex flex-col justify-start">

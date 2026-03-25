@@ -37,7 +37,7 @@ defineProps<{ post: Post }>()
         </p>
         <div class="flex items-center justify-between">
           <p class="text-xs text-neutral-400">
-            {{ post.publishedAt ? formatDate(new Date(post.publishedAt)) : '' }}
+            {{ post.publishedAt ? formatDate(new Date(post.publishedAt), { dateStyle: 'long' }) : '' }}
           </p>
           <span class="inline-flex items-center gap-1.5 text-xs tracking-[0.2em] uppercase font-medium text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors duration-200">
             Lire l'article
