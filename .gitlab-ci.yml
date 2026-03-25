@@ -19,6 +19,7 @@ build-and-push:
       docker build \
         --target runner \
         --build-arg NUXT_TURNSTILE_SITE_KEY=$NUXT_TURNSTILE_SITE_KEY \
+        --build-arg DATABASE_URL=$DATABASE_URL \
         --cache-from $IMAGE:latest \
         --tag $IMAGE:$TAG \
         --tag $IMAGE:latest \
