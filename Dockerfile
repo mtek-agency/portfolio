@@ -67,4 +67,4 @@ USER nuxt
 
 EXPOSE 3000
 
-CMD ["node", ".output/server/index.mjs"]
+CMD ["node", "--import", "./.output/server/sentry.server.config.mjs", ".output/server/index.mjs"]

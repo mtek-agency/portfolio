@@ -24,7 +24,8 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
     '@nuxt/scripts',
     '@nuxtjs/turnstile',
-    '@nuxt/ui'
+    '@nuxt/ui',
+    '@sentry/nuxt/module'
   ],
   css: ['~/assets/css/main.css'],
   hub: {
@@ -65,6 +66,11 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
+    public: {
+      sentry: {
+        dsn: process.env.NUXT_PUBLIC_SENTRY_DSN ?? ''
+      }
+    },
     admin: {
       email: process.env.NUXT_ADMIN_EMAIL,
       password: process.env.NUXT_ADMIN_PASSWORD
