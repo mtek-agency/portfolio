@@ -75,7 +75,9 @@ async function subscribe() {
                   {{ sending ? '…' : "S'abonner →" }}
                 </button>
               </div>
-              <NuxtTurnstile v-model="token" :options="{ size: 'invisible' }" />
+              <ClientOnly>
+                <NuxtTurnstile v-model="token" :options="{ size: 'invisible' }" />
+              </ClientOnly>
               <p v-if="err" class="text-xs text-red-400 mt-3">{{ err }}</p>
             </div>
           </div>

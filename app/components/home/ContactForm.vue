@@ -109,7 +109,9 @@ async function onSubmit(e: FormSubmitEvent<ContactForm>) {
         </div>
       </label>
 
-      <NuxtTurnstile v-model="token" :options="{ size: 'invisible' }" />
+      <ClientOnly>
+        <NuxtTurnstile v-model="token" :options="{ size: 'invisible' }" />
+      </ClientOnly>
 
       <p v-if="errorMsg" class="text-sm text-red-400 mb-4">{{ errorMsg }}</p>
 
