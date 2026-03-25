@@ -19,6 +19,7 @@
     "@nuxthub/core": "^0.10.4",
     "@nuxtjs/turnstile": "^1.1.1",
     "@unhead/vue": "^2.1.2",
+    "aws4fetch": "^1.0.20",
     "drizzle-kit": "^0.18.1",
     "drizzle-orm": "^0.45.1",
     "nuxt": "^4.2.2",

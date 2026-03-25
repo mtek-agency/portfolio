@@ -29,13 +29,26 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   hub: {
     db: {
-      dialect: 'postgresql'
+      dialect: 'postgresql',
+      applyMigrationsDuringBuild: false
     },
     blob: {
       driver: 'fs',
       dir: '.data/files'
     },
     kv: true
+  },
+  $production: {
+    hub: {
+      blob: {
+        driver: 's3',
+        bucket: process.env.CLOUDFLARE_R2_BUCKET ?? 'portfolio',
+        endpoint: `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+        region: 'auto',
+        accessKeyId: process.env.CLOUDFLARE_R2_ACCESS_KEY_ID,
+        secretAccessKey: process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY,
+      }
+    }
   },
   turnstile: {
     siteKey: process.env.NUXT_TURNSTILE_SITE_KEY,
