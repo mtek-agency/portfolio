@@ -25,6 +25,19 @@ const formState = reactive<ToolCreateInput>({
   isDailyDriver: false,
 })
 
+watch(open, (isOpen) => {
+  if (isOpen && !props.tool) {
+    formState.name = ''
+    formState.url = ''
+    formState.icon = ''
+    formState.description = ''
+    formState.category = (props.defaultCategory ?? 'dev') as ToolCreateInput['category']
+    formState.isActive = true
+    formState.isPublic = false
+    formState.isDailyDriver = false
+  }
+})
+
 watch(() => props.tool, (tool) => {
   if (tool) {
     formState.name = tool.name

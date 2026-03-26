@@ -26,7 +26,6 @@ services:
     env_file: .env
     volumes:
       - .:/app
-      # Isolation des dossiers générés localement (incompatibles Linux/macOS)
       - /app/node_modules
       - /app/.nuxt
       - /app/.output

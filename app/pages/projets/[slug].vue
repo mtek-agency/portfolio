@@ -158,7 +158,7 @@ useSeoMeta({
           </div>
         </div>
         <!-- Scroll space so the last card can stick -->
-        <div class="h-svh" />
+        <div class="h-[30vh]" />
       </div>
     </section>
 
