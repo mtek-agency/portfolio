@@ -22,6 +22,11 @@ export default defineNuxtConfig({
   image: {
     provider: 'none',
   },
+  nitro: {
+    externals: {
+      external: ['drizzle-orm'],
+    },
+  },
 
   // ─── SEO ──────────────────────────────────────────────────────────────────
   site: {
