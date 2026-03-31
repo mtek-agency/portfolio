@@ -8,4 +8,5 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
   integrations: [Sentry.replayIntegration()],
   sendDefaultPii: true,
+  registerEsmLoaderHooks: false
 })
