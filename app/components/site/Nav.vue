@@ -32,6 +32,7 @@ onMounted(() => {
 })
 
 const links = [
+  { label: 'À propos', to: '/a-propos' },
   { label: 'Projets', to: '/projets' },
   { label: 'Blog', to: '/blog' },
 ]
@@ -76,6 +77,29 @@ const toggleTheme = () => {
           >
             {{ link.label }}
           </NuxtLink>
+        </div>
+
+        <!-- Social links -->
+        <div class="hidden md:flex items-center gap-4">
+          <a
+            v-for="social in [
+              { href: 'https://www.linkedin.com/in/matteo-bonneval', icon: 'i-lucide-linkedin', label: 'LinkedIn' },
+              { href: 'https://github.com/matteobnvl', icon: 'i-lucide-github', label: 'GitHub' },
+              { href: 'https://gitlab.com/matteobnvl', icon: 'i-simple-icons-gitlab', label: 'GitLab' },
+            ]"
+            :key="social.label"
+            :href="social.href"
+            :aria-label="social.label"
+            target="_blank"
+            rel="noopener"
+            class="p-1 transition-colors duration-300 relative z-10"
+            :class="[
+              scrolled ? 'text-neutral-400 hover:text-neutral-900 dark:text-neutral-600 dark:hover:text-white' : 'text-white/30 hover:text-white',
+              menuOpen ? '!text-neutral-600 hover:!text-white' : ''
+            ]"
+          >
+            <UIcon :name="social.icon" class="size-4" />
+          </a>
         </div>
 
         <!-- Theme toggle -->

@@ -43,6 +43,13 @@
       "when": 1742810400000,
       "tag": "0005_tools",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1774989983004,
+      "tag": "0006_yummy_nico_minoru",
+      "breakpoints": true
     }
   ]
 }

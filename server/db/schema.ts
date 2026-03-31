@@ -153,3 +153,17 @@ export const postViewsRelations = relations(postViews, ({ one }) => ({
         references: [posts.id],
     }),
 }))
+
+export const parcours = pgTable('parcours', {
+    id: serial().primaryKey(),
+    role: text().notNull(),
+    place: text().notNull(),
+    period: text().notNull(),
+    description: text(),
+    isActive: boolean('is_active').notNull().default(true),
+    order: integer().default(0),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+})
+
+export type Parcours = InferSelectModel<typeof parcours>
+export type ParcoursInsert = InferInsertModel<typeof parcours>

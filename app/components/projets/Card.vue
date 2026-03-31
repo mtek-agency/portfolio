@@ -12,13 +12,15 @@ defineProps<{ project: PublicProject }>()
   >
     <!-- Cover image -->
     <div class="md:w-2/5 lg:w-1/2 h-56 md:h-full overflow-hidden bg-neutral-100 dark:bg-neutral-800 shrink-0">
-      <img
+      <NuxtImg
         v-if="project.images[0]"
         :src="coverImageSrc(project.images[0].url)!"
         :alt="project.name"
+        sizes="sm:100vw md:40vw lg:50vw"
         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        loading="lazy"
       />
-      <div v-else class="w-full h-full bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900" />
+      <div v-else class="w-full h-full bg-linear-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900" />
     </div>
 
     <!-- Content -->

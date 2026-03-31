@@ -16,6 +16,26 @@ useSeoMeta({
   titleTemplate: '%s',
   description: 'Développeur web & mobile basé à Bordeaux. Je transforme vos idées en solutions numériques.',
 })
+
+defineOgImage({
+  component: 'Portfolio',
+  title: 'Mattéo Bonneval',
+  description: 'Développeur Web & Mobile basé à Bordeaux.',
+})
+
+useSchemaOrg([
+  defineWebSite({ name: 'Mattéo Bonneval' }),
+  definePerson({
+    name: 'Mattéo Bonneval',
+    url: 'https://matteo-bonneval.fr',
+    sameAs: [
+      'https://www.linkedin.com/in/matteo-bonneval',
+      'https://github.com/matteobnvl',
+    ],
+    jobTitle: 'Développeur Web & Mobile',
+    description: 'Développeur web & mobile basé à Bordeaux, spécialisé en applications fullstack.',
+  }),
+])
 </script>
 
 <template>

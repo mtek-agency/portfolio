@@ -32,11 +32,13 @@ const { el, isVisible } = useReveal()
         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
       >
         <div class="aspect-[16/7] w-full overflow-hidden bg-neutral-900">
-          <img
+          <NuxtImg
             v-if="posts[0].coverImage"
             :src="coverImageSrc(posts[0].coverImage)!"
             :alt="posts[0].title"
+            sizes="100vw"
             class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            loading="lazy"
           />
           <div v-else class="w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900" />
         </div>
@@ -73,11 +75,13 @@ const { el, isVisible } = useReveal()
           :style="{ transitionDelay: isVisible ? `${(i + 1) * 100}ms` : '0ms' }"
         >
           <div class="aspect-[16/9] w-full overflow-hidden bg-neutral-900">
-            <img
+            <NuxtImg
               v-if="post.coverImage"
               :src="coverImageSrc(post.coverImage)!"
               :alt="post.title"
+              sizes="sm:100vw md:50vw"
               class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              loading="lazy"
             />
             <div v-else class="w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900" />
           </div>

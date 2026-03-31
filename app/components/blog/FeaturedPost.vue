@@ -12,11 +12,13 @@ defineProps<{ post: Post }>()
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-start">
       <!-- Image -->
       <div class="lg:col-span-3 aspect-[16/10] rounded-2xl overflow-hidden bg-neutral-100 dark:bg-neutral-900">
-        <img
+        <NuxtImg
           v-if="post.coverImage"
           :src="coverImageSrc(post.coverImage)!"
           :alt="post.title"
+          sizes="sm:100vw lg:60vw"
           class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          loading="lazy"
         />
         <div v-else class="w-full h-full bg-gradient-to-br from-neutral-200 to-neutral-300 dark:from-neutral-700 dark:to-neutral-800" />
       </div>

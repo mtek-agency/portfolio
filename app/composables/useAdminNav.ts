@@ -17,6 +17,7 @@ export function useAdminNav(unreadCount?: Ref<number | null>, onSelect?: () => v
       { label: 'Projets', icon: 'i-lucide-folder-closed', to: '/admin/projets', onSelect },
       { label: 'Blog', icon: 'i-lucide-notebook-pen', to: '/admin/blog', onSelect },
       { label: 'Outils', icon: 'i-lucide-layout-grid', to: '/admin/tools', onSelect },
+      { label: 'Parcours', icon: 'i-lucide-briefcase', to: '/admin/parcours', onSelect },
     ],
     [
       { type: 'label', label: 'Analyse' },

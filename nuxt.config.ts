@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   app: {
     head: {
-      titleTemplate: '%s | mtek agency',
+      titleTemplate: '%s — Mattéo Bonneval',
       link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
@@ -18,15 +18,35 @@ export default defineNuxtConfig({
     },
     pageTransition: { name: 'page', mode: 'out-in' },
   },
-  modules: [
-    '@nuxt/eslint',
-    '@nuxthub/core',
-    'nuxt-auth-utils',
-    '@nuxt/scripts',
-    '@nuxtjs/turnstile',
-    '@nuxt/ui',
-    '@sentry/nuxt/module'
-  ],
+  modules: ['@nuxt/eslint', '@nuxthub/core', 'nuxt-auth-utils', '@nuxt/scripts', '@nuxtjs/turnstile', '@nuxt/ui', '@nuxt/image', '@sentry/nuxt/module', '@nuxtjs/seo'],
+  image: {
+    provider: 'none',
+  },
+
+  // ─── SEO ──────────────────────────────────────────────────────────────────
+  site: {
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://matteo-bonneval.fr',
+    name: 'Mattéo Bonneval',
+    description: 'Développeur web & mobile basé à Bordeaux. Je transforme vos idées en solutions numériques.',
+    defaultLocale: 'fr',
+  },
+  sitemap: {
+    sources: [
+      '/api/__sitemap__/projects',
+      '/api/__sitemap__/posts',
+    ],
+  },
+  robots: {
+    disallow: ['/admin', '/login'],
+  },
+  ogImage: {
+    enabled: true,
+    runtimeCacheStorage: false,
+    renderer: 'satori',
+  },
+  schemaOrg: {
+    reactive: true,
+  },
   css: ['~/assets/css/main.css'],
   hub: {
     db: {

@@ -24,6 +24,13 @@ useSeoMeta({
   title: 'Journal — Mattéo Bonneval',
   description: 'Articles sur le développement web, mobile et les nouvelles technologies.',
 })
+
+defineOgImage({
+  component: 'Portfolio',
+  title: 'Journal',
+  description: 'Articles sur le développement web, mobile et les nouvelles technologies.',
+  label: 'Blog',
+})
 </script>
 
 <template>
@@ -66,12 +73,15 @@ useSeoMeta({
     >
         <!-- Atmospheric background -->
         <div class="absolute inset-0">
-          <img
+          <NuxtImg
             v-if="post.coverImage"
             :src="coverImageSrc(post.coverImage)!"
             :alt="post.title"
+            width="1200"
+            quality="40"
             class="w-full h-full object-cover"
             style="filter: blur(28px) saturate(1.3); transform: scale(1.12)"
+            loading="lazy"
           />
           <div class="absolute inset-0 bg-neutral-950/75" />
           <div class="absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 30%, rgba(10,10,10,0.55) 100%)" />

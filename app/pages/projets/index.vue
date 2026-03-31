@@ -22,6 +22,13 @@ useSeoMeta({
   title: 'Projets — Mattéo Bonneval',
   description: 'Sélection de projets web & mobile réalisés lors de projets étudiants, personnels ou professionnels.',
 })
+
+defineOgImage({
+  component: 'Portfolio',
+  title: 'Projets',
+  description: 'Sélection de projets web & mobile.',
+  label: 'Portfolio',
+})
 </script>
 
 <template>

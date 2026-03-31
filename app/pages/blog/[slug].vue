@@ -23,8 +23,31 @@ const { el: contentEl, isVisible: contentVisible } = useReveal({ threshold: 0.05
 useSeoMeta({
   title: () => post.value?.metaTitle || post.value?.title || '',
   description: () => post.value?.metaDescription || post.value?.excerpt || undefined,
-  ogImage: () => post.value?.coverImage ? coverImageSrc(post.value.coverImage) ?? undefined : undefined,
+  ogType: 'article',
+  twitterCard: 'summary_large_image',
 })
+
+defineOgImage({
+  component: 'Portfolio',
+  title: post.value?.title,
+  description: post.value?.excerpt || undefined,
+  label: 'Journal',
+})
+
+useSchemaOrg([
+  defineArticle({
+    headline: () => post.value?.title || '',
+    description: () => post.value?.excerpt || undefined,
+    image: () => post.value?.coverImage ? coverImageSrc(post.value.coverImage) ?? undefined : undefined,
+    datePublished: () => post.value?.publishedAt?.toISOString() || undefined,
+    dateModified: () => post.value?.updatedAt?.toISOString() || undefined,
+    author: [{
+      '@type': 'Person',
+      name: 'Mattéo Bonneval',
+      url: 'https://matteo-bonneval.fr',
+    }],
+  }),
+])
 </script>
 
 <template>
@@ -73,10 +96,12 @@ useSeoMeta({
         class="w-full max-h-[65vh] overflow-hidden"
         style="animation: line-up 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both"
       >
-        <img
+        <NuxtImg
           :src="coverImageSrc(post.coverImage)!"
           :alt="post.title"
+          sizes="100vw"
           class="w-full h-full object-cover"
+          loading="eager"
         />
       </div>
     </section>

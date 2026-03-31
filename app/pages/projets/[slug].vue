@@ -31,7 +31,13 @@ const { el: contentEl, isVisible: contentVisible } = useReveal({ threshold: 0.05
 useSeoMeta({
   title: () => project.value?.metaTitle || project.value?.name || '',
   description: () => project.value?.metaDescription || project.value?.description || '',
-  ogImage: () => coverImage.value ?? undefined,
+})
+
+defineOgImage({
+  component: 'Portfolio',
+  title: project.value?.name,
+  description: project.value?.description?.substring(0, 120) || undefined,
+  label: `Projet · ${project.value?.year}`,
 })
 </script>
 
@@ -90,7 +96,7 @@ useSeoMeta({
 
       <!-- Cover image -->
       <div v-if="coverImage" class="w-full aspect-[21/9] overflow-hidden" style="animation: line-up 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both">
-        <img :src="coverImage" :alt="project.name" class="w-full h-full object-cover" />
+        <NuxtImg :src="coverImageSrc(project.images[0]?.url)!" :alt="project.name" sizes="100vw" class="w-full h-full object-cover" loading="eager" />
       </div>
     </section>
 
@@ -154,7 +160,7 @@ useSeoMeta({
             class="rounded-2xl lg:rounded-3xl overflow-hidden border border-neutral-200 dark:border-neutral-800"
             style="height: calc(100svh - 172px)"
           >
-            <img :src="coverImageSrc(image.url)!" :alt="project.name" class="w-full h-full object-cover" />
+            <NuxtImg :src="coverImageSrc(image.url)!" :alt="project.name" sizes="100vw" class="w-full h-full object-cover" loading="lazy" />
           </div>
         </div>
         <!-- Scroll space so the last card can stick -->

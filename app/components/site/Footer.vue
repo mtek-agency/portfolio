@@ -103,6 +103,7 @@ async function subscribe() {
             <p class="text-[10px] tracking-[0.35em] uppercase text-neutral-600 mb-5 font-medium">Navigation</p>
             <div class="flex flex-col gap-3">
               <NuxtLink to="/" class="text-sm text-neutral-400 hover:text-white transition-colors duration-200">Accueil</NuxtLink>
+              <NuxtLink to="/a-propos" class="text-sm text-neutral-400 hover:text-white transition-colors duration-200">À propos</NuxtLink>
               <NuxtLink to="/projets" class="text-sm text-neutral-400 hover:text-white transition-colors duration-200">Projets</NuxtLink>
               <NuxtLink to="/blog" class="text-sm text-neutral-400 hover:text-white transition-colors duration-200">Blog</NuxtLink>
             </div>
