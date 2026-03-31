@@ -24,7 +24,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     externals: {
-      external: ['drizzle-orm'],
+      inline: ['drizzle-orm'],
     },
   },
 

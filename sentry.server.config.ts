@@ -5,4 +5,5 @@ Sentry.init({
   environment: process.env.NODE_ENV,
   tracesSampleRate: 0.2,
   sendDefaultPii: true,
+  registerEsmLoaderHooks: false
 })
