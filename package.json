@@ -27,7 +27,6 @@
     "drizzle-orm": "^0.36.4",
     "nuxt": "^4.2.2",
     "nuxt-auth-utils": "^0.5.27",
-    "nuxt-og-image": "^6.3.1",
     "postgres": "^3.4.8",
     "satori": "^0.26.0",
     "tailwindcss": "^4.1.18",
