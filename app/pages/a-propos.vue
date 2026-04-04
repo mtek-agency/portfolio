@@ -6,11 +6,12 @@ useSeoMeta({
   description: 'Développeur web & mobile fullstack basé à Bordeaux. Étudiant en Master Dev Manager Fullstack à l\'EFREI, je conçois des applications propres, performantes et maintenables.',
 })
 
-defineOgImage({
-  component: 'Portfolio',
-  title: 'À propos',
-  description: 'Développeur fullstack basé à Bordeaux, en Master Dev Manager à l\'EFREI.',
-  label: 'Qui suis-je',
+defineOgImage('Portfolio', {
+  props: {
+    title: 'À propos',
+    description: 'Développeur fullstack basé à Bordeaux, en Master Dev Manager à l\'EFREI.',
+    label: 'Qui suis-je',
+  },
 })
 
 useSchemaOrg([
