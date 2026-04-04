@@ -31,7 +31,7 @@ const { el, isVisible } = useReveal()
         class="group relative block w-full rounded-3xl overflow-hidden mb-4 transition-all duration-700"
         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
       >
-        <div class="aspect-[16/7] w-full overflow-hidden bg-neutral-900">
+        <div class="aspect-[4/3] md:aspect-[16/7] w-full overflow-hidden bg-neutral-900">
           <NuxtImg
             v-if="posts[0].coverImage"
             :src="coverImageSrc(posts[0].coverImage)!"
@@ -43,7 +43,7 @@ const { el, isVisible } = useReveal()
           <div v-else class="w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900" />
         </div>
         <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent" />
-        <div class="absolute bottom-0 left-0 right-0 p-8 lg:p-12">
+        <div class="absolute bottom-0 left-0 right-0 p-5 md:p-8 lg:p-12">
           <div class="flex items-center gap-3 mb-4">
             <span v-if="parseTags(posts[0].tags)[0]" class="text-[10px] tracking-[0.35em] uppercase text-neutral-400 font-medium">
               {{ parseTags(posts[0].tags)[0] }}

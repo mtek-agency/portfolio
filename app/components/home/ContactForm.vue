@@ -93,15 +93,15 @@ async function onSubmit(e: FormSubmitEvent<ContactForm>) {
         </div>
       </UFormField>
 
-      <label class="flex items-start gap-4 cursor-pointer group mb-8">
+      <label class="flex items-start gap-4 cursor-pointer group mb-8 -mx-2 px-2 py-2 rounded-lg">
         <div
-          class="mt-0.5 size-4 rounded border flex-shrink-0 flex items-center justify-center transition-all duration-200"
+          class="mt-0.5 size-5 rounded border flex-shrink-0 flex items-center justify-center transition-all duration-200"
           :class="state.newsletter
             ? 'bg-white border-white'
             : 'bg-transparent border-neutral-600 group-hover:border-neutral-400'"
           @click="state.newsletter = !state.newsletter"
         >
-          <UIcon v-if="state.newsletter" name="i-lucide-check" class="size-2.5 text-black" />
+          <UIcon v-if="state.newsletter" name="i-lucide-check" class="size-3 text-black" />
         </div>
         <div @click="state.newsletter = !state.newsletter">
           <p class="text-sm text-neutral-300 font-medium">S'abonner à la newsletter</p>

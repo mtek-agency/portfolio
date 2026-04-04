@@ -85,7 +85,7 @@ async function subscribe() {
       </div>
 
       <!-- Main footer -->
-      <div class="py-14 flex flex-col lg:flex-row items-start justify-between gap-12">
+      <div class="py-10 flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-12">
         <!-- Brand -->
         <div class="max-w-xs">
           <div class="flex items-center gap-0.5 mb-4">
@@ -98,7 +98,7 @@ async function subscribe() {
         </div>
 
         <!-- Links -->
-        <div class="flex gap-16 lg:gap-24">
+        <div class="flex gap-8 md:gap-16 lg:gap-24">
           <div>
             <p class="text-[10px] tracking-[0.35em] uppercase text-neutral-600 mb-5 font-medium">Navigation</p>
             <div class="flex flex-col gap-3">

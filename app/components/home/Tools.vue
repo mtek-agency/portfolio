@@ -10,7 +10,7 @@ const { tilts, spots, onMouseMove, onMouseLeave, cardStyle } = useToolCard()
 <template>
   <section
     ref="el"
-    class="bg-neutral-50 dark:bg-neutral-950 py-24 lg:py-32 border-t border-neutral-200 dark:border-neutral-800/60"
+    class="bg-neutral-50 dark:bg-neutral-950 py-16 lg:py-32 border-t border-neutral-200 dark:border-neutral-800/60"
   >
     <div class="max-w-7xl mx-auto px-6 lg:px-12">
       <div

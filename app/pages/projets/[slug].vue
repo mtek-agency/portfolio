@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Project, ProjectImage } from '~~/server/db/schema'
+import type { PublicProject } from '~/types/home'
 
 type ProjectWithImages = Project & {
   images: ProjectImage[]
@@ -7,7 +8,11 @@ type ProjectWithImages = Project & {
 }
 
 const route = useRoute()
-const { data: project, error } = await useFetch<ProjectWithImages>(`/api/projects/${route.params.slug}`)
+
+const [{ data: project, error }, { data: allProjects }] = await Promise.all([
+  useFetch<ProjectWithImages>(`/api/projects/${route.params.slug}`),
+  useFetch<PublicProject[]>('/api/projects/public'),
+])
 
 if (error.value || !project.value) {
   throw createError({ statusCode: 404, message: 'Projet introuvable' })
@@ -22,11 +27,21 @@ const coverImage = computed(() =>
 )
 const techStack = computed(() => parseTags(project.value?.stack))
 const tags = computed(() => parseTags(project.value?.tags))
-
 const galleryImages = computed(() => project.value?.images.slice(1) ?? [])
 const { cardEls, cardStyle } = useStackCards(computed(() => galleryImages.value.length))
-
 const { el: contentEl, isVisible: contentVisible } = useReveal({ threshold: 0.05 })
+
+const currentIndex = computed(() =>
+  allProjects.value?.findIndex(p => p.slug === route.params.slug) ?? -1,
+)
+const prevProject = computed(() =>
+  currentIndex.value > 0 ? allProjects.value![currentIndex.value - 1] : null,
+)
+const nextProject = computed(() =>
+  currentIndex.value >= 0 && currentIndex.value < (allProjects.value?.length ?? 0) - 1
+    ? allProjects.value![currentIndex.value + 1]
+    : null,
+)
 
 useSeoMeta({
   title: () => project.value?.metaTitle || project.value?.name || '',
@@ -95,16 +110,20 @@ defineOgImage({
       </div>
 
       <!-- Cover image -->
-      <div v-if="coverImage" class="w-full aspect-[21/9] overflow-hidden" style="animation: line-up 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both">
+      <div
+        v-if="coverImage"
+        class="w-full aspect-[4/3] md:aspect-[21/9] overflow-hidden"
+        style="animation: line-up 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both"
+      >
         <NuxtImg :src="coverImageSrc(project.images[0]?.url)!" :alt="project.name" sizes="100vw" class="w-full h-full object-cover" loading="eager" />
       </div>
     </section>
 
     <!-- Content -->
-    <section ref="contentEl" class="bg-white dark:bg-neutral-950 py-20 lg:py-28">
+    <section ref="contentEl" class="bg-white dark:bg-neutral-950 py-16 lg:py-28">
       <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <div
-          class="grid grid-cols-1 lg:grid-cols-3 gap-16 transition-all duration-700"
+          class="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-16 transition-all duration-700"
           :class="contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
         >
           <!-- Description -->
@@ -116,7 +135,7 @@ defineOgImage({
           </div>
 
           <!-- Sidebar meta -->
-          <div class="flex flex-col gap-10">
+          <div class="flex flex-row lg:flex-col gap-8 lg:gap-10 flex-wrap">
             <div v-if="tags.length">
               <p class="text-[10px] tracking-[0.4em] uppercase text-neutral-400 font-medium mb-4">Tags</p>
               <div class="flex flex-wrap gap-2">
@@ -156,26 +175,89 @@ defineOgImage({
           class="mb-3 will-change-transform"
           :style="cardStyle(i)"
         >
-          <div
-            class="rounded-2xl lg:rounded-3xl overflow-hidden border border-neutral-200 dark:border-neutral-800"
-            style="height: calc(100svh - 172px)"
-          >
+          <div class="rounded-2xl lg:rounded-3xl overflow-hidden border border-neutral-200 dark:border-neutral-800 aspect-[16/10] md:aspect-auto md:[height:calc(100svh-172px)]">
             <NuxtImg :src="coverImageSrc(image.url)!" :alt="project.name" sizes="100vw" class="w-full h-full object-cover" loading="lazy" />
           </div>
         </div>
-        <!-- Scroll space so the last card can stick -->
         <div class="h-[30vh]" />
       </div>
     </section>
 
-    <!-- Back -->
-    <div class="bg-white dark:bg-neutral-950 py-10 border-t border-neutral-100 dark:border-neutral-800/60">
-      <div class="max-w-7xl mx-auto px-6 lg:px-12">
+    <!-- Prev / Next navigation -->
+    <div class="bg-neutral-950 border-t border-neutral-800/60">
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        <!-- Prev -->
+        <NuxtLink
+          v-if="prevProject"
+          :to="`/projets/${prevProject.slug}`"
+          class="group relative flex items-end overflow-hidden h-56 md:h-72 p-7 md:p-10 border-b md:border-b-0 border-neutral-800/60"
+        >
+          <NuxtImg
+            v-if="prevProject.images[0]"
+            :src="coverImageSrc(prevProject.images[0].url)!"
+            :alt="prevProject.name"
+            sizes="sm:100vw md:50vw"
+            class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-105 transition-all duration-700 ease-out"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/30 to-transparent" />
+          <div class="relative z-10">
+            <p class="flex items-center gap-2 text-[10px] tracking-[0.4em] uppercase text-neutral-600 font-medium mb-3 group-hover:text-neutral-400 transition-colors duration-300">
+              <UIcon name="i-lucide-arrow-left" class="size-3.5 group-hover:-translate-x-1 transition-transform duration-300" />
+              Projet précédent
+            </p>
+            <h3
+              class="font-display font-black text-white tracking-tighter leading-[0.92] group-hover:translate-x-1.5 transition-transform duration-300"
+              style="font-size: clamp(1.4rem, 3vw, 2.5rem)"
+            >
+              {{ prevProject.name }}
+            </h3>
+          </div>
+        </NuxtLink>
+
+        <!-- Spacer if no prev -->
+        <div v-else class="hidden md:block border-r border-neutral-800/60" />
+
+        <!-- Next -->
+        <NuxtLink
+          v-if="nextProject"
+          :to="`/projets/${nextProject.slug}`"
+          class="group relative flex items-end overflow-hidden h-56 md:h-72 p-7 md:p-10 md:border-l border-neutral-800/60"
+        >
+          <NuxtImg
+            v-if="nextProject.images[0]"
+            :src="coverImageSrc(nextProject.images[0].url)!"
+            :alt="nextProject.name"
+            sizes="sm:100vw md:50vw"
+            class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 group-hover:scale-105 transition-all duration-700 ease-out"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/30 to-transparent" />
+          <div class="relative z-10 md:ml-auto md:text-right w-full">
+            <p class="flex items-center gap-2 text-[10px] tracking-[0.4em] uppercase text-neutral-600 font-medium mb-3 md:justify-end group-hover:text-neutral-400 transition-colors duration-300">
+              Projet suivant
+              <UIcon name="i-lucide-arrow-right" class="size-3.5 group-hover:translate-x-1 transition-transform duration-300" />
+            </p>
+            <h3
+              class="font-display font-black text-white tracking-tighter leading-[0.92] group-hover:-translate-x-1.5 transition-transform duration-300"
+              style="font-size: clamp(1.4rem, 3vw, 2.5rem)"
+            >
+              {{ nextProject.name }}
+            </h3>
+          </div>
+        </NuxtLink>
+
+        <!-- Spacer if no next -->
+        <div v-else class="hidden md:block" />
+      </div>
+
+      <!-- Back link -->
+      <div class="border-t border-neutral-800/60 py-6 px-6 lg:px-12 max-w-7xl mx-auto">
         <NuxtLink
           to="/projets"
-          class="group inline-flex items-center gap-2.5 text-sm text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors duration-200"
+          class="group inline-flex items-center gap-2.5 text-sm text-neutral-600 hover:text-white transition-colors duration-200"
         >
-          <UIcon name="i-lucide-arrow-left" class="size-4 group-hover:-translate-x-1 transition-transform" />
+          <UIcon name="i-lucide-layout-grid" class="size-3.5" />
           Tous les projets
         </NuxtLink>
       </div>

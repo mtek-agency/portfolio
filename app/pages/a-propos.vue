@@ -86,7 +86,7 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
           <div v-for="(line, i) in ['Mattéo', 'DÉVELOPPEUR', 'WEB & MOBILE']" :key="line" class="overflow-hidden leading-[0.88]">
             <h1
               class="font-display font-black text-white tracking-tighter block"
-              :style="`font-size: clamp(2.2rem, 5.5vw, 6.5rem); animation: line-up 0.9s cubic-bezier(0.16,1,0.3,1) ${0.3 + i * 0.15}s both`"
+              :style="`font-size: clamp(1.6rem, 6vw, 6.5rem); animation: line-up 0.9s cubic-bezier(0.16,1,0.3,1) ${0.3 + i * 0.15}s both`"
             >
               {{ line }}
             </h1>
@@ -123,7 +123,7 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
     </section>
 
     <!-- ─── BIO ───────────────────────────────────────────────────────────── -->
-    <section ref="bioEl" class="bg-neutral-50 dark:bg-neutral-950 py-24 lg:py-36">
+    <section ref="bioEl" class="bg-neutral-50 dark:bg-neutral-950 py-16 lg:py-36">
       <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <p
           class="text-[10px] tracking-[0.4em] uppercase text-neutral-400 font-medium mb-16 transition-all duration-700"
@@ -200,7 +200,7 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
     </section>
 
     <!-- ─── PARCOURS ──────────────────────────────────────────────────────── -->
-    <section ref="timelineEl" class="bg-neutral-950 py-24 lg:py-36">
+    <section ref="timelineEl" class="bg-neutral-950 py-16 lg:py-36">
       <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <p
           class="text-[10px] tracking-[0.4em] uppercase text-neutral-600 font-medium mb-16 transition-all duration-700"
@@ -231,7 +231,7 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
     </section>
 
     <!-- ─── VALEURS ───────────────────────────────────────────────────────── -->
-    <section ref="valuesEl" class="bg-neutral-50 dark:bg-neutral-950 py-24 lg:py-36">
+    <section ref="valuesEl" class="bg-neutral-50 dark:bg-neutral-950 py-16 lg:py-36">
       <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <div
           class="flex items-baseline justify-between mb-16 transition-all duration-700"
@@ -269,7 +269,7 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
     </section>
 
     <!-- ─── CTA ───────────────────────────────────────────────────────────── -->
-    <section ref="ctaEl" class="bg-neutral-950 py-24 lg:py-36">
+    <section ref="ctaEl" class="bg-neutral-950 py-16 lg:py-36">
       <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
           <div>

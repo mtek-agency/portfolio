@@ -39,8 +39,8 @@ useSchemaOrg([
     headline: () => post.value?.title || '',
     description: () => post.value?.excerpt || undefined,
     image: () => post.value?.coverImage ? coverImageSrc(post.value.coverImage) ?? undefined : undefined,
-    datePublished: () => post.value?.publishedAt?.toISOString() || undefined,
-    dateModified: () => post.value?.updatedAt?.toISOString() || undefined,
+    datePublished: () => post.value?.publishedAt ? new Date(post.value.publishedAt).toISOString() : undefined,
+    dateModified: () => post.value?.updatedAt ? new Date(post.value.updatedAt).toISOString() : undefined,
     author: [{
       '@type': 'Person',
       name: 'Mattéo Bonneval',
@@ -93,7 +93,7 @@ useSchemaOrg([
       <!-- Cover -->
       <div
         v-if="post.coverImage"
-        class="w-full max-h-[65vh] overflow-hidden"
+        class="w-full max-h-[45vh] md:max-h-[65vh] overflow-hidden"
         style="animation: line-up 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both"
       >
         <NuxtImg

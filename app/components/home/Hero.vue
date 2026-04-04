@@ -1,5 +1,14 @@
 <script setup lang="ts">
+const { isDone } = usePreloader()
+
+function animStyle(delay: number, duration = '0.9s') {
+  return {
+    animation: `line-up ${duration} cubic-bezier(0.16,1,0.3,1) ${delay}s both`,
+    animationPlayState: isDone.value ? 'running' : 'paused',
+  }
+}
 </script>
+
 <template>
   <section class="relative min-h-svh bg-neutral-950 flex flex-col overflow-hidden">
     <div class="absolute inset-0 pointer-events-none">
@@ -10,7 +19,7 @@
       <div class="overflow-hidden mb-8">
         <p
           class="text-neutral-500 text-[10px] tracking-[0.5em] uppercase font-medium"
-          style="animation: line-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s both"
+          :style="animStyle(0.1, '0.7s')"
         >
           MATTÉO BONNEVAL · BORDEAUX, FRANCE
         </p>
@@ -20,7 +29,7 @@
         <div v-for="(line, i) in ['JE DONNE VIE', 'AUX IDÉES.']" :key="line" class="overflow-hidden leading-[0.88]">
           <h1
             class="font-display font-black text-white tracking-tighter block"
-            :style="`font-size: clamp(2.2rem, 5.5vw, 6.5rem); animation: line-up 0.9s cubic-bezier(0.16,1,0.3,1) ${0.3 + i * 0.15}s both`"
+            :style="{ ...animStyle(0.2 + i * 0.15), fontSize: 'clamp(2.2rem, 5.5vw, 6.5rem)' }"
           >
             {{ line }}
           </h1>
@@ -29,7 +38,7 @@
 
       <div
         class="mt-14 flex flex-col md:flex-row items-start md:items-end justify-between gap-8"
-        style="animation: line-up 0.8s cubic-bezier(0.16,1,0.3,1) 0.65s both"
+        :style="animStyle(0.55, '0.8s')"
       >
         <NuxtLink to="/projets" class="group inline-flex items-center gap-4 text-white">
           <span class="text-xs tracking-[0.25em] uppercase font-medium">Voir mes projets</span>
@@ -42,7 +51,7 @@
 
     <div
       class="absolute bottom-8 right-12 flex flex-col items-center gap-3"
-      style="animation: line-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.9s both"
+      :style="animStyle(0.75, '0.7s')"
     >
       <span class="text-[9px] tracking-[0.35em] uppercase text-neutral-600 [writing-mode:vertical-lr]">SCROLL</span>
       <div class="w-px h-14 bg-gradient-to-b from-neutral-600 to-transparent" />

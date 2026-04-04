@@ -36,6 +36,18 @@ defineOgImage({
     <ProjetsHero :count="projects.length" />
 
     <div class="max-w-7xl mx-auto px-6 lg:px-12 pt-20 lg:pt-28">
+      <!-- Mobile year strip -->
+      <div class="md:hidden flex gap-2 overflow-x-auto pb-3 mb-6 -mx-6 px-6 scrollbar-none">
+        <div
+          v-for="[year, yearProjects] in byYear"
+          :key="year"
+          class="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-neutral-200 dark:border-neutral-800"
+        >
+          <span class="text-xs font-mono font-semibold text-neutral-900 dark:text-white">{{ year }}</span>
+          <span class="text-xs font-mono text-neutral-400 dark:text-neutral-600">{{ yearProjects.length.toString().padStart(2, '0') }}</span>
+        </div>
+      </div>
+
       <div class="flex gap-8 lg:gap-14">
         <ProjetsTimeline :by-year="byYear" />
 

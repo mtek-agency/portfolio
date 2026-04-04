@@ -8,7 +8,7 @@ const { hoveredImage, mouseX, mouseY, onHover, onLeave, onMouseMove } = useProje
 </script>
 
 <template>
-  <section ref="el" class="bg-neutral-50 dark:bg-neutral-950 py-24 lg:py-36" @mousemove="onMouseMove">
+  <section ref="el" class="bg-neutral-50 dark:bg-neutral-950 py-16 lg:py-36" @mousemove="onMouseMove">
     <div class="max-w-7xl mx-auto px-6 lg:px-12">
       <div
         class="flex items-baseline justify-between mb-16 transition-all duration-700"

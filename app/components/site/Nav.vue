@@ -19,14 +19,11 @@ watch(menuOpen, (open) => {
 onMounted(() => {
   const onScroll = () => { scrolled.value = window.scrollY > 40 }
   const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') menuOpen.value = false }
-  const onTouchMove = () => { if (menuOpen.value) menuOpen.value = false }
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('keydown', onKey)
-  window.addEventListener('touchmove', onTouchMove, { passive: true })
   onUnmounted(() => {
     window.removeEventListener('scroll', onScroll)
     window.removeEventListener('keydown', onKey)
-    window.removeEventListener('touchmove', onTouchMove)
     document.body.style.overflow = ''
   })
 })
@@ -158,7 +155,7 @@ const toggleTheme = () => {
             <div class="flex items-baseline gap-5">
               <span class="text-xs font-mono text-neutral-700">{{ String(i + 1).padStart(2, '0') }}</span>
               <span class="font-display font-black text-white tracking-tighter transition-transform duration-300 group-hover:translate-x-2"
-                style="font-size: clamp(2.8rem, 12vw, 5rem)">
+                style="font-size: clamp(2rem, 9vw, 5rem)">
                 {{ link.label }}
               </span>
             </div>

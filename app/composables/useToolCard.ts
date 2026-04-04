@@ -1,9 +1,15 @@
 export function useToolCard() {
+  const hasMouse = ref(false)
   const colorMode = useColorMode()
   const tilts = reactive<Record<number, string>>({})
   const spots = reactive<Record<number, { x: number; y: number }>>({})
 
+  onMounted(() => {
+    hasMouse.value = window.matchMedia('(pointer: fine)').matches
+  })
+
   function onMouseMove(e: MouseEvent, id: number) {
+    if (!hasMouse.value) return
     const el = e.currentTarget as HTMLElement
     const { left, top, width, height } = el.getBoundingClientRect()
     const nx = (e.clientX - left) / width
@@ -13,6 +19,7 @@ export function useToolCard() {
   }
 
   function onMouseLeave(id: number) {
+    if (!hasMouse.value) return
     delete tilts[id]
     delete spots[id]
   }
@@ -34,5 +41,5 @@ export function useToolCard() {
     }
   }
 
-  return { tilts, spots, onMouseMove, onMouseLeave, cardStyle }
+  return { hasMouse, tilts, spots, onMouseMove, onMouseLeave, cardStyle }
 }
