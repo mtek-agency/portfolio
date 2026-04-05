@@ -92,19 +92,18 @@ html {
 
 /* ─── Page transitions ─────────────────────────────────────── */
 .page-leave-active {
-  transition: opacity 0.35s cubic-bezier(0.4, 0, 1, 1), transform 0.35s cubic-bezier(0.4, 0, 1, 1);
+  transition: opacity 0.18s ease;
   pointer-events: none;
 }
 .page-leave-to {
   opacity: 0;
-  transform: translateY(-16px) scale(0.98);
 }
 .page-enter-active {
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .page-enter-from {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(10px);
 }
 
 /* ─── Hover image transition ───────────────────────────────── */

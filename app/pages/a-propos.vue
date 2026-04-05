@@ -4,14 +4,15 @@ import type { Parcours } from '~~/server/db/schema'
 useSeoMeta({
   title: 'À propos — Mattéo Bonneval',
   description: 'Développeur web & mobile fullstack basé à Bordeaux. Étudiant en Master Dev Manager Fullstack à l\'EFREI, je conçois des applications propres, performantes et maintenables.',
+  twitterCard: 'summary_large_image',
+  ogLocale: 'fr_FR',
 })
 
-defineOgImage('Portfolio', {
-  props: {
-    title: 'À propos',
-    description: 'Développeur fullstack basé à Bordeaux, en Master Dev Manager à l\'EFREI.',
-    label: 'Qui suis-je',
-  },
+defineOgImage({
+  component: 'Portfolio',
+  title: 'À propos',
+  description: 'Développeur fullstack basé à Bordeaux, en Master Dev Manager à l\'EFREI.',
+  label: 'Qui suis-je',
 })
 
 useSchemaOrg([

@@ -21,6 +21,8 @@ const { cardEls, cardStyle } = useStackCards(computed(() => projects.value.lengt
 useSeoMeta({
   title: 'Projets — Mattéo Bonneval',
   description: 'Sélection de projets web & mobile réalisés lors de projets étudiants, personnels ou professionnels.',
+  twitterCard: 'summary_large_image',
+  ogLocale: 'fr_FR',
 })
 
 defineOgImage({
@@ -29,6 +31,18 @@ defineOgImage({
   description: 'Sélection de projets web & mobile.',
   label: 'Portfolio',
 })
+
+useSchemaOrg([
+  defineItemList({
+    name: 'Projets de Mattéo Bonneval',
+    itemListElement: () => projects.value.map((project, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: project.name,
+      url: `https://matteo-bonneval.fr/projets/${project.slug}`,
+    })),
+  }),
+])
 </script>
 
 <template>

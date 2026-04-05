@@ -46,6 +46,8 @@ const nextProject = computed(() =>
 useSeoMeta({
   title: () => project.value?.metaTitle || project.value?.name || '',
   description: () => project.value?.metaDescription || project.value?.description || '',
+  twitterCard: 'summary_large_image',
+  ogLocale: 'fr_FR',
 })
 
 defineOgImage({
@@ -54,6 +56,27 @@ defineOgImage({
   description: project.value?.description?.substring(0, 120) || undefined,
   label: `Projet · ${project.value?.year}`,
 })
+
+useSchemaOrg([
+  defineWebPage({
+    name: () => project.value?.name || '',
+    description: () => project.value?.description || '',
+    url: () => `https://matteo-bonneval.fr/projets/${route.params.slug}`,
+    author: {
+      '@type': 'Person',
+      name: 'Mattéo Bonneval',
+      url: 'https://matteo-bonneval.fr',
+    },
+    keywords: () => parseTags(project.value?.tags).join(', '),
+  }),
+  defineBreadcrumb({
+    itemListElement: [
+      { name: 'Accueil', item: '/' },
+      { name: 'Projets', item: '/projets' },
+      { name: () => project.value?.name || '', item: () => `/projets/${route.params.slug}` },
+    ],
+  }),
+])
 </script>
 
 <template>

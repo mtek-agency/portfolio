@@ -24,7 +24,11 @@ useSeoMeta({
   title: () => post.value?.metaTitle || post.value?.title || '',
   description: () => post.value?.metaDescription || post.value?.excerpt || undefined,
   ogType: 'article',
+  ogLocale: 'fr_FR',
   twitterCard: 'summary_large_image',
+  articlePublishedTime: () => post.value?.publishedAt ? new Date(post.value.publishedAt).toISOString() : undefined,
+  articleModifiedTime: () => post.value?.updatedAt ? new Date(post.value.updatedAt).toISOString() : undefined,
+  articleAuthor: 'Mattéo Bonneval',
 })
 
 defineOgImage({
@@ -46,6 +50,13 @@ useSchemaOrg([
       name: 'Mattéo Bonneval',
       url: 'https://matteo-bonneval.fr',
     }],
+  }),
+  defineBreadcrumb({
+    itemListElement: [
+      { name: 'Accueil', item: '/' },
+      { name: 'Journal', item: '/blog' },
+      { name: () => post.value?.title || '', item: () => `/blog/${route.params.slug}` },
+    ],
   }),
 ])
 </script>

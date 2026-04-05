@@ -23,6 +23,8 @@ onUnmounted(() => {
 useSeoMeta({
   title: 'Journal — Mattéo Bonneval',
   description: 'Articles sur le développement web, mobile et les nouvelles technologies.',
+  twitterCard: 'summary_large_image',
+  ogLocale: 'fr_FR',
 })
 
 defineOgImage({
@@ -31,6 +33,15 @@ defineOgImage({
   description: 'Articles sur le développement web, mobile et les nouvelles technologies.',
   label: 'Blog',
 })
+
+useSchemaOrg([
+  defineWebPage({
+    '@type': 'CollectionPage',
+    name: 'Journal — Mattéo Bonneval',
+    description: 'Articles sur le développement web, mobile et les nouvelles technologies.',
+    url: 'https://matteo-bonneval.fr/blog',
+  }),
+])
 </script>
 
 <template>

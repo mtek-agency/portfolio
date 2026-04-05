@@ -15,6 +15,8 @@ useSeoMeta({
   title: 'Mattéo Bonneval — Développeur Web & Mobile',
   titleTemplate: '%s',
   description: 'Développeur web & mobile basé à Bordeaux. Je transforme vos idées en solutions numériques.',
+  twitterCard: 'summary_large_image',
+  ogLocale: 'fr_FR',
 })
 
 defineOgImage({
@@ -28,6 +30,7 @@ useSchemaOrg([
   definePerson({
     name: 'Mattéo Bonneval',
     url: 'https://matteo-bonneval.fr',
+    image: 'https://matteo-bonneval.fr/hero.webp',
     sameAs: [
       'https://www.linkedin.com/in/matteo-bonneval',
       'https://github.com/matteobnvl',
