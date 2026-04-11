@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+
   app: {
     head: {
       titleTemplate: '%s — Mattéo Bonneval',
@@ -18,10 +19,13 @@ export default defineNuxtConfig({
     },
     pageTransition: { name: 'page', mode: 'out-in' },
   },
+
   modules: ['@nuxt/eslint', '@nuxthub/core', 'nuxt-auth-utils', '@nuxt/scripts', '@nuxtjs/turnstile', '@nuxt/ui', '@nuxt/image', '@sentry/nuxt/module', 'nuxt-og-image', '@nuxtjs/seo'],
+
   image: {
     provider: 'none',
   },
+
   nitro: {
     externals: {
       inline: ['drizzle-orm'],
@@ -35,23 +39,29 @@ export default defineNuxtConfig({
     description: 'Développeur web & mobile basé à Bordeaux. Je transforme vos idées en solutions numériques.',
     defaultLocale: 'fr',
   },
+
   sitemap: {
     sources: [
       '/api/__sitemap__/projects',
       '/api/__sitemap__/posts',
     ],
   },
+
   robots: {
     disallow: ['/admin', '/login'],
   },
+
   ogImage: {
     enabled: true,
     runtimeCacheStorage: false,
   },
+
   schemaOrg: {
     reactive: true,
   },
+
   css: ['~/assets/css/main.css'],
+
   hub: {
     db: {
       dialect: 'postgresql'
@@ -62,6 +72,7 @@ export default defineNuxtConfig({
     },
     kv: true
   },
+
   $production: {
     hub: {
       blob: {
@@ -74,9 +85,11 @@ export default defineNuxtConfig({
       }
     }
   },
+
   turnstile: {
     siteKey: process.env.NUXT_TURNSTILE_SITE_KEY,
   },
+
   vite: {
     optimizeDeps: {
       include: [
@@ -88,12 +101,9 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   runtimeConfig: {
-    public: {
-      sentry: {
-        dsn: process.env.NUXT_PUBLIC_SENTRY_DSN ?? ''
-      }
-    },
+    public: {},
     admin: {
       email: process.env.NUXT_ADMIN_EMAIL,
       password: process.env.NUXT_ADMIN_PASSWORD
@@ -108,5 +118,14 @@ export default defineNuxtConfig({
       // environment variable.
       secretKey: process.env.NUXT_TURNSTILE_SECRET_KEY,
     }
+  },
+
+  sentry: {
+    org: 'developpement-lc',
+    project: 'mtek-portfolio'
+  },
+
+  sourcemap: {
+    client: 'hidden'
   }
 })

@@ -21,7 +21,7 @@
     "@nuxtjs/seo": "^5.1.0",
     "@nuxtjs/turnstile": "^1.1.1",
     "@resvg/resvg-js": "^2.6.2",
-    "@sentry/nuxt": "^8.55.1",
+    "@sentry/nuxt": "^10.48.0",
     "@unhead/vue": "^2.1.2",
     "aws4fetch": "^1.0.20",
     "drizzle-orm": "^0.36.4",

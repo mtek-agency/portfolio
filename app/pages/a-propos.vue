@@ -102,15 +102,17 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
             Je code pour donner vie aux idées, transformer les rêves en réalités numériques.
           </p>
 
-          <NuxtLink
-            to="/projets"
-            class="group inline-flex items-center gap-4 text-white"
-          >
-            <span class="text-xs tracking-[0.25em] uppercase font-medium">Voir mes projets</span>
-            <div class="size-12 rounded-full border border-white/20 flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:border-white">
-              <UIcon name="i-lucide-arrow-right" class="size-4 transition-colors duration-300 group-hover:text-black" />
-            </div>
-          </NuxtLink>
+          <UiMagnetic>
+            <NuxtLink
+              to="/projets"
+              class="group inline-flex items-center gap-4 text-white"
+            >
+              <span class="text-xs tracking-[0.25em] uppercase font-medium">Voir mes projets</span>
+              <div class="size-12 rounded-full border border-white/20 flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:border-white">
+                <UIcon name="i-lucide-arrow-right" class="size-4 transition-colors duration-300 group-hover:text-black" />
+              </div>
+            </NuxtLink>
+          </UiMagnetic>
         </div>
       </div>
 
@@ -180,13 +182,14 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
             </div>
 
             <!-- Lien CV -->
+            <!-- CV button — à réactiver quand le CV sera prêt
             <div
               class="transition-all duration-700"
               :class="bioVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
               style="transition-delay: 650ms"
             >
               <a
-                href="/[votre-cv].pdf"
+                href="/cv.pdf"
                 target="_blank"
                 class="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full border border-neutral-300 dark:border-neutral-700 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-950 hover:border-neutral-950 hover:text-white dark:hover:bg-white dark:hover:text-black dark:hover:border-white transition-all duration-300"
               >
@@ -195,6 +198,7 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
                 <UIcon name="i-lucide-download" class="size-3.5 group-hover:translate-y-0.5 transition-transform" />
               </a>
             </div>
+            -->
           </div>
         </div>
       </div>
