@@ -7,7 +7,7 @@ defineProps<{ count: number }>()
     <div class="max-w-7xl mx-auto px-6 lg:px-12 pb-16 w-full pt-32">
       <div class="overflow-hidden mb-4">
         <p
-          class="text-neutral-500 text-[10px] tracking-[0.5em] uppercase font-medium"
+          class="text-neutral-500 text-xs tracking-[0.3em] uppercase font-medium"
           style="animation: line-up 0.6s cubic-bezier(0.16,1,0.3,1) 0.15s both"
         >
           {{ count }} projets

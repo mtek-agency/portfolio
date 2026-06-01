@@ -4,6 +4,7 @@ import type { PublicProject } from '~/types/home'
 defineProps<{ projects: PublicProject[] }>()
 
 const { el, isVisible } = useReveal()
+const { el: ctaEl, isVisible: ctaVisible } = useReveal({ threshold: 0.8 })
 const { hoveredImage, mouseX, mouseY, onHover, onLeave, onMouseMove } = useProjectHover()
 </script>
 
@@ -14,7 +15,7 @@ const { hoveredImage, mouseX, mouseY, onHover, onLeave, onMouseMove } = useProje
         class="flex items-baseline justify-between mb-16 transition-all duration-700"
         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
       >
-        <p class="text-[10px] tracking-[0.4em] uppercase text-neutral-400 font-medium">Travaux sélectionnés</p>
+        <p class="text-xs tracking-[0.3em] uppercase text-neutral-400 font-medium">Travaux sélectionnés</p>
         <span class="text-xs font-mono text-neutral-400">{{ String(projects.length).padStart(2, '0') }}</span>
       </div>
 
@@ -43,11 +44,16 @@ const { hoveredImage, mouseX, mouseY, onHover, onLeave, onMouseMove } = useProje
           @mousemove="(e) => onHover(e, project)"
           @mouseleave="onLeave"
         >
-          <div class="flex items-baseline gap-6 md:gap-10">
-            <span class="text-xs font-mono text-neutral-300 dark:text-neutral-700 w-6 shrink-0">{{ String(i + 1).padStart(2, '0') }}</span>
-            <span class="font-display font-bold text-xl md:text-3xl text-neutral-900 dark:text-neutral-100 group-hover:translate-x-3 transition-transform duration-300 ease-out">
-              {{ project.name }}
-            </span>
+          <div class="flex items-start gap-6 md:gap-10 min-w-0">
+            <span class="text-xs font-mono text-neutral-300 dark:text-neutral-700 w-6 shrink-0 mt-1.5">{{ String(i + 1).padStart(2, '0') }}</span>
+            <div class="flex flex-col gap-1 min-w-0">
+              <span class="font-display font-bold text-xl md:text-3xl text-neutral-900 dark:text-neutral-100 group-hover:translate-x-3 transition-transform duration-300 ease-out">
+                {{ project.name }}
+              </span>
+              <span v-if="project.description" class="hidden md:block text-sm text-neutral-400 dark:text-neutral-500 truncate max-w-lg">
+                {{ project.description }}
+              </span>
+            </div>
           </div>
           <div class="flex items-center gap-3 md:gap-6 shrink-0">
             <div class="hidden md:flex gap-2">
@@ -66,17 +72,18 @@ const { hoveredImage, mouseX, mouseY, onHover, onLeave, onMouseMove } = useProje
       </div>
 
       <div
-        class="mt-12 flex justify-center transition-all duration-700"
-        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
-        :style="{ transitionDelay: isVisible ? '450ms' : '0ms' }"
+        ref="ctaEl"
+        class="mt-12 flex justify-end transition-all duration-700"
+        :class="ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
       >
-        <NuxtLink
-          to="/projets"
-          class="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full border border-neutral-300 dark:border-neutral-700 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-950 hover:border-neutral-950 hover:text-white dark:hover:bg-white dark:hover:text-black dark:hover:border-white transition-all duration-300"
-        >
-          Tous les projets
-          <UIcon name="i-lucide-arrow-right" class="size-3.5 group-hover:translate-x-1 transition-transform" />
-        </NuxtLink>
+        <UiMagnetic>
+          <NuxtLink to="/projets" class="group inline-flex items-center gap-4 text-neutral-950 dark:text-white">
+            <span class="text-xs tracking-[0.25em] uppercase font-medium">Tous les projets</span>
+            <div class="size-12 rounded-full border flex items-center justify-center transition-all duration-300 bg-neutral-950 border-neutral-950 dark:bg-white dark:border-white">
+              <UIcon name="i-lucide-arrow-right" class="size-4 text-white dark:text-black transition-transform duration-300 group-hover:-rotate-45" />
+            </div>
+          </NuxtLink>
+        </UiMagnetic>
       </div>
     </div>
   </section>

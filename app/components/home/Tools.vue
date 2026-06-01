@@ -17,7 +17,7 @@ const { tilts, spots, onMouseMove, onMouseLeave, cardStyle } = useToolCard()
         class="flex items-baseline justify-between mb-12 transition-all duration-700"
         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
       >
-        <p class="text-[10px] tracking-[0.4em] uppercase text-neutral-600 font-medium">Liens & outils</p>
+        <p class="text-xs tracking-[0.3em] uppercase text-neutral-600 font-medium">Liens & outils</p>
         <span class="text-xs font-mono text-neutral-700">{{ String(tools.length).padStart(2, '0') }}</span>
       </div>
 

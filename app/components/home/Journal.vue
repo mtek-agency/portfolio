@@ -14,7 +14,7 @@ const { el, isVisible } = useReveal()
         class="flex items-center justify-between mb-12 transition-all duration-700"
         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
       >
-        <p class="text-[10px] tracking-[0.4em] uppercase text-neutral-500 dark:text-neutral-600 font-medium">Journal</p>
+        <p class="text-xs tracking-[0.3em] uppercase text-neutral-500 dark:text-neutral-600 font-medium">Journal</p>
         <NuxtLink
           to="/blog"
           class="group inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-neutral-500 dark:text-neutral-600 hover:text-neutral-950 dark:hover:text-white transition-colors duration-200"

@@ -76,7 +76,7 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
       <div class="relative flex-1 flex flex-col justify-end max-w-7xl mx-auto w-full px-6 lg:px-12 pb-20 pt-32">
         <div class="overflow-hidden mb-8">
           <p
-            class="text-neutral-500 text-[10px] tracking-[0.5em] uppercase font-medium"
+            class="text-neutral-500 text-xs tracking-[0.3em] uppercase font-medium"
             style="animation: line-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s both"
           >
             À PROPOS · BORDEAUX
@@ -129,7 +129,7 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
     <section ref="bioEl" class="bg-neutral-50 dark:bg-neutral-950 py-16 lg:py-36">
       <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <p
-          class="text-[10px] tracking-[0.4em] uppercase text-neutral-400 font-medium mb-16 transition-all duration-700"
+          class="text-xs tracking-[0.3em] uppercase text-neutral-400 font-medium mb-16 transition-all duration-700"
           :class="bioVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
         >
           Qui suis-je
@@ -171,13 +171,16 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
               style="transition-delay: 500ms"
             >
               <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                Je construis des applications fullstack en m'intéressant autant à l'architecture qu'à l'expérience utilisateur parce qu'un bon produit, c'est rarement l'un sans l'autre.
+                <span class="font-semibold text-neutral-950 dark:text-white">Confinement 2020.</span> Lycéen, rien à faire, des exercices python à la pelle. Je me suis plongé dedans et
+                <span class="font-semibold text-neutral-950 dark:text-white">je n'en suis jamais vraiment sorti.</span> Depuis, je construis des applications <span class="font-semibold text-neutral-950 dark:text-white">fullstack</span> en m'intéressant
+                autant à l'architecture qu'à l'expérience utilisateur, parce qu'un bon produit, c'est rarement l'un
+                sans l'autre.
               </p>
               <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                Actuellement en Master Dev Manager Fullstack à l'EFREI, je mets en pratique mes compétences à travers des projets concrets, avec un goût prononcé pour le code propre, les interfaces soignées et les systèmes qui tiennent dans le temps.
-              </p>
-              <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                Curieux par nature, j'aime explorer de nouvelles technologies et comprendre comment les choses fonctionnent vraiment, pas juste les utiliser.
+                Actuellement en Master Dev Manager Fullstack à <span class="font-semibold text-neutral-950 dark:text-white">l'EFREI</span>, je mets en pratique ces compétences à travers
+                des projets concrets, avec un goût prononcé pour le <span class="font-semibold text-neutral-950 dark:text-white">code propre</span>, les interfaces soignées et les systèmes
+                qui tiennent dans le temps. En vacances, je suis capable de perdre le fil d'une conversation parce que
+                j'ai repensé à <span class="font-semibold text-neutral-950 dark:text-white">un bug laissé en plan.</span> C'est soit de la passion, soit un problème. Je n'ai pas encore tranché.
               </p>
             </div>
 
@@ -208,7 +211,7 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
     <section ref="timelineEl" class="bg-neutral-950 py-16 lg:py-36">
       <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <p
-          class="text-[10px] tracking-[0.4em] uppercase text-neutral-600 font-medium mb-16 transition-all duration-700"
+          class="text-xs tracking-[0.3em] uppercase text-neutral-600 font-medium mb-16 transition-all duration-700"
           :class="timelineVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
         >
           Parcours
@@ -242,7 +245,7 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
           class="flex items-baseline justify-between mb-16 transition-all duration-700"
           :class="valuesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
         >
-          <p class="text-[10px] tracking-[0.4em] uppercase text-neutral-400 font-medium">Comment je travaille</p>
+          <p class="text-xs tracking-[0.3em] uppercase text-neutral-400 font-medium">Comment je travaille</p>
           <span class="text-xs font-mono text-neutral-400">{{ String(valeurs.length).padStart(2, '0') }}</span>
         </div>
 
@@ -279,7 +282,7 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
           <div>
             <p
-              class="text-[10px] tracking-[0.4em] uppercase text-neutral-600 font-medium mb-8 transition-all duration-700"
+              class="text-xs tracking-[0.3em] uppercase text-neutral-600 font-medium mb-8 transition-all duration-700"
               :class="ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
             >
               Travaillons ensemble

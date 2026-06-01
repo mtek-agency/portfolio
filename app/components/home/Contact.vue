@@ -11,7 +11,7 @@ const links = [
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24">
         <!-- Left: intro -->
         <div class="flex flex-col justify-start">
-          <p class="text-[10px] tracking-[0.4em] uppercase text-neutral-600 mb-8 font-medium">Contact</p>
+          <p class="text-xs tracking-[0.3em] uppercase text-neutral-600 mb-8 font-medium">Contact</p>
           <div
             v-for="line in ['Vous avez un projet ?', 'Travaillons ensemble.']"
             :key="line"

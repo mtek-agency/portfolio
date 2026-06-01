@@ -46,7 +46,7 @@ useSchemaOrg([
     <HomeHero />
     <UiStackReveal />
     <HomeWorks :projects="featuredProjects" />
-    <HomeStatement />
+    <HomeAbout />
     <HomeTools v-if="tools?.length" :tools="tools" />
     <HomeJournal v-if="recentPosts.length" :posts="recentPosts" />
     <HomeContact />

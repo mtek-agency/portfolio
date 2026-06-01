@@ -38,7 +38,7 @@ function animStyle(delay: number, duration = '0.9s') {
     <div class="relative flex-1 flex flex-col justify-end max-w-7xl mx-auto w-full px-6 lg:px-12 pb-20 pt-32">
       <div class="overflow-hidden mb-8">
         <p
-          class="text-neutral-500 text-[10px] tracking-[0.5em] uppercase font-medium"
+          class="text-neutral-500 text-xs tracking-[0.3em] uppercase font-medium"
           :style="animStyle(0.1, '0.7s')"
         >
           MATTÉO BONNEVAL · BORDEAUX, FRANCE
@@ -56,9 +56,16 @@ function animStyle(delay: number, duration = '0.9s') {
         </div>
       </div>
 
+      <p
+        class="text-neutral-400 text-sm md:text-base mt-6"
+        :style="animStyle(0.55, '0.8s')"
+      >
+        Développeur web & mobile fullstack — disponible pour de nouveaux projets
+      </p>
+
       <div
-        class="mt-14 flex flex-col md:flex-row items-start md:items-end justify-between gap-8"
-        :style="animStyle(0.6, '0.8s')"
+        class="mt-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-8"
+        :style="animStyle(0.7, '0.8s')"
       >
         <UiMagnetic>
           <NuxtLink to="/projets" class="group inline-flex items-center gap-4 text-white">

@@ -32,14 +32,14 @@ async function subscribe() {
     <div class="max-w-7xl mx-auto px-6 lg:px-12">
 
       <!-- Newsletter band -->
-      <div class="py-12 md:py-20 border-b border-neutral-800/50">
-        <div class="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 lg:gap-12">
+      <div class="py-10 md:py-14 border-b border-neutral-800/50">
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:gap-16">
           <!-- Headline -->
           <div class="shrink-0">
             <p class="text-[10px] tracking-[0.5em] uppercase text-neutral-600 font-medium mb-4 md:mb-6">Newsletter</p>
             <h2
               class="font-display font-black text-white tracking-tighter leading-[0.88]"
-              style="font-size: clamp(2rem, 5.5vw, 6.5rem)"
+              style="font-size: clamp(2rem, 3.5vw, 4.5rem)"
             >
               Restez au<br>courant.
             </h2>
@@ -47,7 +47,7 @@ async function subscribe() {
 
           <!-- Form side -->
           <div class="w-full lg:max-w-lg">
-            <p class="text-neutral-500 text-sm md:text-base mb-6 md:mb-10 leading-relaxed">
+            <p class="text-neutral-500 text-sm mb-5 leading-relaxed">
               Nouveaux articles et projets directement dans votre boîte mail. Pas de spam, promis.
             </p>
 
@@ -100,7 +100,7 @@ async function subscribe() {
         <!-- Links -->
         <div class="flex gap-8 md:gap-16 lg:gap-24">
           <div>
-            <p class="text-[10px] tracking-[0.35em] uppercase text-neutral-600 mb-5 font-medium">Navigation</p>
+            <p class="text-xs tracking-[0.3em] uppercase text-neutral-600 mb-5 font-medium">Navigation</p>
             <div class="flex flex-col gap-3">
               <NuxtLink to="/" class="text-sm text-neutral-400 hover:text-white transition-colors duration-200">Accueil</NuxtLink>
               <NuxtLink to="/a-propos" class="text-sm text-neutral-400 hover:text-white transition-colors duration-200">À propos</NuxtLink>
@@ -109,7 +109,7 @@ async function subscribe() {
             </div>
           </div>
           <div>
-            <p class="text-[10px] tracking-[0.35em] uppercase text-neutral-600 mb-5 font-medium">Contact</p>
+            <p class="text-xs tracking-[0.3em] uppercase text-neutral-600 mb-5 font-medium">Contact</p>
             <div class="flex flex-col gap-3">
               <a href="mailto:contact@matteo-bonneval.fr" class="text-sm text-neutral-400 hover:text-white transition-colors duration-200">
                 contact@matteo-bonneval.fr

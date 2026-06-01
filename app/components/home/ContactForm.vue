@@ -58,7 +58,7 @@ async function onSubmit(e: FormSubmitEvent<ContactForm>) {
       <div class="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-8">
         <UFormField name="name" :ui="{ error: 'text-red-400 text-xs mt-1' }">
           <div class="border-b border-neutral-700 focus-within:border-white transition-[border-color] duration-300 pb-3 mb-8">
-            <label class="block text-[10px] tracking-[0.35em] uppercase text-neutral-600 mb-3 font-medium">Nom</label>
+            <label class="block text-xs tracking-[0.25em] uppercase text-neutral-600 mb-3 font-medium">Nom</label>
             <input
               v-model="state.name"
               type="text"
@@ -70,7 +70,7 @@ async function onSubmit(e: FormSubmitEvent<ContactForm>) {
 
         <UFormField name="email" :ui="{ error: 'text-red-400 text-xs mt-1' }">
           <div class="border-b border-neutral-700 focus-within:border-white transition-[border-color] duration-300 pb-3 mb-8">
-            <label class="block text-[10px] tracking-[0.35em] uppercase text-neutral-600 mb-3 font-medium">Email</label>
+            <label class="block text-xs tracking-[0.25em] uppercase text-neutral-600 mb-3 font-medium">Email</label>
             <input
               v-model="state.email"
               type="email"
@@ -83,7 +83,7 @@ async function onSubmit(e: FormSubmitEvent<ContactForm>) {
 
       <UFormField name="message" :ui="{ error: 'text-red-400 text-xs mt-1' }">
         <div class="border-b border-neutral-700 focus-within:border-white transition-[border-color] duration-300 pb-3 mb-8">
-          <label class="block text-[10px] tracking-[0.35em] uppercase text-neutral-600 mb-3 font-medium">Message</label>
+          <label class="block text-xs tracking-[0.25em] uppercase text-neutral-600 mb-3 font-medium">Message</label>
           <textarea
             v-model="state.message"
             placeholder="Votre message"
