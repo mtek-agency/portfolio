@@ -117,9 +117,6 @@ async function subscribe() {
               <a href="https://www.linkedin.com/in/matteo-bonneval" target="_blank" rel="noopener" class="text-sm text-neutral-400 hover:text-white transition-colors duration-200">
                 LinkedIn
               </a>
-              <a href="https://github.com/matteobnvl" target="_blank" rel="noopener" class="text-sm text-neutral-400 hover:text-white transition-colors duration-200">
-                GitHub
-              </a>
             </div>
           </div>
         </div>
@@ -127,10 +124,10 @@ async function subscribe() {
 
       <!-- Bottom bar -->
       <div class="py-5 border-t border-neutral-800/50 flex flex-col md:flex-row items-center justify-between gap-3">
-        <p class="text-xs text-neutral-700">
+        <p class="text-xs text-neutral-600">
           Mattéo Bonneval — Copyright © {{ new Date().getFullYear() }}
         </p>
-        <p class="text-xs text-neutral-700">
+        <p class="text-xs text-neutral-600">
           Bordeaux, France
         </p>
       </div>

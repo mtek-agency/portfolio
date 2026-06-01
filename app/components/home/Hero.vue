@@ -1,18 +1,4 @@
 <script setup lang="ts">
-const { isDone } = usePreloader()
-
-// Scramble for each title line
-const { output: title1, start: startTitle1 } = useScramble('JE DONNE VIE', { duration: 750 })
-const { output: title2, start: startTitle2 } = useScramble('AUX IDÉES.', { duration: 700, delay: 120 })
-
-watch(isDone, (done) => {
-  if (done) {
-    startTitle1()
-    startTitle2()
-  }
-}, { immediate: true })
-
-// Mouse parallax for the ambient glow
 const glowX = ref(0)
 const glowY = ref(0)
 
@@ -35,12 +21,8 @@ const glowStyle = computed(() => ({
   transition: 'transform 1s cubic-bezier(0.16, 1, 0.3, 1)',
 }))
 
-// Line-up animation for secondary elements
 function animStyle(delay: number, duration = '0.9s') {
-  return {
-    animation: `line-up ${duration} cubic-bezier(0.16,1,0.3,1) ${delay}s both`,
-    animationPlayState: isDone.value ? 'running' : 'paused',
-  }
+  return { animation: `line-up ${duration} cubic-bezier(0.16,1,0.3,1) ${delay}s both` }
 }
 </script>
 
@@ -63,21 +45,20 @@ function animStyle(delay: number, duration = '0.9s') {
         </p>
       </div>
 
-      <h1 class="font-display font-black text-white tracking-tighter" :style="{ fontSize: 'clamp(2.2rem, 5.5vw, 6.5rem)' }">
-        <span
-          class="block leading-[0.88] transition-opacity duration-75"
-          :class="isDone ? 'opacity-100' : 'opacity-0'"
-        >{{ title1 }}</span>
-        <span
-          class="block leading-[0.88] transition-opacity duration-75"
-          :class="isDone ? 'opacity-100' : 'opacity-0'"
-          style="transition-delay: 40ms"
-        >{{ title2 }}</span>
-      </h1>
+      <div>
+        <div v-for="(line, i) in ['JE DONNE VIE', 'AUX IDÉES.']" :key="line" class="overflow-hidden leading-[0.88]">
+          <h1
+            class="font-display font-black text-white tracking-tighter block"
+            :style="{ fontSize: 'clamp(2.2rem, 5.5vw, 6.5rem)', ...animStyle(0.25 + i * 0.15) }"
+          >
+            {{ line }}
+          </h1>
+        </div>
+      </div>
 
       <div
         class="mt-14 flex flex-col md:flex-row items-start md:items-end justify-between gap-8"
-        :style="animStyle(0.55, '0.8s')"
+        :style="animStyle(0.6, '0.8s')"
       >
         <UiMagnetic>
           <NuxtLink to="/projets" class="group inline-flex items-center gap-4 text-white">
@@ -92,7 +73,7 @@ function animStyle(delay: number, duration = '0.9s') {
 
     <div
       class="absolute bottom-8 right-12 flex flex-col items-center gap-3"
-      :style="animStyle(0.75, '0.7s')"
+      :style="animStyle(0.8, '0.7s')"
     >
       <span class="text-[9px] tracking-[0.35em] uppercase text-neutral-600 [writing-mode:vertical-lr]">SCROLL</span>
       <div class="w-px h-14 bg-gradient-to-b from-neutral-600 to-transparent" />

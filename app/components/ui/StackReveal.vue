@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const lines = [
-  ['Nuxt', 'TypeScript', 'TailwindCSS', 'React'],
-  ['NestJS', 'Symfony', 'PostgreSQL', 'Supabase', 'PostgreSQL'],
-  ['Expo', 'Docker', 'GitLab', 'GitHub', 'Figma'],
+  ['Nuxt', 'Symfony', 'TailwindCSS'],
+  ['NestJS', 'PostgreSQL', 'PostgreSQL'],
+  ['Go', 'Docker', 'GitLab', 'GitHub'],
 ]
 
 const sectionEl = ref<HTMLElement | null>(null)

@@ -22,6 +22,10 @@ export default defineNuxtConfig({
 
   modules: ['@nuxt/eslint', '@nuxthub/core', 'nuxt-auth-utils', '@nuxt/scripts', '@nuxtjs/turnstile', '@nuxt/ui', '@nuxt/image', '@sentry/nuxt/module', 'nuxt-og-image', '@nuxtjs/seo'],
 
+  colorMode: {
+    preference: 'light',
+  },
+
   image: {
     provider: 'none',
   },

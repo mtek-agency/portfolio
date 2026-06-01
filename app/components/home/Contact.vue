@@ -1,8 +1,7 @@
 <script setup lang="ts">
 const links = [
   { href: 'mailto:contact@matteo-bonneval.fr', icon: 'i-lucide-mail', label: 'contact@matteo-bonneval.fr', external: false },
-  { href: 'https://www.linkedin.com/in/matteo-bonneval', icon: 'i-lucide-linkedin', label: 'LinkedIn', external: true },
-  { href: 'https://github.com/matteobnvl', icon: 'i-lucide-github', label: 'GitHub', external: true },
+  { href: 'https://www.linkedin.com/in/matteo-bonneval', icon: 'i-lucide-linkedin', label: 'LinkedIn', external: true }
 ]
 </script>
 

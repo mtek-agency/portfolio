@@ -42,7 +42,7 @@ const valeurs = [
   {
     index: '01',
     title: 'Code propre avant tout',
-    description: 'J\'écris du code pour qu\'il tienne dans le temps — lisible, maintenable, scalable. Livrer vite en accumulant de la dette technique, c\'est juste repousser le problème.',
+    description: 'J\'écris du code pour qu\'il tienne dans le temps, lisible, maintenable, scalable. Livrer vite en accumulant de la dette technique, c\'est juste repousser le problème.',
   },
   {
     index: '02',
@@ -171,13 +171,13 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
               style="transition-delay: 500ms"
             >
               <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                Je construis des applications fullstack en m'intéressant autant à l'architecture qu'à l'expérience utilisateur — parce qu'un bon produit, c'est rarement l'un sans l'autre.
+                Je construis des applications fullstack en m'intéressant autant à l'architecture qu'à l'expérience utilisateur parce qu'un bon produit, c'est rarement l'un sans l'autre.
               </p>
               <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
                 Actuellement en Master Dev Manager Fullstack à l'EFREI, je mets en pratique mes compétences à travers des projets concrets, avec un goût prononcé pour le code propre, les interfaces soignées et les systèmes qui tiennent dans le temps.
               </p>
               <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                Curieux par nature, j'aime explorer de nouvelles technologies et comprendre comment les choses fonctionnent vraiment — pas juste les utiliser.
+                Curieux par nature, j'aime explorer de nouvelles technologies et comprendre comment les choses fonctionnent vraiment, pas juste les utiliser.
               </p>
             </div>
 
