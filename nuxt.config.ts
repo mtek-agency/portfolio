@@ -60,8 +60,8 @@ export default defineNuxtConfig({
     runtimeCacheStorage: false,
     compatibility: {
       runtime: {
-        satori: 'wasm-edge',
-        resvg: 'wasm-edge',
+        satori: 'wasm',
+        resvg: 'wasm',
         sharp: false,
       },
     },
