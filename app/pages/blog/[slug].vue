@@ -31,8 +31,7 @@ useSeoMeta({
   articleAuthor: 'Mattéo Bonneval',
 })
 
-defineOgImage({
-  component: 'Portfolio',
+defineOgImage('Portfolio', {
   title: post.value?.title,
   description: post.value?.excerpt || undefined,
   label: 'Journal',

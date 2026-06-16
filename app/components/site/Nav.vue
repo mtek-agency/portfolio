@@ -4,11 +4,7 @@ const menuOpen = ref(false)
 const colorMode = useColorMode()
 const route = useRoute()
 
-const isDark = computed(() => {
-  if (colorMode.preference === 'dark') return true
-  if (colorMode.preference === 'light') return false
-  return isDark
-})
+const isDark = computed(() => colorMode.value === 'dark')
 
 watch(() => route.path, () => { menuOpen.value = false })
 
@@ -100,17 +96,19 @@ const toggleTheme = () => {
         </div>
 
         <!-- Theme toggle -->
-        <button
-          class="transition-colors duration-300 p-1 relative z-10"
-          :class="[
-            scrolled ? 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white' : 'text-white/50 hover:text-white',
-            menuOpen ? '!text-neutral-400 hover:!text-white' : ''
-          ]"
-          :aria-label="isDark ? 'Mode clair' : 'Mode sombre'"
-          @click="toggleTheme"
-        >
-          <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
-        </button>
+        <ClientOnly>
+          <button
+            class="transition-colors duration-300 p-1 relative z-10"
+            :class="[
+              scrolled ? 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white' : 'text-white/50 hover:text-white',
+              menuOpen ? '!text-neutral-400 hover:!text-white' : ''
+            ]"
+            :aria-label="isDark ? 'Mode clair' : 'Mode sombre'"
+            @click="toggleTheme"
+          >
+            <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
+          </button>
+        </ClientOnly>
 
         <!-- Burger (mobile only) -->
         <button

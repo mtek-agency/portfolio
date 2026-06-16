@@ -24,7 +24,9 @@ const { el, isVisible } = useReveal({ threshold: 0.2 })
 
         <UiMagnetic>
           <NuxtLink to="/a-propos" class="group inline-flex items-center gap-4 shrink-0 text-neutral-950 dark:text-white">
-            <span class="text-xs tracking-[0.25em] uppercase font-medium">Qui suis-je</span>
+            <span class="text-xs tracking-[0.25em] uppercase font-medium">
+              Découvrir le coupable
+            </span>
             <div class="size-12 rounded-full border flex items-center justify-center transition-all duration-300 bg-neutral-950 border-neutral-950 dark:bg-white dark:border-white">
               <UIcon name="i-lucide-arrow-right" class="size-4 text-white dark:text-black transition-transform duration-300 group-hover:-rotate-45" />
             </div>

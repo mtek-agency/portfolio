@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
   },
 
-  modules: ['@nuxt/eslint', '@nuxthub/core', 'nuxt-auth-utils', '@nuxt/scripts', '@nuxtjs/turnstile', '@nuxt/ui', '@nuxt/image', '@sentry/nuxt/module', 'nuxt-og-image', '@nuxtjs/seo'],
+  modules: ['@nuxt/eslint', '@nuxthub/core', 'nuxt-auth-utils', '@nuxt/scripts', '@nuxtjs/turnstile', '@nuxt/ui', '@nuxt/image', '@sentry/nuxt/module', '@nuxtjs/seo'],
 
   colorMode: {
     preference: 'light',
@@ -58,6 +58,13 @@ export default defineNuxtConfig({
   ogImage: {
     enabled: true,
     runtimeCacheStorage: false,
+    compatibility: {
+      runtime: {
+        satori: 'wasm-edge',
+        resvg: 'wasm-edge',
+        sharp: false,
+      },
+    },
   },
 
   schemaOrg: {

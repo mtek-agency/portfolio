@@ -19,8 +19,7 @@ useSeoMeta({
   ogLocale: 'fr_FR',
 })
 
-defineOgImage({
-  component: 'Portfolio',
+defineOgImage('Portfolio', {
   title: 'Mattéo Bonneval',
   description: 'Développeur Web & Mobile basé à Bordeaux.',
 })

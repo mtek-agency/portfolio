@@ -50,8 +50,7 @@ useSeoMeta({
   ogLocale: 'fr_FR',
 })
 
-defineOgImage({
-  component: 'Portfolio',
+defineOgImage('Portfolio', {
   title: project.value?.name,
   description: project.value?.description?.substring(0, 120) || undefined,
   label: `Projet · ${project.value?.year}`,

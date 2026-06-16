@@ -8,8 +8,7 @@ useSeoMeta({
   ogLocale: 'fr_FR',
 })
 
-defineOgImage({
-  component: 'Portfolio',
+defineOgImage('Portfolio', {
   title: 'À propos',
   description: 'Développeur fullstack basé à Bordeaux, en Master Dev Manager à l\'EFREI.',
   label: 'Qui suis-je',

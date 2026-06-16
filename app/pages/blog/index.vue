@@ -27,8 +27,7 @@ useSeoMeta({
   ogLocale: 'fr_FR',
 })
 
-defineOgImage({
-  component: 'Portfolio',
+defineOgImage('Portfolio', {
   title: 'Journal',
   description: 'Articles sur le développement web, mobile et les nouvelles technologies.',
   label: 'Blog',

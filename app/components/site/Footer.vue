@@ -125,7 +125,7 @@ async function subscribe() {
       <!-- Bottom bar -->
       <div class="py-5 border-t border-neutral-800/50 flex flex-col md:flex-row items-center justify-between gap-3">
         <p class="text-xs text-neutral-600">
-          Mattéo Bonneval — Copyright © {{ new Date().getFullYear() }}
+          Mattéo Bonneval — Copyright © <ClientOnly>{{ new Date().getFullYear() }}<template #fallback>2026</template></ClientOnly>
         </p>
         <p class="text-xs text-neutral-600">
           Bordeaux, France

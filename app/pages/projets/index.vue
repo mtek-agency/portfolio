@@ -25,8 +25,7 @@ useSeoMeta({
   ogLocale: 'fr_FR',
 })
 
-defineOgImage({
-  component: 'Portfolio',
+defineOgImage('Portfolio', {
   title: 'Projets',
   description: 'Sélection de projets web & mobile.',
   label: 'Portfolio',
