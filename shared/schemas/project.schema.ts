@@ -20,6 +20,8 @@ export const createProjectSchema = z.object({
     tags: z.string().optional(),
     stack: z.string().optional(),
     isDisabled: z.boolean().default(false),
+    metaTitle: z.string().max(60).optional().nullable(),
+    metaDescription: z.string().max(160).optional().nullable(),
 })
 
 export const updateProjectSchema = createProjectSchema.partial()
