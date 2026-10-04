@@ -50,6 +50,22 @@ shared/
 └── types/studio.ts   formes consommées par les pages
 ```
 
+## Intégration continue
+
+`.github/workflows/ci.yml` : sur chaque pull request, lint, build et construction de l'image (sans publication) ;
+sur `main`, publication de l'image dans le registre GitHub (`ghcr.io/mtek-agency/portfolio`, étiquettes `latest` et
+`sha-<court>`), puis appel du webhook de déploiement Dokploy.
+
+À configurer dans GitHub (Settings → Secrets and variables → Actions) :
+
+| Nom | Type | Valeur |
+|---|---|---|
+| `DOKPLOY_DEPLOY_URL` | secret | l'URL du webhook de déploiement de l'application Dokploy |
+| `NUXT_TURNSTILE_SITE_KEY` | variable | la clé **publique** Turnstile (lue à la construction) |
+
+Dokploy doit pouvoir tirer l'image : la source de l'application est `ghcr.io/mtek-agency/portfolio:latest`, avec un
+identifiant de registre (un jeton GitHub `read:packages`) si le paquet est privé.
+
 ## Production
 
 ```bash

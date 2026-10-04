@@ -5,7 +5,8 @@ export default withNuxt(
     // ...Custom flat configs append after nuxt's configs
 )
     .prepend(
-        // ...Prepend some flat configs in front
+        // Les fichiers Markdown (README, docs) ne sont pas du code à analyser.
+        { ignores: ['**/*.md'] },
     )
     // Override some rules in a specific config, based on their name
     .override('nuxt/typescript/rules', {

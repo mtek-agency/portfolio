@@ -10,5 +10,4 @@ node_modules
 .git
 .gitignore
 .github
-.gitlab-ci.yml
 README.md
