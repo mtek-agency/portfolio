@@ -5,8 +5,8 @@ defineProps<{
   byYear: [string, PublicProject[]][]
 }>()
 
-// Must match card height in Card.vue: calc(100svh - 172px) + 12px gap
-const CARD_H = 'calc(100svh - 172px + 12px)'
+// Doit correspondre à la hauteur d'une carte (--project-card-h, voir main.css) + 12px d'écart
+const CARD_H = 'calc(var(--project-card-h) + 12px)'
 </script>
 
 <template>

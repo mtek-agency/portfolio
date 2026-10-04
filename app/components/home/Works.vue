@@ -33,14 +33,14 @@ const { hoveredImage, mouseX, mouseY, onHover, onLeave, onMouseMove } = useProje
       </Teleport>
 
       <div>
-        <div
+        <NuxtLink
           v-for="(project, i) in projects"
           :key="project.id"
-          class="group flex items-center justify-between py-6 border-b border-neutral-100 dark:border-neutral-800/80 cursor-pointer select-none transition-all duration-500"
+          :to="`/projets/${project.slug}`"
+          class="group flex items-center justify-between py-6 border-b border-neutral-100 dark:border-neutral-800/80 select-none transition-all duration-500"
           data-cursor="VOIR"
           :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
           :style="{ transitionDelay: isVisible ? `${i * 75}ms` : '0ms' }"
-          @click="navigateTo(`/projets/${project.slug}`)"
           @mousemove="(e) => onHover(e, project)"
           @mouseleave="onLeave"
         >
@@ -68,7 +68,7 @@ const { hoveredImage, mouseX, mouseY, onHover, onLeave, onMouseMove } = useProje
               <UIcon name="i-lucide-arrow-up-right" class="size-3.5 text-neutral-400 group-hover:text-white dark:group-hover:text-black transition-colors" />
             </div>
           </div>
-        </div>
+        </NuxtLink>
       </div>
 
       <div

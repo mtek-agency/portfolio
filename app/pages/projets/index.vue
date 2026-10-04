@@ -19,7 +19,7 @@ const projectItems = computed(() =>
 const { cardEls, cardStyle } = useStackCards(computed(() => projects.value.length))
 
 useSeoMeta({
-  title: 'Projets — Mattéo Bonneval',
+  title: 'Projets',
   description: 'Sélection de projets web & mobile réalisés lors de projets étudiants, personnels ou professionnels.',
   twitterCard: 'summary_large_image',
   ogLocale: 'fr_FR',

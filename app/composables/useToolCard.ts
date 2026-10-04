@@ -20,8 +20,8 @@ export function useToolCard() {
 
   function onMouseLeave(id: number) {
     if (!hasMouse.value) return
-    delete tilts[id]
-    delete spots[id]
+    Reflect.deleteProperty(tilts, id)
+    Reflect.deleteProperty(spots, id)
   }
 
   function cardStyle(id: number, visible: boolean, index: number) {

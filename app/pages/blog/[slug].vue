@@ -78,8 +78,8 @@ useSchemaOrg([
         <!-- Title -->
         <div class="overflow-hidden leading-[0.9] mb-10">
           <h1
-            class="font-display font-black text-white tracking-tighter"
-            style="font-size: clamp(2.5rem, 7vw, 7rem); animation: line-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both"
+            class="font-display font-black text-white tracking-tighter wrap-anywhere"
+            style="font-size: clamp(1.75rem, 7vw, 7rem); animation: line-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both"
           >
             {{ post.title }}
           </h1>

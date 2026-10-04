@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { newsletterSchema } from '#shared/schemas/contact.schema'
+import { emailSchema } from '#shared/schemas/contact.schema'
 
-const token = ref('')
+const { token, failed, widget, options, renew } = useCaptcha()
 const email = ref('')
 const sending = ref(false)
 const done = ref(false)
@@ -9,6 +9,10 @@ const err = ref('')
 
 async function subscribe() {
   if (!email.value || !token.value) return
+  if (!emailSchema.safeParse(email.value).success) {
+    err.value = 'Adresse e-mail invalide.'
+    return
+  }
   sending.value = true
   err.value = ''
   try {
@@ -23,6 +27,7 @@ async function subscribe() {
   }
   finally {
     sending.value = false
+    renew()
   }
 }
 </script>
@@ -76,9 +81,12 @@ async function subscribe() {
                 </button>
               </div>
               <ClientOnly>
-                <NuxtTurnstile v-model="token" :options="{ size: 'invisible' }" />
+                <NuxtTurnstile ref="widget" v-model="token" :options="options" />
               </ClientOnly>
-              <p v-if="err" class="text-xs text-red-400 mt-3">{{ err }}</p>
+              <p v-if="failed" class="text-xs text-red-400 mt-3">
+        La vérification anti-spam n'a pas pu se charger : désactivez votre bloqueur de publicités ou rechargez la page.
+      </p>
+      <p v-else-if="err" class="text-xs text-red-400 mt-3">{{ err }}</p>
             </div>
           </div>
         </div>

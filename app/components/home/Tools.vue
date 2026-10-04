@@ -4,7 +4,7 @@ import type { Tool } from '#shared/types/studio'
 defineProps<{ tools: Tool[] }>()
 
 const { el, isVisible } = useReveal()
-const { tilts, spots, onMouseMove, onMouseLeave, cardStyle } = useToolCard()
+const { spots, onMouseMove, onMouseLeave, cardStyle } = useToolCard()
 </script>
 
 <template>

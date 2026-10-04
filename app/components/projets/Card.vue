@@ -7,7 +7,7 @@ defineProps<{ project: PublicProject }>()
 <template>
   <NuxtLink
     :to="`/projets/${project.slug}`"
-    class="group flex flex-col md:flex-row rounded-2xl lg:rounded-3xl overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors duration-300 md:h-[calc(100svh-172px)]"
+    class="group flex flex-col md:flex-row rounded-2xl lg:rounded-3xl overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors duration-300 md:h-(--project-card-h)"
   >
     <!-- Cover image -->
     <div class="md:w-2/5 lg:w-1/2 aspect-[16/10] md:aspect-auto md:h-full overflow-hidden bg-neutral-100 dark:bg-neutral-800 shrink-0">

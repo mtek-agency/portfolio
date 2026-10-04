@@ -10,7 +10,7 @@ defineProps<{ count: number }>()
           class="text-neutral-500 text-xs tracking-[0.3em] uppercase font-medium"
           style="animation: line-up 0.6s cubic-bezier(0.16,1,0.3,1) 0.15s both"
         >
-          {{ count }} projets
+          {{ count }} projet{{ count > 1 ? 's' : '' }}
         </p>
       </div>
       <div class="overflow-hidden leading-[0.88]">

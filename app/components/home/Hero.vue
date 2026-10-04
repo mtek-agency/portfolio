@@ -45,16 +45,14 @@ function animStyle(delay: number, duration = '0.9s') {
         </p>
       </div>
 
-      <div>
-        <div v-for="(line, i) in ['JE DONNE VIE', 'AUX IDÉES.']" :key="line" class="overflow-hidden leading-[0.88]">
-          <h1
-            class="font-display font-black text-white tracking-tighter block"
-            :style="{ fontSize: 'clamp(2.2rem, 5.5vw, 6.5rem)', ...animStyle(0.25 + i * 0.15) }"
-          >
-            {{ line }}
-          </h1>
-        </div>
-      </div>
+      <h1
+        class="font-display font-black text-white tracking-tighter"
+        style="font-size: clamp(2rem, 5.5vw, 6.5rem)"
+      >
+        <span v-for="(line, i) in ['JE DONNE VIE', 'AUX IDÉES.']" :key="line" class="block overflow-hidden leading-[0.88]">
+          <span class="block" :style="animStyle(0.25 + i * 0.15)">{{ line }}</span>
+        </span>
+      </h1>
 
       <p
         class="text-neutral-400 text-sm md:text-base mt-6"
