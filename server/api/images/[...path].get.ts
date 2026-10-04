@@ -3,5 +3,10 @@
 export default defineEventHandler((event) => {
   const { apiUrl } = useRuntimeConfig(event).studio
   const raw = (event.path.split('?')[0] ?? '').replace(/^\/api\/images\//, '')
-  return sendRedirect(event, `${apiUrl}/api/images/${raw}`, 301)
+  // Chaque segment est décodé puis ré-encodé : l'adresse de redirection est toujours bien formée.
+  const path = raw.split('/').map((s) => {
+    try { return encodeURIComponent(decodeURIComponent(s)) }
+    catch { return '' }
+  }).join('/')
+  return sendRedirect(event, `${apiUrl}/api/images/${path}`, 301)
 })
