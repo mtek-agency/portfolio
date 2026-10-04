@@ -63,6 +63,9 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  // Composables rangés par thème (composables/<thème>/useX.ts), tous auto-importés.
+  imports: { dirs: ['composables/**'] },
+
   turnstile: {
     siteKey: process.env.NUXT_TURNSTILE_SITE_KEY,
   },

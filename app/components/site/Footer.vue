@@ -1,35 +1,5 @@
 <script setup lang="ts">
-import { emailSchema } from '#shared/schemas/contact.schema'
-
-const { token, failed, widget, options, renew } = useCaptcha()
-const email = ref('')
-const sending = ref(false)
-const done = ref(false)
-const err = ref('')
-
-async function subscribe() {
-  if (!email.value || !token.value) return
-  if (!emailSchema.safeParse(email.value).success) {
-    err.value = 'Adresse e-mail invalide.'
-    return
-  }
-  sending.value = true
-  err.value = ''
-  try {
-    await $fetch('/api/newsletter', {
-      method: 'POST',
-      body: { email: email.value, token: token.value },
-    })
-    done.value = true
-  }
-  catch {
-    err.value = 'Une erreur est survenue. Réessayez.'
-  }
-  finally {
-    sending.value = false
-    renew()
-  }
-}
+const { token, failed, widget, options, email, sending, done, err, subscribe } = useNewsletter()
 </script>
 
 <template>

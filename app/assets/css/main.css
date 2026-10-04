@@ -65,19 +65,6 @@ html {
   90%     { transform: translate(-10%,10%) }
 }
 
-/* ─── Marquee ──────────────────────────────────────────────── */
-@keyframes marquee-left {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-@keyframes marquee-right {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
-}
-.marquee-track   { animation: marquee-left  30s linear infinite; }
-.marquee-left    { animation: marquee-left  35s linear infinite; }
-.marquee-right   { animation: marquee-right 35s linear infinite; }
-
 /* Hauteur des cartes de la liste des projets : un écran moins l'en-tête, jamais moins de 28rem
    (sur un écran bas, le contenu serait sinon rogné). La frise des années utilise la même valeur. */
 :root { --project-card-h: max(28rem, calc(100svh - 172px)); }

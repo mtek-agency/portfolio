@@ -23,6 +23,32 @@ visiteur (limitation de débit et filtre des robots de l'API). Aucun CORS à ouv
 En production, l'API doit faire confiance à ce serveur pour `X-Forwarded-For` : mettre son adresse
 (ou son réseau Docker) dans `TRUSTED_PROXIES` côté API.
 
+## Organisation
+
+```
+app/
+├── pages/            index, a-propos, projets/, blog/
+├── layouts/          default (navigation, curseur, pied de page)
+├── components/
+│   ├── home/         sections de l'accueil (hero, projets, journal, outils, contact)
+│   ├── projets/      carte, en-tête et frise de la liste des projets
+│   ├── blog/         auteur et inscription à la newsletter d'un article
+│   ├── site/         navigation et pied de page
+│   ├── ui/           éléments transverses (curseur, grain, aimant, bandeau des technologies)
+│   └── OgImage/      gabarit des images de partage
+├── composables/
+│   ├── forms/        jeton anti-robot (useCaptcha), inscription (useNewsletter)
+│   └── motion/       apparition au scroll, cartes empilées, survols
+├── plugins/          défilement fluide (Lenis)
+└── utils/            dates, images, tags
+server/
+├── api/              routes Nitro : l'adaptateur vers l'API Studio (une route = une lecture ou un formulaire)
+└── utils/studio/     client de l'API, conversions des réponses (mappers) et lectures
+shared/
+├── schemas/          validation des formulaires
+└── types/studio.ts   formes consommées par les pages
+```
+
 ## Production
 
 ```bash
