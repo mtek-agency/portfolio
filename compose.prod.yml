@@ -19,3 +19,11 @@ services:
     # Pas de port publié : Traefik (Dokploy) atteint le conteneur par le réseau Docker, domaine configuré dans Dokploy.
     expose:
       - "3000"
+    networks:
+      - dokploy-network
+
+# Réseau créé par Dokploy : le site y joint l'API Studio directement (NUXT_STUDIO_API_URL=http://studio-api:8080),
+# pour que l'IP du visiteur ne se perde pas (voir TRUSTED_PROXIES côté API).
+networks:
+  dokploy-network:
+    external: true
