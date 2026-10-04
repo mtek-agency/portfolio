@@ -1,4 +1,4 @@
-import type { Post } from '~~/server/db/schema'
+import type { Post } from '#shared/types/studio'
 
 export function usePostHover() {
   const hoveredPost = ref<Post | null>(null)

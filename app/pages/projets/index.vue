@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PublicProject } from '~/types/home'
+import type { PublicProject } from '#shared/types/studio'
 
 const { data } = await useFetch<PublicProject[]>('/api/projects/public')
 const projects = computed(() => data.value ?? [])

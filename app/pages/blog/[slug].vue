@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Post } from '~~/server/db/schema'
+import type { Post } from '#shared/types/studio'
 
 const route = useRoute()
 const { data: post, error } = await useFetch<Post>(`/api/blog/${route.params.slug}`)
@@ -12,11 +12,7 @@ onMounted(() => {
   $fetch(`/api/blog/${route.params.slug}/view`, { method: 'POST' }).catch(() => {})
 })
 
-const readingTime = computed(() => {
-  if (!post.value?.content) return 1
-  const words = post.value.content.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length
-  return Math.max(1, Math.ceil(words / 200))
-})
+const readingTime = computed(() => post.value?.readingTime ?? 1)
 
 const { el: contentEl, isVisible: contentVisible } = useReveal({ threshold: 0.05 })
 

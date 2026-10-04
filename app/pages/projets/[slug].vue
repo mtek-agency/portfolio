@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import type { Project, ProjectImage } from '~~/server/db/schema'
-import type { PublicProject } from '~/types/home'
-
-type ProjectWithImages = Project & {
-  images: ProjectImage[]
-  views: number
-}
+import type { ProjectWithImages, PublicProject } from '#shared/types/studio'
 
 const route = useRoute()
 

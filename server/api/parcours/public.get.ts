@@ -1,5 +1,1 @@
-import { parcoursService } from '~~/server/services/parcours.service'
-
-export default defineEventHandler(async () => {
-    return await parcoursService.findActive()
-})
+export default defineEventHandler(event => fetchParcours(event))

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Post } from '~~/server/db/schema'
+import type { Post } from '#shared/types/studio'
 
 const { data: posts } = await useFetch<Post[]>('/api/blog')
 

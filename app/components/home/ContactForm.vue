@@ -6,6 +6,8 @@ import type { FormSubmitEvent } from '#ui/types'
 type ContactForm = z.infer<typeof contactSchema>
 
 const token = ref('')
+// Une clé par envoi : si l'envoi est réessayé, le message n'est enregistré qu'une fois.
+let idempotencyKey: string | null = null
 const sending = ref(false)
 const success = ref(false)
 const errorMsg = ref('')
@@ -21,8 +23,10 @@ async function onSubmit(e: FormSubmitEvent<ContactForm>) {
   sending.value = true
   errorMsg.value = ''
   try {
+    idempotencyKey ??= crypto.randomUUID()
     await $fetch('/api/contact', {
       method: 'POST',
+      headers: { 'Idempotency-Key': idempotencyKey },
       body: { ...e.data, token: token.value },
     })
     success.value = true

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Parcours } from '~~/server/db/schema'
+import type { Parcours } from '#shared/types/studio'
 
 useSeoMeta({
   title: 'À propos — Mattéo Bonneval',

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { Post, Tool } from '~~/server/db/schema'
-import type { PublicProject } from '~/types/home'
+import type { Post, PublicProject, Tool } from '#shared/types/studio'
 
 const [{ data: projects }, { data: posts }, { data: tools }] = await Promise.all([
   useFetch<PublicProject[]>('/api/projects/public'),

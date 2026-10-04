@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Tool } from '~~/server/db/schema'
+import type { Tool } from '#shared/types/studio'
 
 defineProps<{ tools: Tool[] }>()
 

@@ -1,4 +1,4 @@
-import type { PublicProject } from '~/types/home'
+import type { PublicProject } from '#shared/types/studio'
 
 export function useProjectHover() {
   const hasMouse = ref(false)

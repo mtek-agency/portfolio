@@ -19,11 +19,6 @@ build-and-push:
       docker build \
         --target runner \
         --build-arg NUXT_TURNSTILE_SITE_KEY=$NUXT_TURNSTILE_SITE_KEY \
-        --build-arg DATABASE_URL=$DATABASE_URL \
-        --build-arg CLOUDFLARE_ACCOUNT_ID=$CLOUDFLARE_ACCOUNT_ID \
-        --build-arg CLOUDFLARE_R2_BUCKET=$CLOUDFLARE_R2_BUCKET \
-        --build-arg CLOUDFLARE_R2_ACCESS_KEY_ID=$CLOUDFLARE_R2_ACCESS_KEY_ID \
-        --build-arg CLOUDFLARE_R2_SECRET_ACCESS_KEY=$CLOUDFLARE_R2_SECRET_ACCESS_KEY \
         --cache-from $IMAGE:latest \
         --tag $IMAGE:$TAG \
         --tag $IMAGE:latest \
