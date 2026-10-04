@@ -16,7 +16,14 @@ const readingTime = computed(() => post.value?.readingTime ?? 1)
 
 const { el: contentEl, isVisible: contentVisible } = useReveal({ threshold: 0.05 })
 
+// Image de partage : la couverture de l'article, sinon l'image fixe du site (public/og/default.png).
+const { url: siteUrl } = useSiteConfig()
+const shareImage = computed(() => coverImageSrc(post.value?.coverImage) ?? `${siteUrl}/og/default.png`)
+
 useSeoMeta({
+  ogImage: () => shareImage.value,
+  twitterImage: () => shareImage.value,
+  ogImageAlt: () => post.value?.title,
   title: () => post.value?.metaTitle || post.value?.title || '',
   description: () => post.value?.metaDescription || post.value?.excerpt || undefined,
   ogType: 'article',
@@ -27,17 +34,11 @@ useSeoMeta({
   articleAuthor: 'Mattéo Bonneval',
 })
 
-defineOgImage('Portfolio', {
-  title: post.value?.title,
-  description: post.value?.excerpt || undefined,
-  label: 'Journal',
-})
-
 useSchemaOrg([
   defineArticle({
     headline: () => post.value?.title || '',
     description: () => post.value?.excerpt || undefined,
-    image: () => post.value?.coverImage ? coverImageSrc(post.value.coverImage) ?? undefined : undefined,
+    image: () => shareImage.value,
     datePublished: () => post.value?.publishedAt ? new Date(post.value.publishedAt).toISOString() : undefined,
     dateModified: () => post.value?.updatedAt ? new Date(post.value.updatedAt).toISOString() : undefined,
     author: [{
