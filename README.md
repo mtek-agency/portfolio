@@ -57,5 +57,5 @@ npm run build
 node --import ./.output/server/sentry.server.config.mjs .output/server/index.mjs
 ```
 
-Variables : `NUXT_STUDIO_API_URL`, `NUXT_STUDIO_SITE`, `NUXT_TURNSTILE_SITE_KEY`, `NUXT_PUBLIC_SITE_URL`,
+Variables : `NUXT_STUDIO_API_URL`, `NUXT_STUDIO_PUBLIC_URL`, `NUXT_STUDIO_SITE`, `NUXT_TURNSTILE_SITE_KEY`, `NUXT_PUBLIC_SITE_URL`,
 `NUXT_OG_IMAGE_SECRET`.

@@ -71,10 +71,12 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    // API Studio : adresse du serveur (sans /api/v1) et slug du site de ce portfolio.
-    // Surchargés au runtime par NUXT_STUDIO_API_URL et NUXT_STUDIO_SITE.
+    // API Studio : adresse du serveur (sans /api/v1), slug du site de ce portfolio, et adresse publique
+    // de l'API pour les redirections envoyées au navigateur (vide : même adresse que apiUrl).
+    // Surchargés au runtime par NUXT_STUDIO_API_URL, NUXT_STUDIO_SITE et NUXT_STUDIO_PUBLIC_URL.
     studio: {
       apiUrl: 'http://localhost:8080',
+      publicUrl: '',
       site: 'portfolio',
     },
   },
