@@ -71,7 +71,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           # La clé publique Turnstile est lue à la construction (variable du dépôt, pas un secret).
           build-args: |
-            NUXT_TURNSTILE_SITE_KEY=${{ vars.NUXT_TURNSTILE_SITE_KEY }}
+            NUXT_TURNSTILE_SITE_KEY=${{ vars.NUXT_TURNSTILE_SITE_KEY || secrets.NUXT_TURNSTILE_SITE_KEY }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
