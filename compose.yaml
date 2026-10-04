@@ -1,14 +1,16 @@
+# Développement : le front dans un conteneur, avec rechargement à chaud.
+# (L'API Studio tourne à part, voir le dépôt `studio`.)
 services:
   front:
     build:
-      context: .
+      context: ./front
       target: dev
-    container_name: nuxt_front
+    container_name: portfolio-front
     ports:
       - "3000:3000"
     env_file: .env
     volumes:
-      - .:/app
+      - ./front:/app
       - /app/node_modules
       - /app/.nuxt
       - /app/.output
