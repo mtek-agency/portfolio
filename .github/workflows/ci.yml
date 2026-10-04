@@ -20,6 +20,9 @@ env:
 jobs:
   check:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: front
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -28,6 +31,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: front/package-lock.json
       - run: npm ci
       - run: npm run lint
       - run: npm run build
@@ -60,7 +64,7 @@ jobs:
             type=sha,format=short
       - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
-          context: .
+          context: ./front
           target: runner
           push: ${{ github.event_name == 'push' }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -71,6 +75,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+  # Dokploy redéploie le compose de production (compose.prod.yml) : il tire l'image qu'on vient de publier.
   deploy:
     needs: image
     if: github.event_name == 'push'
@@ -78,5 +83,20 @@ jobs:
     steps:
       - name: Déclencher le déploiement Dokploy
         env:
-          DOKPLOY_DEPLOY_URL: ${{ secrets.DOKPLOY_DEPLOY_URL }}
-        run: curl --fail --silent --show-error -X GET "$DOKPLOY_DEPLOY_URL"
+          DOKPLOY_URL: ${{ vars.DOKPLOY_URL }}
+          DOKPLOY_API_KEY: ${{ secrets.DOKPLOY_API_KEY }}
+          DOKPLOY_COMPOSE_ID: ${{ secrets.DOKPLOY_COMPOSE_ID }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          TITLE=$(printf '%s' "$COMMIT_MESSAGE" | head -n1)
+          DESCRIPTION=$(printf '%s' "$COMMIT_MESSAGE" | tail -n +2)
+          PAYLOAD=$(jq -n \
+            --arg composeId "$DOKPLOY_COMPOSE_ID" \
+            --arg title "$TITLE" \
+            --arg description "$DESCRIPTION" \
+            '{composeId: $composeId, title: $title, description: $description}')
+          curl --fail --silent --show-error -X POST "$DOKPLOY_URL/api/compose.deploy" \
+            -H "Accept: application/json" \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: $DOKPLOY_API_KEY" \
+            -d "$PAYLOAD"
