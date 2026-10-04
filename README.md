@@ -44,6 +44,7 @@ app/
 server/
 ├── api/              routes Nitro : l'adaptateur vers l'API Studio (une route = une lecture ou un formulaire)
 └── utils/studio/     client de l'API, conversions des réponses (mappers) et lectures
+    (api/images/[...path] redirige les anciennes URLs d'images vers l'API Studio)
 shared/
 ├── schemas/          validation des formulaires
 └── types/studio.ts   formes consommées par les pages
