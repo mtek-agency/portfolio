@@ -5,6 +5,11 @@ const props = defineProps<{
 
 const handleError = () => clearError({ redirect: '/' })
 const is404 = computed(() => props.error.statusCode === 404)
+
+useSeoMeta({
+  title: () => (is404.value ? 'Page introuvable' : 'Erreur'),
+  robots: 'noindex',
+})
 </script>
 
 <template>

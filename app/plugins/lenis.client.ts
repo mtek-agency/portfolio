@@ -2,9 +2,8 @@ import Lenis from 'lenis'
 
 // Routes where Lenis should be disabled (native scroll / scroll-snap)
 const EXCLUDED_ROUTES = ['/blog']
-const EXCLUDED_PREFIXES = ['/admin', '/login']
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(() => {
   let lenis: Lenis | null = null
   let rafId: number
 
@@ -32,7 +31,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   const router = useRouter()
 
   function isExcludedPath(path: string) {
-    return EXCLUDED_ROUTES.includes(path) || EXCLUDED_PREFIXES.some(p => path.startsWith(p))
+    return EXCLUDED_ROUTES.includes(path)
   }
 
   router.beforeEach((to) => {
@@ -51,6 +50,4 @@ export default defineNuxtPlugin((nuxtApp) => {
       lenis.scrollTo(0, { immediate: true })
     }
   })
-
-  nuxtApp.provide('lenis', { get: () => lenis })
 })

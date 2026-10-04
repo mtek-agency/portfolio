@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import type { Project, ProjectImage } from '~~/server/db/schema'
-import type { PublicProject } from '~/types/home'
-
-type ProjectWithImages = Project & {
-  images: ProjectImage[]
-  views: number
-}
+import type { ProjectWithImages, PublicProject } from '#shared/types/studio'
 
 const route = useRoute()
 
@@ -95,8 +89,8 @@ useSchemaOrg([
             </div>
             <div class="overflow-hidden leading-[0.88]">
               <h1
-                class="font-display font-black text-white tracking-tighter"
-                style="font-size: clamp(2rem, 5vw, 5.5rem); animation: line-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both"
+                class="font-display font-black text-white tracking-tighter wrap-anywhere"
+                style="font-size: clamp(1.5rem, 5vw, 5.5rem); animation: line-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both"
               >
                 {{ project.name }}
               </h1>

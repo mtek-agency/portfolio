@@ -1,5 +1,1 @@
-import { findPublishedPosts } from '~~/server/services/post.service'
-
-export default defineEventHandler(() => {
-  return findPublishedPosts()
-})
+export default defineEventHandler(event => fetchPosts(event))

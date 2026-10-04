@@ -1,21 +1,4 @@
 services:
-  postgres:
-    image: postgres:16-alpine
-    container_name: nuxt_postgres
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: db_portfolio
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U root -d db_portfolio"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-
   front:
     build:
       context: .
@@ -29,11 +12,3 @@ services:
       - /app/node_modules
       - /app/.nuxt
       - /app/.output
-      - blob_data:/app/.data/files
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-volumes:
-  postgres_data:
-  blob_data:

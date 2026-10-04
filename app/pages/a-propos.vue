@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Parcours } from '~~/server/db/schema'
+import type { Parcours } from '#shared/types/studio'
 
 useSeoMeta({
-  title: 'À propos — Mattéo Bonneval',
+  title: 'À propos',
   description: 'Développeur web & mobile fullstack basé à Bordeaux. Étudiant en Master Dev Manager Fullstack à l\'EFREI, je conçois des applications propres, performantes et maintenables.',
   twitterCard: 'summary_large_image',
   ogLocale: 'fr_FR',
@@ -82,16 +82,14 @@ const { onMouseMove, onMouseLeave, cardStyle: tiltCardStyle } = useToolCard()
           </p>
         </div>
 
-        <div>
-          <div v-for="(line, i) in ['Mattéo', 'DÉVELOPPEUR', 'WEB & MOBILE']" :key="line" class="overflow-hidden leading-[0.88]">
-            <h1
-              class="font-display font-black text-white tracking-tighter block"
-              :style="`font-size: clamp(1.6rem, 6vw, 6.5rem); animation: line-up 0.9s cubic-bezier(0.16,1,0.3,1) ${0.3 + i * 0.15}s both`"
-            >
-              {{ line }}
-            </h1>
-          </div>
-        </div>
+        <h1
+          class="font-display font-black text-white tracking-tighter"
+          style="font-size: clamp(1.35rem, 6vw, 6.5rem)"
+        >
+          <span v-for="(line, i) in ['Mattéo', 'DÉVELOPPEUR', 'WEB & MOBILE']" :key="line" class="block overflow-hidden leading-[0.88]">
+            <span class="block" :style="`animation: line-up 0.9s cubic-bezier(0.16,1,0.3,1) ${0.3 + i * 0.15}s both`">{{ line }}</span>
+          </span>
+        </h1>
 
         <div
           class="mt-14 flex flex-col md:flex-row items-start md:items-end justify-between gap-8"

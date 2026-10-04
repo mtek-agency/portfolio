@@ -1,30 +1,5 @@
 <script setup lang="ts">
-import { newsletterSchema } from '#shared/schemas/contact.schema'
-
-const token = ref('')
-const email = ref('')
-const sending = ref(false)
-const done = ref(false)
-const err = ref('')
-
-async function subscribe() {
-  if (!email.value || !token.value) return
-  sending.value = true
-  err.value = ''
-  try {
-    await $fetch('/api/newsletter', {
-      method: 'POST',
-      body: { email: email.value, token: token.value },
-    })
-    done.value = true
-  }
-  catch {
-    err.value = 'Une erreur est survenue. Réessayez.'
-  }
-  finally {
-    sending.value = false
-  }
-}
+const { token, failed, widget, options, email, sending, done, err, subscribe } = useNewsletter()
 </script>
 
 <template>
@@ -76,9 +51,12 @@ async function subscribe() {
                 </button>
               </div>
               <ClientOnly>
-                <NuxtTurnstile v-model="token" :options="{ size: 'invisible' }" />
+                <NuxtTurnstile ref="widget" v-model="token" :options="options" />
               </ClientOnly>
-              <p v-if="err" class="text-xs text-red-400 mt-3">{{ err }}</p>
+              <p v-if="failed" class="text-xs text-red-400 mt-3">
+        La vérification anti-spam n'a pas pu se charger : désactivez votre bloqueur de publicités ou rechargez la page.
+      </p>
+      <p v-else-if="err" class="text-xs text-red-400 mt-3">{{ err }}</p>
             </div>
           </div>
         </div>

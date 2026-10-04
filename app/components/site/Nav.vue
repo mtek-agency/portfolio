@@ -78,7 +78,7 @@ const toggleTheme = () => {
             v-for="social in [
               { href: 'https://www.linkedin.com/in/matteo-bonneval', icon: 'i-lucide-linkedin', label: 'LinkedIn' },
               { href: 'https://github.com/matteobnvl', icon: 'i-lucide-github', label: 'GitHub' },
-              { href: 'https://gitlab.com/matteobnvl', icon: 'i-simple-icons-gitlab', label: 'GitLab' },
+              { href: 'https://gitlab.com/matteobnvl', icon: 'i-lucide-gitlab', label: 'GitLab' },
             ]"
             :key="social.label"
             :href="social.href"
@@ -134,60 +134,58 @@ const toggleTheme = () => {
     </nav>
   </header>
 
-  <!-- Mobile menu fullscreen overlay -->
-  <Teleport to="body">
-    <Transition name="mobile-menu">
-      <div
-        v-if="menuOpen"
-        class="fixed inset-0 z-40 bg-neutral-950 flex flex-col px-6 pt-20 pb-10 md:hidden"
-      >
-        <!-- Links -->
-        <nav class="flex-1 flex flex-col justify-center gap-1">
-          <NuxtLink
-            v-for="(link, i) in links"
-            :key="link.to"
-            :to="link.to"
-            class="group flex items-center justify-between py-6 border-b border-neutral-800/60"
-            :style="{ transitionDelay: `${i * 60}ms` }"
-          >
-            <div class="flex items-baseline gap-5">
-              <span class="text-xs font-mono text-neutral-700">{{ String(i + 1).padStart(2, '0') }}</span>
-              <span class="font-display font-black text-white tracking-tighter transition-transform duration-300 group-hover:translate-x-2"
-                style="font-size: clamp(2rem, 9vw, 5rem)">
-                {{ link.label }}
-              </span>
-            </div>
-            <UIcon name="i-lucide-arrow-up-right" class="size-5 text-neutral-600 shrink-0 transition-all duration-300 group-hover:text-white group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </NuxtLink>
-        </nav>
-
-        <!-- Bottom bar -->
-        <div class="flex items-center justify-between pt-8 border-t border-neutral-800/60">
-          <div class="flex items-center gap-5">
-            <a
-              href="https://www.linkedin.com/in/matteo-bonneval"
-              target="_blank"
-              rel="noopener"
-              class="text-xs tracking-[0.2em] uppercase text-neutral-600 hover:text-white transition-colors"
-            >LinkedIn</a>
-            <a
-              href="https://github.com/matteobnvl"
-              target="_blank"
-              rel="noopener"
-              class="text-xs tracking-[0.2em] uppercase text-neutral-600 hover:text-white transition-colors"
-            >GitHub</a>
+  <!-- Mobile menu fullscreen overlay (dans l'application : l'en-tête, z-50, reste au-dessus) -->
+  <Transition name="mobile-menu">
+    <div
+      v-if="menuOpen"
+      class="fixed inset-0 z-40 bg-neutral-950 flex flex-col px-6 pt-20 pb-10 md:hidden"
+    >
+      <!-- Links -->
+      <nav class="flex-1 flex flex-col justify-center gap-1">
+        <NuxtLink
+          v-for="(link, i) in links"
+          :key="link.to"
+          :to="link.to"
+          class="group flex items-center justify-between py-6 border-b border-neutral-800/60"
+          :style="{ transitionDelay: `${i * 60}ms` }"
+        >
+          <div class="flex items-baseline gap-5">
+            <span class="text-xs font-mono text-neutral-700">{{ String(i + 1).padStart(2, '0') }}</span>
+            <span class="font-display font-black text-white tracking-tighter transition-transform duration-300 group-hover:translate-x-2"
+              style="font-size: clamp(2rem, 9vw, 5rem)">
+              {{ link.label }}
+            </span>
           </div>
-          <button
-            class="flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-neutral-600 hover:text-white transition-colors"
-            @click="menuOpen = false"
-          >
-            Fermer
-            <UIcon name="i-lucide-x" class="size-3.5" />
-          </button>
+          <UIcon name="i-lucide-arrow-up-right" class="size-5 text-neutral-600 shrink-0 transition-all duration-300 group-hover:text-white group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        </NuxtLink>
+      </nav>
+
+      <!-- Bottom bar -->
+      <div class="flex items-center justify-between pt-8 border-t border-neutral-800/60">
+        <div class="flex items-center gap-5">
+          <a
+            href="https://www.linkedin.com/in/matteo-bonneval"
+            target="_blank"
+            rel="noopener"
+            class="text-xs tracking-[0.2em] uppercase text-neutral-600 hover:text-white transition-colors"
+          >LinkedIn</a>
+          <a
+            href="https://github.com/matteobnvl"
+            target="_blank"
+            rel="noopener"
+            class="text-xs tracking-[0.2em] uppercase text-neutral-600 hover:text-white transition-colors"
+          >GitHub</a>
         </div>
+        <button
+          class="flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-neutral-600 hover:text-white transition-colors"
+          @click="menuOpen = false"
+        >
+          Fermer
+          <UIcon name="i-lucide-x" class="size-3.5" />
+        </button>
       </div>
-    </Transition>
-  </Teleport>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>

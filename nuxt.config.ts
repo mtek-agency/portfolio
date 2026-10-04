@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
   },
 
-  modules: ['@nuxt/eslint', '@nuxthub/core', 'nuxt-auth-utils', '@nuxt/scripts', '@nuxtjs/turnstile', '@nuxt/ui', '@nuxt/image', '@sentry/nuxt/module', '@nuxtjs/seo'],
+  modules: ['@nuxt/eslint', '@nuxt/scripts', '@nuxtjs/turnstile', '@nuxt/ui', '@nuxt/image', '@sentry/nuxt/module', '@nuxtjs/seo'],
 
   colorMode: {
     preference: 'light',
@@ -28,12 +28,6 @@ export default defineNuxtConfig({
 
   image: {
     provider: 'none',
-  },
-
-  nitro: {
-    externals: {
-      inline: ['drizzle-orm'],
-    },
   },
 
   // ─── SEO ──────────────────────────────────────────────────────────────────
@@ -51,17 +45,15 @@ export default defineNuxtConfig({
     ],
   },
 
-  robots: {
-    disallow: ['/admin', '/login'],
-  },
-
   ogImage: {
     enabled: true,
     runtimeCacheStorage: false,
+    // Le site tourne sur Node (Docker) : rendu natif avec @resvg/resvg-js, installé.
+    // (La variante wasm exige @resvg/resvg-wasm, qui n'est pas une dépendance : l'image échouait en 500.)
     compatibility: {
       runtime: {
-        satori: 'wasm',
-        resvg: 'wasm',
+        satori: 'node',
+        resvg: 'node',
         sharp: false,
       },
     },
@@ -73,62 +65,22 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  hub: {
-    db: {
-      dialect: 'postgresql'
-    },
-    blob: {
-      driver: 'fs',
-      dir: '.data/files'
-    },
-    kv: true
-  },
-
-  $production: {
-    hub: {
-      blob: {
-        driver: 's3',
-        bucket: process.env.CLOUDFLARE_R2_BUCKET ?? 'portfolio',
-        endpoint: `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-        region: 'auto',
-        accessKeyId: process.env.CLOUDFLARE_R2_ACCESS_KEY_ID,
-        secretAccessKey: process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY,
-      }
-    }
-  },
+  // Composables rangés par thème (composables/<thème>/useX.ts), tous auto-importés.
+  imports: { dirs: ['composables/**'] },
 
   turnstile: {
     siteKey: process.env.NUXT_TURNSTILE_SITE_KEY,
   },
 
-  vite: {
-    optimizeDeps: {
-      include: [
-        '@nuxt/ui > prosemirror-state',
-        '@nuxt/ui > prosemirror-transform',
-        '@nuxt/ui > prosemirror-model',
-        '@nuxt/ui > prosemirror-view',
-        '@nuxt/ui > prosemirror-gapcursor',
-      ],
-    },
-  },
-
   runtimeConfig: {
-    public: {},
-    admin: {
-      email: process.env.NUXT_ADMIN_EMAIL,
-      password: process.env.NUXT_ADMIN_PASSWORD
+    // API Studio : adresse du serveur (sans /api/v1), slug du site de ce portfolio, et adresse publique
+    // de l'API pour les redirections envoyées au navigateur (vide : même adresse que apiUrl).
+    // Surchargés au runtime par NUXT_STUDIO_API_URL, NUXT_STUDIO_SITE et NUXT_STUDIO_PUBLIC_URL.
+    studio: {
+      apiUrl: 'http://localhost:8080',
+      publicUrl: '',
+      site: 'portfolio',
     },
-    brevo: {
-      apiKey: process.env.NUXT_BREVO_API_KEY,
-      contactEmail: process.env.NUXT_CONTACT_EMAIL,
-      senderEmail: process.env.NUXT_SENDER_EMAIL
-    },
-    turnstile: {
-      // This can be overridden at runtime via the NUXT_TURNSTILE_SECRET_KEY
-      // environment variable.
-      secretKey: process.env.NUXT_TURNSTILE_SECRET_KEY,
-    }
   },
 
   sentry: {
