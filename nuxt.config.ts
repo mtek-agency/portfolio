@@ -48,10 +48,12 @@ export default defineNuxtConfig({
   ogImage: {
     enabled: true,
     runtimeCacheStorage: false,
+    // Le site tourne sur Node (Docker) : rendu natif avec @resvg/resvg-js, installé.
+    // (La variante wasm exige @resvg/resvg-wasm, qui n'est pas une dépendance : l'image échouait en 500.)
     compatibility: {
       runtime: {
-        satori: 'wasm',
-        resvg: 'wasm',
+        satori: 'node',
+        resvg: 'node',
         sharp: false,
       },
     },
