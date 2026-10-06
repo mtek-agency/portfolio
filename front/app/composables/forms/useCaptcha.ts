@@ -8,7 +8,13 @@ export function useCaptcha() {
 
   const options = {
     size: 'invisible',
-    'error-callback': () => { failed.value = true; token.value = '' },
+    // Le code d'erreur Cloudflare (ex. 110200 domaine non autorisé, 400020 clé invalide) distingue
+    // une mauvaise configuration d'un vrai blocage côté visiteur : on le garde dans la console.
+    'error-callback': (code?: string) => {
+      console.warn('[turnstile] erreur du widget', code)
+      failed.value = true
+      token.value = ''
+    },
     'expired-callback': () => { token.value = '' },
   }
 
